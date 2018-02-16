@@ -1,0 +1,11 @@
+https://wireframe.cc/qcH9I3 - homepage not logged
+https://wireframe.cc/WofRxR - profile page
+https://wireframe.cc/3Fkr8z - homepage logged in
+https://wireframe.cc/SS0UPm - place info (logged in, not visited, not reviewed)
+https://wireframe.cc/3FT0Bj - place info (logged in, visited, review writen)
+https://wireframe.cc/tkhKxb - place info (logged in, visited, no review)
+https://wireframe.cc/bSbjf5 - place info (not logged)
+https://wireframe.cc/SpelnJ - write a review dialog
+https://wireframe.cc/p4Uu19 - add a place
+https://wireframe.cc/AJ3ndS - login dialog
+https://wireframe.cc/wLA1zj - register dialog
