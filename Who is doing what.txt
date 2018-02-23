@@ -1,0 +1,20 @@
+Anguel
+ + add places (PAGE)
+ + map
+ + populating dashboard with places
+
+
+
+Daumantas
+ + Login/Register
+ + Place details page
+ + Make a review dialog
+
+
+
+Louis
+ + Dashboard
+ + Profile page
+ + Contacts
+ + About
+ + Base template
