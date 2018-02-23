@@ -3,17 +3,18 @@ from django.contrib.auth.models import User
 
 # TODO  Location,
 
-class Comment(model.Model):
+class Comment(models.Model):
     publish_date = models.DateField(auto_now=True)
     content = models.CharField(max_length=300)
     location_id = models.PositiveIntegerField()
     rating = models.CharField(max_length=1)
     posted_by = models.CharField(max_length=30)
 
-class Picture(model.Model):
+class Picture(models.Model):
     upload_date = models.DateField(auto_now=True)
     location_id = models.PositiveIntegerField()
     uploaded_by = models.CharField(max_length=30)
+    picture = models.ImageField(upload_to='places_location', blank=True)
     
 
 # Create your models here.
