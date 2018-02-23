@@ -1,7 +1,20 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# TODO PageModel, ReviewModel
+# TODO  Location,
+
+class Comment(model.Model):
+    publish_date = models.DateField(auto_now=True)
+    content = models.CharField(max_length=300)
+    location_id = models.PositiveIntegerField()
+    rating = models.CharField(max_length=1)
+    posted_by = models.CharField(max_length=30)
+
+class Picture(model.Model):
+    upload_date = models.DateField(auto_now=True)
+    location_id = models.PositiveIntegerField()
+    uploaded_by = models.CharField(max_length=30)
+    
 
 # Create your models here.
 class UserProfile(models.Model):
@@ -10,8 +23,6 @@ class UserProfile(models.Model):
     # additional attributes
     
     picture = models.ImageField(upload_to='profile_image', blank=True)
-    # TODO add Reviews
-    # TODO add Pages visited
 
     def __str__(self):
         return self.user.username
