@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.http import JsonResponse
+from django.contrib.auth.models import User
 
 # Create your views here.
 def about(request):
@@ -24,10 +25,41 @@ def user_logout(request):
     # Take the user back to the homepage
     return HttpResponseRedirect(reverse('index'))
 
+def register(request):
+    # a boolean value for telling the template
+    # whether the registration was successful.
+    # Set to False initially. Code changes value to
+    # True when registration succeeds.
+    registered = False
+
+    # if its a HTTP POST we're interested in processing form data.
+    if request.method == "POST":
+        user_form = UserForm(data=request.POST)
+        username = request.POST.get('username')
+        print(user_form.is_valid())
+        if not User.objects.filter(username__iexact=username).exists():
+            user = User.objects.create_user(username=username,
+                                 password=password)
+            # login user
+            login(request, user)
+            return HttpResponseRedirect(reverse('index'))
+        else:
+            # Invalid form or forms - mistakes or something else?
+            # return json
+            data = {
+                    'error': True,
+            }
+            return JsonResponse(data)
+    # not a POST request
+    else:
+        return HTTPResponse("not a POST request")
+
+
+
 def user_login(request):
     print("we are in a view!")
     # if the request is a HTTP POST, try to pull out the relevant information
-    if request.method == 'ajax':
+    if request.method == 'POST':
         # Gather the username and password provided by the user
         # This information is obtained from the login form/
         # We user request.POST.get('<variable>') as opposed
@@ -54,14 +86,14 @@ def user_login(request):
                 return HttpResponseRedirect(reverse('index'))
             else:
                 data = {
-                    'is_active': false
+                    'is_active': False,
                 }
                 # an inactive account was used - no logging in!
-                return HttpResponse(data, content_type='application/json')
+                return JsonResponse(data)
         else:
             # Bad login credentials were provided. So we can't log the user in.
             data = {
-                    'is_valid': false
+                    'is_valid': False,
                 }
             return JsonResponse(data)
     else:

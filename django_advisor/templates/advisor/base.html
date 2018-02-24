@@ -71,7 +71,7 @@
 				<label for="inputUsername" class="sr-only">Username</label>
 				<input type="text" name="username" id="id_username" class="form-control" placeholder="Username" required autofocus>
 				<label for="inputPassword" class="sr-only">Password</label>
-				<input type="text" name="password" id="id_password" class="form-control" placeholder="Password" required>
+				<input type="password" name="password" id="id_password" class="form-control" placeholder="Password" required>
 				<button class="btn btn-lg btn-primary brn-block" type="submit" value="Submit">Sign in</button>
 			  </form>
 			  
@@ -97,8 +97,7 @@
 			<div class="modal-body">
 			  <!-- Register form -->
 			  
-			  <form role="form" method="post" action="{% url 'auth_login' %}">
-				{% csrf_token %}
+			  <form role="form" method="post" id="register_form" register-user-url="{% url 'register' %}"">
 				<div class="form-group">
 					<p class="required"><label class="required" for="id_username">
 					Username:</label>
