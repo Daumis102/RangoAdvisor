@@ -6,33 +6,132 @@
       <title>
          RangoAdvisor -
          {% block title_block %}
-         {% if user.is_authenticated %}
-                <li><a href="{% url 'restricted' %}">Add a place</a></li>
-                <li><a href="{% url 'logout' %}">Logout</a></li>
-         {% endif %}
          Share your world with the world!
          {% endblock %}
       </title>
+	  
+	  <meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <link rel="stylesheet" href="{% static "css/bootstrap.css" %}">
+	  <script src="{% static 'js/jquery.js' %}"></script>
+      <script src="{% static 'js/bootstrap.js' %}"></script>
+	  <link href="http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
    </head>
    <body>
+	  <!-- Header -->
+	  <!-- Navigation Bar -->
+      <nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">RangoAdvisor</a>
+			</div>
+				<ul class="nav navbar-nav">
+				   {% if user.is_authenticated %}
+						<li class="nav-item"><a href="{% url 'add_place' %}">Add a Place</a></li>
+						<li class="nav-item"><a href="{% url 'logout' %}">Logout</a></li>
+				   {% else %}
+						<!-- Buttons that invoke Register and Login pop ups -->
+						<li class="nav-item"><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#loginModal">Login</button></li>
+						<li class="nav-item"><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#registerModal">Register</button></li>
+				   {% endif %}
+					   
+				</ul>
+		</div>
+	  </nav>
+	  <!-- BODY -->
       <div>
          {% block body_block %}
          {% endblock %}
       </div>
-      <hr />
-      <div>
-         <ul>
-           {% if user.is_authenticated %}
-                 <li><a href="{% url 'add_category' %}">Add a Place</a></li>
-                <li><a href="{% url 'logout' %}">Logout</a></li>
-           {% else %}
-                <li><a href="{% url 'login' %}">Sign In</a></li>
-                <li><a href="{% url 'register' %}">Sign Up</a></li>
-           {% endif %}
+	  
+	  
+		   <!-- FOOTER -->
                 <li><a href="{% url 'about' %}">About</a></li>
                 <li><a href="{% url 'about' %}">Contacts</a></li>
-                <li><a href="{% url 'index' %}">Index</a></li>
-        </ul>
+                <li><a href="{% url 'about' %}">Index</a></li>
       </div>
+	  
+	  <!-- Dialogs -->
+	  
+	  <!-- Login dialog -->
+	  <div class="modal fade" id="loginModal" role="dialog">
+		<div class="modal-dialog">
+		
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">Login</h4>
+			</div>
+			<div class="modal-body">
+			  <!-- Login form -->
+			  
+			  <form class="form-signin" validate-user-url="{% url 'login' %}" role="form" method="post">
+				{% csrf_token %}
+				<h2 class="form-sigin-heading">Please sign in</h2>
+				<label for="inputUsername" class="sr-only">Username</label>
+				<input type="text" name="username" id="id_username" class="form-control" placeholder="Username" required autofocus>
+				<label for="inputPassword" class="sr-only">Password</label>
+				<input type="text" name="password" id="id_password" class="form-control" placeholder="Password" required>
+				<button class="btn btn-lg btn-primary brn-block" type="submit" value="Submit">Sign in</button>
+			  </form>
+			  
+			  
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		  </div>
+		</div>
+	  </div>
+		  
+	<!-- Register dialog -->
+	  <div class="modal fade" id="registerModal" role="dialog">
+		<div class="modal-dialog">
+		
+		  <!-- Modal content-->
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			  <h4 class="modal-title">Register</h4>
+			</div>
+			<div class="modal-body">
+			  <!-- Register form -->
+			  
+			  <form role="form" method="post" action="{% url 'auth_login' %}">
+				{% csrf_token %}
+				<div class="form-group">
+					<p class="required"><label class="required" for="id_username">
+					Username:</label>
+					<input class="form-control" id="id_username" maxlength="30"
+					name="username" type="text" />
+					<span class="helptext">
+					Required. 30 characters of fewer. Letters, digits and @/./+/-/_ only.
+					</span>
+					</p>
+					<p class="required"> <label class="required" for="id_password1">
+					Password:</label>
+					<input class="form-control" id="id_password1" name="password1" type="password">
+					</p>
+					
+					<p class="required"> <label class="required" for="id_password2">
+					Password confirmation:</label>
+					<input class="form-control" id="id_password2" name="password2" type="password">
+					</p>
+					<span class="helptext">
+					Enter the same password as before, for verification.</span>
+					</p>
+				</div>
+				<button class="btn btn-default" type="submit">Register</button>
+			</form>
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	  <script src="{% static 'ajax/check_forms.js' %}"></script>
+	  {% block javascript %}{% endblock %}
    </body>
 </html>
