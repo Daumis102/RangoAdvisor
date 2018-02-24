@@ -66,8 +66,7 @@
 			<div class="modal-body">
 			  <!-- Login form -->
 			  
-			  <form class="form-signin" validate-user-url="{% url 'login' %}" role="form" method="post">
-				{% csrf_token %}
+			  <form class="form-signin" id="login_form" validate-user-url="{% url 'login' %}" role="form" method="post">
 				<h2 class="form-sigin-heading">Please sign in</h2>
 				<label for="inputUsername" class="sr-only">Username</label>
 				<input type="text" name="username" id="id_username" class="form-control" placeholder="Username" required autofocus>

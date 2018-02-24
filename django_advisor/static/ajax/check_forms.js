@@ -1,15 +1,18 @@
 $(document).ready(function(){
 	
-	$("#form-signin").submit(function(event) {
+	$("#login_form").submit(function(event) {
 		event.preventDefault();
-		alert("submit");
-		
+		var form = $(this).closest("form");
 		var username = document.getElementById("id_username").value;
 		var password = document.getElementById("id_password").value;
-		alert(username + " " + password);
+		
 		$.ajax({
+			type: "POST",
 			url: form.attr('validate-user-url'),
-			data: form.serialize(),
+			data: {
+				username: 'username',
+				password: 'password',
+			}
 			dataType: 'json',
 			success: function (data) {
 				if(data.hasOwnProperty('is_valid')){

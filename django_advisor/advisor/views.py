@@ -13,11 +13,21 @@ def about(request):
 
 def index(request):
     return HttpResponse("index")
+def add_place(request):
+    return HttpResponse("add place")
+
+# use the login_required() decorator to ensure only those logged in can access the view
+@login_required
+def user_logout(request):
+    # since we know the user is logged in, we can now just log them out.
+    logout(request)
+    # Take the user back to the homepage
+    return HttpResponseRedirect(reverse('index'))
 
 def user_login(request):
     print("we are in a view!")
     # if the request is a HTTP POST, try to pull out the relevant information
-    if request.method == 'POST':
+    if request.method == 'ajax':
         # Gather the username and password provided by the user
         # This information is obtained from the login form/
         # We user request.POST.get('<variable>') as opposed
@@ -47,10 +57,12 @@ def user_login(request):
                     'is_active': false
                 }
                 # an inactive account was used - no logging in!
-                return JsonResponse(data)
+                return HttpResponse(data, content_type='application/json')
         else:
             # Bad login credentials were provided. So we can't log the user in.
             data = {
                     'is_valid': false
                 }
             return JsonResponse(data)
+    else:
+        return HttpResponse("Not a post request")
