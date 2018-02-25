@@ -15,8 +15,7 @@ def about(request):
 
 
 def index(request):  # TODO: make this return the index page when that is finished
-
-    return render(request, 'advisor/index.html', context={})
+    return HttpResponse("index")
 
 
 def add_place(request):  # TODO: make this return the add_place page when that is finished
