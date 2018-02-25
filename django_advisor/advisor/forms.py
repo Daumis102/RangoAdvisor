@@ -50,13 +50,13 @@ class PageForm(forms.ModelForm):
 '''
 
 
-class LoginForm(forms.ModelForm):
-    username = forms.CharField(label="Enter Username", widget=forms.TextInput(), max_length=30, required=True)
-    password = forms.CharField(label="Enter Password", widget=forms.PasswordInput(), max_length=30, required=True)
-
-    class Meta:
-        model = User
-        fields = ('username', 'password',)
+# class LoginForm(forms.ModelForm):
+#     username = forms.CharField(label="Enter Username", widget=forms.TextInput(), max_length=30, required=True)
+#     password = forms.CharField(label="Enter Password", widget=forms.PasswordInput(), max_length=30, required=True)
+#
+#     class Meta:
+#         model = User
+#         fields = ('username', 'password',)
 
 
 '''

@@ -8,6 +8,7 @@
             <div class="modal-body">
                 <form id="loginForm" method="post" action="{% url "login" %}" role="form">
                     {% csrf_token %}
+                    <input type="hidden" value="" name="currentUrl" aria-hidden="true">
                     <div class="form-group">
                         <label for="loginUsername">Username</label>
                         <input type="text" class="form-control" id="loginUsername" placeholder="Enter username" required autofocus name="loginUsername">
@@ -25,4 +26,3 @@
         </div>
     </div>
 </div>
-{#TODO: add some feedback to user to let them know when they failed to log in#}

@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from advisor.forms import LoginForm
 #from advisor.forms import UserProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
@@ -32,14 +31,9 @@ def user_logout(request):
 
 
 def register(request):
-    registered = False
-    username = ''
-    password = ''
     if request.method == 'POST':
-        # user_form = UserForm(data=request.POST)
         username = request.POST.get('username')
         password = request.POST.get('password')
-        # print(user_form.is_valid())
         if not User.objects.filter(username__iexact=username).exists():
             user = User.objects.create_user(username=username, password=password)
             # login user
@@ -49,7 +43,6 @@ def register(request):
             }))
         else:
             # Invalid form or forms - mistakes or something else?
-            # return json
             data = {
                     'registration': False,
             }
@@ -62,23 +55,20 @@ def register(request):
 
 
 def user_login(request):
-    username = ''
-    password = ''
     if request.method == 'POST':
         username = request.POST.get('loginUsername')
         password = request.POST.get('loginPassword')
-        print(username)
-        print(password)
         user = authenticate(username=username, password=password)
         if user:
             if user.is_active:
                 login(request, user)
                 return HttpResponse(JsonResponse({
-                    'login': True
+                    'currentUrl': request.POST.get('currentUrl'),
+                    'statusCode': 0
                 }))
             else:
                 return HttpResponse(JsonResponse({
-                    "login": False
+                    "statusCode": 1
                 }))
 
         else:
