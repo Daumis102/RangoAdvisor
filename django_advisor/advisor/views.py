@@ -36,41 +36,30 @@ def register(request):
     registered = False
     username = ''
     password = ''
-
-    print(request.POST)
-
-    # if request.method == 'POST':
-    #     # user_form = UserForm(data=request.POST)
-    #     username = request.POST.get('usernameRegister')
-    #     password = request.POST.get('passwordRegister')
-    #     # print(user_form.is_valid())
-    #     print(request.POST.get('usernameRegister'))
-    #
-    #
-    #
-    #
-    #     if not User.objects.filter(username__iexact=username).exists():
-    #         user = User.objects.create_user(username=username, password=password)
-    #         # login user
-    #         print("oh yeah")
-    #         login(request, user)
-    #         return HttpResponse(JsonResponse({
-    #             "registration": True
-    #         }))
-    #     else:
-    #         # Invalid form or forms - mistakes or something else?
-    #         # return json
-    #         print("oh no")
-    #         data = {
-    #                 'registration': False,
-    #         }
-    #         return HttpResponse(JsonResponse(data))
-    # # not a POST request
-    # else:
-    #     print("ahfuck")
-    #     return HttpResponse(JsonResponse({
-    #         "response type": "not post"
-    #     }))
+    if request.method == 'POST':
+        # user_form = UserForm(data=request.POST)
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        # print(user_form.is_valid())
+        if not User.objects.filter(username__iexact=username).exists():
+            user = User.objects.create_user(username=username, password=password)
+            # login user
+            login(request, user)
+            return HttpResponse(JsonResponse({
+                "registration": True
+            }))
+        else:
+            # Invalid form or forms - mistakes or something else?
+            # return json
+            data = {
+                    'registration': False,
+            }
+            return HttpResponse(JsonResponse(data))
+    # not a POST request
+    else:
+        return HttpResponse(JsonResponse({
+            "response type": "not post"
+        }))
 
 
 def user_login(request):
@@ -85,18 +74,15 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
-                print("we made it!")
                 return HttpResponse(JsonResponse({
                     'login': True
                 }))
             else:
-                print("We failed it")
                 return HttpResponse(JsonResponse({
                     "login": False
                 }))
 
         else:
-            print("nice try")
             return HttpResponse(JsonResponse({
                 "details": "bad login details"
             }))
