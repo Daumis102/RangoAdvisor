@@ -6,8 +6,8 @@ from django.contrib.auth.models import User
 class Location(models.Model):
     name = models.CharField(max_length=50)  # the name of the location
     city = models.PositiveIntegerField()  # foreign key to the id of the city
-    coordinates = models.CharField(50)  # the latitude/longitude coordinates from maps api in comma separated string
-    visited_by = models.CharField(validators=[validate_comma_separated_integer_list])  # list of the people who have visited this place
+    coordinates = models.CharField(validators=[validate_comma_separated_integer_list], max_length=128)  # the latitude/longitude coordinates from maps api in comma separated string
+    visited_by = models.CharField(validators=[validate_comma_separated_integer_list], max_length=128)  # list of the people who have visited this place
 
     class Meta:
         verbose_name_plural = "Locations"
