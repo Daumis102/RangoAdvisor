@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.http import JsonResponse
 from django.contrib.auth.models import User
+from advisor.models import Comment, Picture, Location
 
 
 # Create your views here.
@@ -14,11 +15,32 @@ def about(request):
 
 
 def index(request):  # TODO: make this return the index page when that is finished
-    return HttpResponse("index")
+    locations_list = Location.objects.order_by('-name')
+    context_dict = {'locations': locations_list}
+    return render(request, 'advisor/index.html', context_dict)
 
 
-def add_place(request):  # TODO: make this return the add_place page when that is finished
+def add_location(request):  # TODO: make this return the add_place page when that is finished
     return HttpResponse("add place")
+
+def location_details(request, location_name_slug):
+    context_dict={}
+    try:
+        location = Location.objects.get(slug=location_name_slug)
+        comments = Comment.objects.filter(location_id=location.pk)
+        pictures = Picture.objects.filter(location_id=location.pk)
+        context_dict['comments'] = comments;
+        context_dict['pictures'] = pictures;
+        context_dict['location'] = location;
+        context_dict['num_comments'] = range(len(comments));
+        context_dict['num_pictures'] = range(len(pictures));
+    except Location.DoesNotExist:
+        context_dict['comments'] = None;
+        context_dict['pictures'] = None;
+        context_dict['location'] = None;
+        context_dict['num_comments'] = None;
+        context_dict['num_pictures'] = None;
+    return render(request, 'advisor/location_details.html', context_dict)
 
 
 # use the login_required() decorator to ensure only those logged in can access the view

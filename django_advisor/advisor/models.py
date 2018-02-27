@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import validate_comma_separated_integer_list
 from django.contrib.auth.models import User
+from utils.slugify import *
 
 
 class Location(models.Model):
@@ -8,6 +9,11 @@ class Location(models.Model):
     city = models.CharField(max_length=50)  # city where it is located
     coordinates = models.CharField(validators=[validate_comma_separated_integer_list], max_length=128)  # the latitude/longitude coordinates from maps api in comma separated string
     visited_by = models.CharField(validators=[validate_comma_separated_integer_list], max_length=128)  # list of the people who have visited this place
+    slug = models.SlugField(unique=True)
+
+    def save(self, *args, **kwargs):
+        unique_slugify(self, self.name, slug_field_name='slug')
+        super(Location, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = "Locations"
@@ -50,3 +56,4 @@ class UserProfile(models.Model):
 
     def __str__(self):  # return the username when printed
         return self.user.username
+
