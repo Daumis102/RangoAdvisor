@@ -1,3 +1,13 @@
-	input[type="number"] {
+input[type="number"] {
 	-moz-appearance: textfield;
+}
+
+div.align {
+  display: flex;
+  align-items: center
+}
+
+textarea.write-review {
+	height: 200px;
+	padding:2px;
 }
