@@ -24,24 +24,25 @@ def index(request):  # TODO: make this return the index page when that is finish
 def add_location(request):  # TODO: make this return the add_place page when that is finished
     return HttpResponse("add place")
 
+
 def location_details(request, location_name_slug):
-    context_dict={}
+    context_dict = {}
     try:
         location = Location.objects.get(slug=location_name_slug)
         comments = Comment.objects.filter(location_id=location.pk)
         pictures = Picture.objects.filter(location_id=location.pk)
-        context_dict['comments'] = comments;
-        context_dict['pictures'] = pictures;
-        context_dict['location'] = location;
-        context_dict['num_comments'] = range(len(comments));
-        context_dict['slug'] = location_name_slug;
+        context_dict['comments'] = comments
+        context_dict['pictures'] = pictures
+        context_dict['location'] = location
+        context_dict['num_comments'] = range(len(comments))
+        context_dict['slug'] = location_name_slug
     except Location.DoesNotExist:
-        context_dict['comments'] = None;
-        context_dict['pictures'] = None;
-        context_dict['location'] = None;
-        context_dict['num_comments'] = None;
-        context_dict['num_pictures'] = None;
-        context_dict['slug'] = None;
+        context_dict['comments'] = None
+        context_dict['pictures'] = None
+        context_dict['location'] = None
+        context_dict['num_comments'] = None
+        context_dict['num_pictures'] = None
+        context_dict['slug'] = None
     return render(request, 'advisor/location_details.html', context_dict)
 
 
@@ -60,7 +61,7 @@ def register(request):
         password = request.POST.get('password')
         if not User.objects.filter(username__iexact=username).exists():
             user = User.objects.create_user(username=username, password=password)
-            profile = UserProfile.objects.create(user = user)
+            profile = UserProfile.objects.create(user=user)
             # login user
             login(request, user)
             return HttpResponse(JsonResponse({
@@ -106,7 +107,8 @@ def user_login(request):
         return HttpResponse(JsonResponse({
             "response type": "not post"
         }))
-    
+
+
 @login_required
 def write_review(request):
     print("WRITE REVIEW")
@@ -125,8 +127,8 @@ def write_review(request):
             location = Location.objects.get(slug=slug)
             
             review = Comment.objects.create(publish_date=now, content=content,
-                                           location_id = location.id, rating=rating,
-                                           posted_by = request.user.id)
+                                           location_id=location.id, rating=rating,
+                                           posted_by=request.user.id)
             return HttpResponse(JsonResponse({
                 'currentUrl': request.POST.get('currentUrl'),
                 'statusCode': 0
