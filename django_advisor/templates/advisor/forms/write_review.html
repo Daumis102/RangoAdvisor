@@ -9,13 +9,14 @@
                 <form id="reviewForm" method="post" action="{% url "write_review" %}" role="form">
                     {% csrf_token %}
                     <input type="hidden" value="" name="currentUrl" aria-hidden="true">
+					<input type="hidden" value="{{ slug }}" name="slug">
 					<div class="row align">
 						<div class="col-md-6 ">
 							<input type="text" class="form-control" id="title" placeholder="Title" required autofocus name="reviewTitle">
 						</div>
-						
+					
 						<div class="col-md-5">
-							<input id="ratingBar" name="input-rating" type="number" class="rating" min=0 max=5 step=1 data-show-clear="false" data-show-caption="false" data-size="sm">
+							<input id="ratingBar" name="input-rating" type="number" class="rating"min=0 max=5 step=1 data-show-clear="false" data-show-caption="false" data-size="sm">
 						</div>
 					</div>
 					

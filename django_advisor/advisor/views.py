@@ -6,7 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.http import JsonResponse
 from django.contrib.auth.models import User
-from advisor.models import Comment, Picture, Location
+from advisor.models import *
+import datetime
 
 
 # Create your views here.
@@ -33,13 +34,14 @@ def location_details(request, location_name_slug):
         context_dict['pictures'] = pictures;
         context_dict['location'] = location;
         context_dict['num_comments'] = range(len(comments));
-        context_dict['num_pictures'] = range(len(pictures));
+        context_dict['slug'] = location_name_slug;
     except Location.DoesNotExist:
         context_dict['comments'] = None;
         context_dict['pictures'] = None;
         context_dict['location'] = None;
         context_dict['num_comments'] = None;
         context_dict['num_pictures'] = None;
+        context_dict['slug'] = None;
     return render(request, 'advisor/location_details.html', context_dict)
 
 
@@ -58,15 +60,17 @@ def register(request):
         password = request.POST.get('password')
         if not User.objects.filter(username__iexact=username).exists():
             user = User.objects.create_user(username=username, password=password)
+            profile = UserProfile.objects.create(user = user)
             # login user
             login(request, user)
             return HttpResponse(JsonResponse({
-                "registration": True
+                'currentUrl': request.POST.get('currentUrl'),
+                'statusCode': 0
             }))
         else:
             # Invalid form or forms - mistakes or something else?
             data = {
-                    'registration': False,
+                    "statusCode": 1
             }
             return HttpResponse(JsonResponse(data))
     # not a POST request
@@ -102,17 +106,31 @@ def user_login(request):
         return HttpResponse(JsonResponse({
             "response type": "not post"
         }))
-
+    
+@login_required
 def write_review(request):
+    print("WRITE REVIEW")
     if request.method == 'POST':
         title = request.POST.get('reviewTitle')
-        rating = request.POST.get('reviewRating')
+        rating = request.POST.get('input-rating')
         content = request.POST.get('reviewContent')
+        slug = request.POST.get("slug")
+        print(title)
+        print(rating)
+        print(content)
         if title and rating and content:
-                return HttpResponse(JsonResponse({
-                    'currentUrl': request.POST.get('currentUrl'),
-                    'statusCode': 0
-                }))
+            now = datetime.datetime.now()
+            now.strftime("%Y-%m-%d %H:%M")
+
+            location = Location.objects.get(slug=slug)
+            
+            review = Comment.objects.create(publish_date=now, content=content,
+                                           location_id = location.id, rating=rating,
+                                           posted_by = request.user.id)
+            return HttpResponse(JsonResponse({
+                'currentUrl': request.POST.get('currentUrl'),
+                'statusCode': 0
+            }))
         else:
             return HttpResponse(JsonResponse({
                 "statusCode": 1

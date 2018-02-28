@@ -31,12 +31,19 @@ $(document).ready(function(){
         $.ajax({
             url: "/advisor/register/",
             type: "POST",
+			dataType: "json",
             data: $(this).serialize(),
             success: function(resp) {
-                console.log(resp);
+                if (resp.statusCode === 0){
+                    // everything was ok, user is registered, redirect them to original page
+                    window.location = resp.currentUrl;
+                } else {
+                    alert('login failed');
+                    // TODO: alert the user here that their register failed
+                }
             },
             error: function(resp) {
-                console.log(resp);
+                console.log("error" + resp);
             }
         });
     });

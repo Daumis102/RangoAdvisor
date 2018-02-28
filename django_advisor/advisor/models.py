@@ -30,7 +30,7 @@ class Comment(models.Model):
     posted_by = models.CharField(max_length=30)  # foreign key to user that posted this comment
 
     class Meta:
-        verbose_name_plural = "Locations"
+        verbose_name_plural = "Comments"
 
     def __str__(self):  # return the comment content when printed
         return self.content

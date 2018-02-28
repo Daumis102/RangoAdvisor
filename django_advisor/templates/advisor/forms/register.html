@@ -8,6 +8,7 @@
             <div class="modal-body">
                 <form id="signupForm" method="post" action="{% url 'register' %}" role="form">
                     {% csrf_token %}
+					<input type="hidden" value="" name="currentUrl" aria-hidden="true">
                     <div class="form-group">
                         <label for="username">Username</label>
                         <input type="text" maxlength="30" class="form-control" name="username" id="username" placeholder="Choose a username" required autofocus aria-describedby="usernameHelp">

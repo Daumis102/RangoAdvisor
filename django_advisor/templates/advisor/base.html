@@ -21,8 +21,9 @@
 	<link href="{% static "css/main.css" %}" media="all" rel="stylesheet" type="text/css" /> 
 	
 </head>
-<body>
+
 <!-- Header -->
+<header>
 <!-- Navigation Bar -->
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -50,12 +51,14 @@
         </ul>
     </div>
 </nav>
+</header>
 <!-- BODY -->
-<div>
-    {% block body_block %}
-    {% endblock %}
-</div>
-
+<body>
+	<div style="margin:40px">
+		{% block body_block %}
+		{% endblock %}
+	</div>
+</body>
 <footer>
     <!-- FOOTER -->
     <ul>
@@ -73,6 +76,5 @@
 {% include 'advisor/forms/register.html' %}
 
 <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
-{% block javascript %}{% endblock %}
 </body>
 </html>
