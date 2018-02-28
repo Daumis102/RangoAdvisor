@@ -102,3 +102,26 @@ def user_login(request):
         return HttpResponse(JsonResponse({
             "response type": "not post"
         }))
+
+def write_review(request):
+    if request.method == 'POST':
+        title = request.POST.get('reviewTitle')
+        rating = request.POST.get('reviewRating')
+        content = request.POST.get('reviewContent')
+        if title and rating and content:
+                return HttpResponse(JsonResponse({
+                    'currentUrl': request.POST.get('currentUrl'),
+                    'statusCode': 0
+                }))
+        else:
+            return HttpResponse(JsonResponse({
+                "statusCode": 1
+            }))
+
+    else:
+        return HttpResponse(JsonResponse({
+            "response type": "not post"
+        }))
+
+
+

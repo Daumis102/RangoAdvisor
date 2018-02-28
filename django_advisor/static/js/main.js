@@ -63,4 +63,29 @@ $(document).ready(function(){
             }
         });
     })
+	
+	
+	// handle review
+    $('#reviewForm').submit(function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: "/advisor/write_review/",
+            type: "POST",
+            dataType: "json",
+            data:$(this).serialize(),
+            success: function(resp) {
+                if (resp.statusCode === 0){
+                    // everything was ok, review posted
+                    window.location = resp.currentUrl;
+                } else {
+                    alert('submit failed');
+                    // TODO: alert the user here that something went wrong
+                }
+            },
+            error: function(resp) {
+                console.log(resp);
+            }
+        });
+    })
+	
 });
