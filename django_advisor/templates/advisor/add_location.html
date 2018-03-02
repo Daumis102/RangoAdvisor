@@ -1,0 +1,58 @@
+{% extends 'advisor/base.html' %}
+{% load staticfiles %}
+{% block title_block %}
+    Add New Location
+{% endblock %}
+
+{% block body_block %}
+    <div class="container-fluid">
+        <div class="row">
+            {# left side of the screen   #}
+            <div class="col-md-6">
+
+                {# the title of the location input  #}
+                <div class="row">
+                    {#todo: get this formatting done right#}
+                    <div class="input-group">
+                        <input type="text" maxlength="50" placeholder="Name of Location" class="form-control" autofocus
+                               name="location_name">
+                    </div>
+                </div>
+
+                {# the picture carousel #}
+                <div class="row">
+                    <div id="picture-carousel" class="carousel slide" data-ride="carousel">
+                        {# indicators. depends on how many images have been added. will need to be manipulated using javascript #}
+                        <ol class="carousel-indicators">
+
+                        </ol>
+
+                        {# wrapper for slides #}
+                        <div class="carousel-inner" role="listbox">
+                            <div class="item active">
+                                <img src="{% static 'chicago.jpg' %}" alt=""> {# for test purposes #}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {# the picture(s) input field  #}
+                <div class="row">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="image_description">Upload an image of the location</span>
+                        <input type="file" name="location_image0" class="form-control"
+                               aria-describedby="image_description">
+                    </div>
+                </div>
+
+            </div>
+
+
+            {#          right side of the screen  #}
+            <div class="col-md-6">
+
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="{% static 'js/add_location.js' %}"></script>
+{% endblock %}
