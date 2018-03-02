@@ -117,16 +117,13 @@ def write_review(request):
         rating = request.POST.get('input-rating')
         content = request.POST.get('reviewContent')
         slug = request.POST.get("slug")
-        print(title)
-        print(rating)
-        print(content)
         if title and rating and content:
             now = datetime.datetime.now()
             now.strftime("%Y-%m-%d %H:%M")
 
             location = Location.objects.get(slug=slug)
             
-            review = Comment.objects.create(publish_date=now, content=content,
+            review = Comment.objects.create(title=title,publish_date=now, content=content,
                                            location_id=location.id, rating=rating,
                                            posted_by=request.user.id)
             return HttpResponse(JsonResponse({

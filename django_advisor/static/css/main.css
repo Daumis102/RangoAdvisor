@@ -4,7 +4,7 @@ input[type="number"] {
 
 div.align {
   display:flex;
-  align-items:center
+  align-items:center;
 }
 
 textarea.write-review {
@@ -14,8 +14,30 @@ textarea.write-review {
 
 div.comments-container {
     height:100%;
-    border:1px solid black;
+    border:2px solid grey;
 	border-radius:5px;
 	padding:5px;
-	margin:5px
+	margin:5px;
 }
+
+div.comment-container {
+	border:1px solid grey;
+	border-radius:5px;
+	padding:3px;
+	margin:2px;
+	
+}
+
+img.review-thumbnail {
+    width: 25%;
+    height: auto;
+    display: block;
+}
+
+div.float-left {
+	float:left
+	margin:2px;
+	
+}
+
+
