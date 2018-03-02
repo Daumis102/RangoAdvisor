@@ -40,4 +40,7 @@ div.float-left {
 	
 }
 
-
+#map {
+    height: 400px;
+    width: 100%;
+}

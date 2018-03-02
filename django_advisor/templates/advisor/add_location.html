@@ -19,24 +19,37 @@
                     </div>
                 </div>
 
-                {# the picture carousel #}
+                {# the picture carousel. this needs to be some empty placeholder because initially no images will be added #}
                 <div class="row">
                     <div id="picture-carousel" class="carousel slide" data-ride="carousel">
                         {# indicators. depends on how many images have been added. will need to be manipulated using javascript #}
                         <ol class="carousel-indicators">
-
+                            <li data-target="#picture-carousel" data-slide-to="0" class="active"></li> {# for test purposes #}
                         </ol>
 
                         {# wrapper for slides #}
                         <div class="carousel-inner" role="listbox">
                             <div class="item active">
                                 <img src="{% static 'chicago.jpg' %}" alt=""> {# for test purposes #}
+                                <div class="carousel-caption">
+                                    A test photo
+                                </div>
                             </div>
                         </div>
+
+                        {# controls #}
+                        <a class="left carousel-control" href="#picture-carousel" role="button" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="right carousel-control" href="#picture-carousel" role="button" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
                     </div>
                 </div>
 
-                {# the picture(s) input field  #}
+                {# the picture(s) input field. could possibly be with a button and then some js using the FileApi  #}
                 <div class="row">
                     <div class="input-group">
                         <span class="input-group-addon" id="image_description">Upload an image of the location</span>
@@ -48,11 +61,28 @@
             </div>
 
 
-            {#          right side of the screen  #}
+            {# right side of the screen  #}
             <div class="col-md-6">
+                {# star rating #}
+                <div class="row">
+                    {# need to see how to get the number value from this when submitting form #}
+                    <input id="ratingBar" name="input-rating" type="number" class="rating" min=0 max=5 step=1 data-show-clear="false" data-show-caption="false" data-size="xs" data-readonly="false">
+                </div>
+
+                {# google maps location chooser using google maps api #}
+                <div class="row">
+                    <p class=""></p>
+                    <div id="map"></div>
+                </div>
+
+                {# post button #}
+                <div class="row">
+                    <button class="btn btn-primary">Post</button>
+                </div>
 
             </div>
         </div>
     </div>
     <script type="text/javascript" src="{% static 'js/add_location.js' %}"></script>
+    <script type="text/javascript" async defer  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDA7X84ZDyPgCBFuFaE99Ft64XeE0V5x2g&callback=initMap"></script>
 {% endblock %}
