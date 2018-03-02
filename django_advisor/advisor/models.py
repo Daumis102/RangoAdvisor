@@ -31,10 +31,11 @@ class Location(models.Model):
         return self.name
 
 
-class Comment(models.Model):
+class Review(models.Model):
 
     def get_max_len():
         return 300
+
     title = models.CharField(max_length=100, default="")
     publish_date = models.DateField(auto_now=True)  # the date that the comment was published
     content = models.CharField(max_length=get_max_len())  # the content of the comment
@@ -57,7 +58,7 @@ class Picture(models.Model):
     location_id = models.PositiveIntegerField()  # foreign key of the location that this picture is of
     # uploaded_by = models.ForeignKey(UserProfile, on_delete=models.CASCADE)  # actual foreign key
     uploaded_by = models.CharField(max_length=30)  # foreign key to the user that uploaded this picture
-    # picture = models.ImageField(upload_to='places_location', blank=True)  # the actual picture
+    picture = models.ImageField(upload_to='places_location', blank=True)  # the actual picture
 
     class Meta:
         verbose_name_plural = "Pictures"
