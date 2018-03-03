@@ -6,8 +6,8 @@ from utils.slugify import *
 
 # Create your models here.
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)  # the user
-    picture = models.ImageField(upload_to='profile_image', blank=True)  # picture of the user
+    user = models.OneToOneField(User, related_name="user_profile", on_delete=models.CASCADE)  # the user
+    avatar = models.ImageField(upload_to='profile_image', blank=True)  # picture of the user
 
     def __str__(self):  # return the username when printed
         return self.user.username
@@ -39,11 +39,11 @@ class Review(models.Model):
     title = models.CharField(max_length=100, default="")
     publish_date = models.DateField(auto_now=True)  # the date that the comment was published
     content = models.CharField(max_length=get_max_len())  # the content of the comment
-    # location_id = models.ForeignKey(Location, on_delete=models.CASCADE)  # actual foreign key
-    location_id = models.PositiveIntegerField()  # foreign key pointing to the location which this comment belongs to
     rating = models.CharField(max_length=1)  # rating of 1 to 5
-    # posted_by = models.ForeignKey(UserProfile, on_delete=models.CASCADE)  # actual foreign key
-    posted_by = models.CharField(max_length=30)  # foreign key to user that posted this comment
+    location_id = models.ForeignKey(Location, on_delete=models.CASCADE)  # actual foreign key
+    # location_id = models.PositiveIntegerField()  # foreign key pointing to the location which this comment belongs to
+    posted_by = models.ForeignKey(UserProfile, on_delete=models.CASCADE)  # actual foreign key
+    # posted_by = models.CharField(max_length=30)  # foreign key to user that posted this comment
 
     class Meta:
         verbose_name_plural = "Comments"
@@ -54,10 +54,10 @@ class Review(models.Model):
 
 class Picture(models.Model):
     upload_date = models.DateField(auto_now=True)  # the upload date of picture
-    # location_id = models.ForeignKey(Location, on_delete=models.CASCADE)  # actual foreign key
-    location_id = models.PositiveIntegerField()  # foreign key of the location that this picture is of
-    # uploaded_by = models.ForeignKey(UserProfile, on_delete=models.CASCADE)  # actual foreign key
-    uploaded_by = models.CharField(max_length=30)  # foreign key to the user that uploaded this picture
+    location_id = models.ForeignKey(Location, on_delete=models.CASCADE)  # actual foreign key
+    # location_id = models.PositiveIntegerField()  # foreign key of the location that this picture is of
+    uploaded_by = models.ForeignKey(UserProfile, on_delete=models.CASCADE)  # actual foreign key
+    # uploaded_by = models.CharField(max_length=30)  # foreign key to the user that uploaded this picture
     picture = models.ImageField(upload_to='places_location', blank=True)  # the actual picture
 
     class Meta:
