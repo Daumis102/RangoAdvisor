@@ -25,8 +25,15 @@ def index(request):
     return render(request, 'advisor/index.html', context_dict)
 
 
-def add_location(request):  # TODO: make this return the add_place page when that is finished
-    return HttpResponse("add place")
+@login_required
+def add_location(request):
+    context_dict = {}
+    if request.method == 'POST':  # will just post back to the same url but with data
+        name = request.POST.get("name")
+        coordinates = request.POST.get("coordinates")
+    #     other items here
+    else:
+        return render(request, 'advisor/add_location.html', context_dict)
 
 
 def location_details(request, location_name_slug):
@@ -60,7 +67,7 @@ def user_logout(request):
 
 
 def register(request):
-    if request.method == 'POST':
+    if request.method == 'POST' and request.is_ajax():  # we are doing modal login so should only be ajax
         username = request.POST.get('username')
         password = request.POST.get('password')
         if not User.objects.filter(username__iexact=username).exists():
@@ -86,7 +93,7 @@ def register(request):
 
 
 def user_login(request):
-    if request.method == 'POST':
+    if request.method == 'POST' and request.is_ajax():  # we are doing modal login so should only be ajax
         username = request.POST.get('loginUsername')
         password = request.POST.get('loginPassword')
         user = authenticate(username=username, password=password)
