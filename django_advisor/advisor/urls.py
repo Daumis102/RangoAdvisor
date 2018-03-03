@@ -3,6 +3,7 @@ from advisor import views
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
+    url(r'^index/$', views.index, name='index'),
     url(r'^about/$', views.about, name='about'),
     url(r'^contacts/$', views.contacts, name='contacts'),
     url(r'^login/$', views.user_login, name='login'),
