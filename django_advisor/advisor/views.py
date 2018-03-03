@@ -19,7 +19,7 @@ def contacts(request):
     return render(request, 'advisor/contacts.html', context={})
 
 
-def index(request):  # TODO: make this return the index page when that is finished
+def index(request):
     locations_list = Location.objects.order_by('-name')
     context_dict = {'locations': locations_list}
     return render(request, 'advisor/index.html', context_dict)
@@ -33,7 +33,7 @@ def location_details(request, location_name_slug):
     context_dict = {}
     try:
         location = Location.objects.get(slug=location_name_slug)
-        comments = Comment.objects.filter(location_id=location.pk)
+        comments = Review.objects.filter(location_id=location.pk)
         pictures = Picture.objects.filter(location_id=location.pk)
         context_dict['comments'] = comments
         context_dict['pictures'] = pictures
@@ -127,9 +127,10 @@ def write_review(request):
 
             location = Location.objects.get(slug=slug)
             
-            review = Comment.objects.create(title=title,publish_date=now, content=content,
+            review = Review.objects.create(title=title, publish_date=now, content=content,
                                            location_id=location.id, rating=rating,
                                            posted_by=request.user.id)
+            review.save()
             return HttpResponse(JsonResponse({
                 'currentUrl': request.POST.get('currentUrl'),
                 'statusCode': 0
