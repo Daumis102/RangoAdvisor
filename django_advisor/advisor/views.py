@@ -15,6 +15,10 @@ def about(request):
     return render(request, 'advisor/about.html', context={})
 
 
+def contacts(request):
+    return render(request, 'advisor/contacts.html', context={})
+
+
 def index(request):  # TODO: make this return the index page when that is finished
     locations_list = Location.objects.order_by('-name')
     context_dict = {'locations': locations_list}
