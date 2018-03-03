@@ -65,24 +65,28 @@
             <div class="col-md-6">
                 {# star rating #}
                 <div class="row">
-                    {# need to see how to get the number value from this when submitting form #}
+                    <span>Give it a good ol rating now</span> <br>
+{#                     need to see how to get the number value from this when submitting form#}
                     <input id="ratingBar" name="input-rating" type="number" class="rating" min=0 max=5 step=1 data-show-clear="false" data-show-caption="false" data-size="xs" data-readonly="false">
                 </div>
 
                 {# google maps location chooser using google maps api #}
                 <div class="row">
-                    <p class=""></p>
+                    <p id="map_help_text">Select the location below on the map:</p> <br>
+{#                    <p id="selected_location" class="text-info">Location Selected: </p>#}
                     <div id="map"></div>
                 </div>
 
                 {# post button #}
                 <div class="row">
-                    <button class="btn btn-primary">Post</button>
+                    <button type="button" class="btn btn-primary" id="ent_loc_man" data-toggle="modal" data-target="#manAddr" >Or Enter Address Manually</button>
+                    <button type="button" class="btn btn-primary">Post</button>
                 </div>
 
             </div>
         </div>
     </div>
+    {% include 'advisor/forms/manual_address.html' %} {# for if the user wants to enter their address manually instead of mucking about the map #}
     <script type="text/javascript" src="{% static 'js/add_location.js' %}"></script>
     <script type="text/javascript" async defer  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDA7X84ZDyPgCBFuFaE99Ft64XeE0V5x2g&callback=initMap"></script>
 {% endblock %}
