@@ -35,7 +35,7 @@ img.review-thumbnail {
 }
 
 div.float-left {
-	float:left
+	float:left;
 	margin:2px;
 	
 }
@@ -48,4 +48,9 @@ div.float-left {
     font-family: 'Open Sans', sans-serif;
     color: #FFFFFF;
     padding: 20px;
+}
+
+#map{
+    height: 400px;
+    width: 100%;
 }
