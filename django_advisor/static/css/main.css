@@ -35,12 +35,17 @@ img.review-thumbnail {
 }
 
 div.float-left {
-	float:left;
+	float:left
 	margin:2px;
 	
 }
 
-#map {
-    height: 400px;
-    width: 100%;
+#footer {
+    position: absolute;
+    bottom: 0;
+    background: #444444;
+    height: 100px;
+    font-family: 'Open Sans', sans-serif;
+    color: #FFFFFF;
+    padding: 20px;
 }
