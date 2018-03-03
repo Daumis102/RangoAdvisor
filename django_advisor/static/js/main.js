@@ -69,7 +69,7 @@ $(document).ready(function(){
                 console.log(resp);
             }
         });
-    })
+    });
 	
 	
 	// handle review

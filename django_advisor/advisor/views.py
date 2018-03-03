@@ -19,21 +19,28 @@ def contacts(request):
     return render(request, 'advisor/contacts.html', context={})
 
 
-def index(request):  # TODO: make this return the index page when that is finished
+def index(request):
     locations_list = Location.objects.order_by('-name')
     context_dict = {'locations': locations_list}
     return render(request, 'advisor/index.html', context_dict)
 
 
-def add_location(request):  # TODO: make this return the add_place page when that is finished
-    return HttpResponse("add place")
+@login_required
+def add_location(request):
+    context_dict = {}
+    if request.method == 'POST':  # will just post back to the same url but with data
+        name = request.POST.get("name")
+        coordinates = request.POST.get("coordinates")
+    #     other items here
+    else:
+        return render(request, 'advisor/add_location.html', context_dict)
 
 
 def location_details(request, location_name_slug):
     context_dict = {}
     try:
         location = Location.objects.get(slug=location_name_slug)
-        comments = Comment.objects.filter(location_id=location.pk)
+        comments = Review.objects.filter(location_id=location.pk)
         pictures = Picture.objects.filter(location_id=location.pk)
         context_dict['comments'] = comments
         context_dict['pictures'] = pictures
@@ -60,7 +67,7 @@ def user_logout(request):
 
 
 def register(request):
-    if request.method == 'POST':
+    if request.method == 'POST' and request.is_ajax():  # we are doing modal login so should only be ajax
         username = request.POST.get('username')
         password = request.POST.get('password')
         if not User.objects.filter(username__iexact=username).exists():
@@ -86,7 +93,7 @@ def register(request):
 
 
 def user_login(request):
-    if request.method == 'POST':
+    if request.method == 'POST' and request.is_ajax():  # we are doing modal login so should only be ajax
         username = request.POST.get('loginUsername')
         password = request.POST.get('loginPassword')
         user = authenticate(username=username, password=password)
@@ -127,9 +134,10 @@ def write_review(request):
 
             location = Location.objects.get(slug=slug)
             
-            review = Comment.objects.create(title=title,publish_date=now, content=content,
+            review = Review.objects.create(title=title, publish_date=now, content=content,
                                            location_id=location.id, rating=rating,
                                            posted_by=request.user.id)
+            review.save()
             return HttpResponse(JsonResponse({
                 'currentUrl': request.POST.get('currentUrl'),
                 'statusCode': 0
