@@ -16,8 +16,8 @@ class UserProfile(models.Model):
 class Location(models.Model):
     name = models.CharField(max_length=50)  # the name of the location
     city = models.CharField(max_length=50)  # city where it is located
-    coordinates = models.CharField(validators=[validate_comma_separated_integer_list], max_length=128)  # the latitude/longitude coordinates from maps api in comma separated string
-    visited_by = models.CharField(validators=[validate_comma_separated_integer_list], max_length=128)  # list of the people who have visited this place
+    coordinates = models.CharField(max_length=128)  # the latitude/longitude coordinates from maps api in comma separated string
+    visited_by = models.CharField(validators=[validate_comma_separated_integer_list], max_length=128, blank=True)  # list of the people who have visited this place
     slug = models.SlugField(unique=True)
 
     def save(self, *args, **kwargs):
@@ -29,6 +29,12 @@ class Location(models.Model):
 
     def __str__(self):  # return the name of the location
         return self.name
+    
+    def get_lat(self):
+        return float(self.coordinates.split(',')[0])
+    
+    def get_lng(self):
+        return float(self.coordinates.split(',')[1])
 
 
 class Review(models.Model):
@@ -64,4 +70,4 @@ class Picture(models.Model):
         verbose_name_plural = "Pictures"
 
     def __str__(self):  # unsure about this
-        return self.picture
+        return str(self.location_id.name) + " " + str(self.id)

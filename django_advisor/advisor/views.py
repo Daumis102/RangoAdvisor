@@ -45,6 +45,7 @@ def location_details(request, location_name_slug):
         context_dict['comments'] = comments
         context_dict['pictures'] = pictures
         context_dict['location'] = location
+        context_dict['num_pictures'] = range(len(pictures))
         context_dict['num_comments'] = range(len(comments))
         context_dict['slug'] = location_name_slug
     except Location.DoesNotExist:

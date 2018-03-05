@@ -9,7 +9,6 @@
 			<div>
 				<h1 class="page-header">{{ location.name }}</h1>
 			</div>
-		
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-md-6" name="photo_map_col">
@@ -19,23 +18,36 @@
 								<!-- PHOTOs CAROUSEL -->
 								<div id="photos" class="carousel slide" data-ride="carousel">
 								  <!-- Indicators -->
-								  <ol class="carousel-indicators">
-									<li data-target="#photos" data-slide-to="0" class="active"></li>
-									<li data-target="#photos" data-slide-to="1"></li>
-									<li data-target="#photos" data-slide-to="2"></li>
+								  <ol class="carousel-indicators">		
+									{# loop over photos and add indicator for each photo #}
+									{% for picture in pictures %}
+									
+										{# We have to make the first photo active #}
+										{% if forloop.first %}
+											<li data-target="#photos" data-slide-to="0" class="active"></li>
+										{% else %}
+											<li data-target="#photos" data-slide-to="{{forloop.counter0}}"></li>
+										{% endif %}
+									{% endfor %}
+
 								  </ol>
 								  <!-- Wrapper for slides -->
 								  <div class="carousel-inner">
-									<div class="item active">
-									  <img src="la.jpg" alt="Los Angeles">
-									</div>
-									{% if pictures|length > 1 %}
-										{% for i in num_pictures %}
-											<div class="item">
-											  <img src="{{pictures.i.picture}}" alt="{{pictures.i.location_id}}">
+								  
+								  {# loop over photos and add them to carousel #}
+									{% for picture in pictures %}
+										
+										{# We have to make the first photo active #}
+										{% if forloop.first %}
+											<div class="item active">
+											  <img src="{{ picture.picture.url }}" alt="{{picture}}">
 											</div>
-										{% endfor %}
-									{% endif %}
+										{% else %}
+											<div class="item">
+												<img src="{{ picture.picture.url }}" alt="{{picture}}">
+											</div>
+										{% endif %}
+									{% endfor %}
 								  </div>
 									
 								  {% if pictures|length > 1 %}
@@ -53,7 +65,10 @@
 							{% else %}
 								<h2>No photos to show</h2>
 							{% endif %}
-							
+						</div>
+						<div class="row" name="map">
+
+							<div id="map"></div>
 						</div>
 					
 					</div>
@@ -102,5 +117,13 @@
 		
 <!-- Review dialog -->
 {% include 'advisor/forms/write_review.html' %}	
+
+<!-- we need to create js variable reference in html to access django variables from external files -->
+<script>
+	var lat = {{location.get_lat}}
+	var lng = {{location.get_lng}}
+</script>
+<script type="text/javascript" src="{% static 'js/location_details.js' %}"></script>
+<script type="text/javascript" async defer  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDA7X84ZDyPgCBFuFaE99Ft64XeE0V5x2g&callback=initMap"></script>
 	
 {% endblock %}
