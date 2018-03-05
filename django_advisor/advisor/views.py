@@ -133,10 +133,11 @@ def write_review(request):
             now.strftime("%Y-%m-%d %H:%M")
 
             location = Location.objects.get(slug=slug)
+            user_profile = UserProfile.objects.get(user=request.user)
             
             review = Review.objects.create(title=title, publish_date=now, content=content,
-                                           location_id=location.id, rating=rating,
-                                           posted_by=request.user.id)
+                                           location_id=location, rating=rating,
+                                           posted_by=user_profile)
             review.save()
             return HttpResponse(JsonResponse({
                 'currentUrl': request.POST.get('currentUrl'),
