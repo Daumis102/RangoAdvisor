@@ -8,12 +8,22 @@
 	
 {% block body_block %}
 		{% if location %}
-			<div>
-				<h1 class="page-header">{{ location.name }}</h1>
+			<div class="page-header">
+				<h1 >{{ location.name }}</h1>
+					<div>
+					{% if visited_by_user %}
+						<h3 id="been-here-text">You said that you have visited this place</h3>
+						<button class="btn btn-danger" id="btn-visited" data-state="true" data-location-id="{{ location.id }}" action='{% url "toggle_visited" %}'>Click me if you haven't!</button>
+					{% else %}
+						<h3 id="been-here-text">You said that you haven't visited this place</h3>
+						<button class="btn btn-success" id="btn-visited" data-state="false" data-location-id="{{ location.id }}" action='{% url "toggle_visited" %}'>Click me if you have!</button>
+					{% endif %}
+					</div>
+				<p>This Location was visited by <span id="num-visits">{{ no_visits }}</span> people</p>
 			</div>
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-md-8 " name="photo_map_col">
+					<div class="col-md-5 " name="photo_map_col">
 					
 						<div class="row" name="photo">
 						

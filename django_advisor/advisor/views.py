@@ -35,6 +35,39 @@ def add_location(request):
     else:
         return render(request, 'advisor/add_location.html', context_dict)
 
+@login_required
+def toggle_visited(request):
+    if request.method == 'POST' and request.is_ajax():
+        location_id=request.POST.get('location_id')
+        state=request.POST.get('state')
+        location = Location.objects.get(id=location_id)
+        if location:
+            visited_by_array = location.visited_by.split(",")
+            user = str(request.user.id)
+            try:
+                if user in visited_by_array:
+                    visited_by_array.remove(user)
+                else:
+                    visited_by_array.append(user)
+                location.visited_by = ",".join(visited_by_array)
+                location.save()
+                print(location.visited_by)
+                return HttpResponse(JsonResponse({
+                            'statusCode': 0,
+                        }))
+            except:
+                return HttpResponse(JsonResponse({
+                            'statusCode': 1,
+                        }))
+        else:
+            return HttpResponse(JsonResponse({
+                    'statusCode': 1
+                }))
+    # not a POST request
+    else:
+        return HttpResponse(JsonResponse({
+            "response type": "not post"
+        }))
 
 def location_details(request, location_name_slug):
     context_dict = {}
@@ -42,12 +75,24 @@ def location_details(request, location_name_slug):
         location = Location.objects.get(slug=location_name_slug)
         comments = Review.objects.filter(location_id=location.pk)
         pictures = Picture.objects.filter(location_id=location.pk)
+        visited_by_array = location.visited_by.split(",")
+        no_visits = len(visited_by_array)
+
+        if request.user.is_authenticated():
+            if str(request.user.id) in visited_by_array:
+                visited_by_user = True
+            else:
+                visited_by_user = None
+        
+        
         context_dict['comments'] = comments
         context_dict['pictures'] = pictures
         context_dict['location'] = location
         context_dict['num_pictures'] = range(len(pictures))
         context_dict['num_comments'] = range(len(comments))
         context_dict['slug'] = location_name_slug
+        context_dict['no_visits'] = no_visits
+        context_dict['visited_by_user'] = visited_by_user
     except Location.DoesNotExist:
         context_dict['comments'] = None
         context_dict['pictures'] = None
@@ -55,6 +100,8 @@ def location_details(request, location_name_slug):
         context_dict['num_comments'] = None
         context_dict['num_pictures'] = None
         context_dict['slug'] = None
+        context_dict['no_visits'] = None
+        context_dict['visited_by_user'] = None
     return render(request, 'advisor/location_details.html', context_dict)
 
 

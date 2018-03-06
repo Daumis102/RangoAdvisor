@@ -25,6 +25,7 @@ div.comment-container {
 	border-radius:5px;
 	padding:3px;
 	margin:2px;
+	overflow:hidden;
 	
 }
 
