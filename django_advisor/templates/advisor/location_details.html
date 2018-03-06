@@ -4,6 +4,8 @@
 		Details
 {% endblock %}
 	
+	{# Comments in this file are actually reviews  #}
+	
 {% block body_block %}
 		{% if location %}
 			<div>
@@ -11,7 +13,8 @@
 			</div>
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-md-6" name="photo_map_col">
+					<div class="col-md-8 " name="photo_map_col">
+					
 						<div class="row" name="photo">
 						
 							{% if pictures %}
@@ -66,52 +69,61 @@
 								<h2>No photos to show</h2>
 							{% endif %}
 						</div>
+						
 						<div class="row" name="map">
-
 							<div id="map"></div>
 						</div>
-					
 					</div>
-					
-					
-					<div class="col-md-6" name="reviews">
-						<div class="comments-container pre-scrollable">
-							{% if comments %}
+					<div class="col-md-3 col-md-offset-1" name="reviews">
+						<div class="row">
+							<div class="comments-container pre-scrollable">
+								{% if comments %}
 
-									{% for comment in comments %}
+										{% for comment in comments %}
+												
+											<div class="comment-container row">
 											
-										<div class="comment-container row">
-											<div class="col-sm-3">
-											
-												<div class="float-left">
-													<img src="https://cdn3.f-cdn.com/ppic/6432052/logo/9262697/Google-Play-Games-Default-Profile-Avatar-Thumbnail.png" class="review-thumbnail" alt="Profile photo"> 
-													<p>Username</p>
-													
-													<input id="ratingBar" value="{{comment.rating}}" name="input-rating" type="number" class="rating" min=0 max=5 step=1 data-show-clear="false" data-show-caption="false" data-size="xs" data-readonly="true">
+												<div class="col-md-4 align-items-center">
+														{% if comment.posted_by.avatar %}
+															<img src="{{comment.posted_by.avatar.url}}" class="review-thumbnail" alt="Profile photo"> 
+														{% else %}
+															<img src="https://cdn3.f-cdn.com/ppic/6432052/logo/9262697/Google-Play-Games-Default-Profile-Avatar-Thumbnail.png" class="review-thumbnail" alt="Profile photo"> 
+														{% endif %}
+														<p class="text-center"><b>{{comment.posted_by}}</b></p>
+														<input id="ratingBar" value="{{comment.rating}}" name="input-rating" type="number" class="rating" min=0 max=5 step=1 data-show-clear="false" data-show-caption="false" data-size="xs" data-displayonly="true"/>
+												</div>
+												
+												<div class="col-md-8">
+													{% if comment.title %}
+														<div class="row comment-title">
+															<h4>{{comment.title}}</h4>
+														</div>
+													{% endif %}
+												
+													<div class="row comment-content">
+														<p>{{comment.content}}</p>
+													</div>
 												</div>
 											</div>
-											<div class="col-sm-9">
-												<h5>{{comment.title}}</h5>
-												<p>{{comment.content}}</p>
-											</div>
-										</div>
-									{% endfor %}
-								
-							{% else %}
-								<h2> No comments to show</h2>
-							{% endif %}
+										{% endfor %}
+									
+								{% else %}
+									<h2> No comments to show</h2>
+								{% endif %}
+							</div>
+						</div>	
+						<div class="row">
+							<button type="button" class="btn btn-outline-dark btn-success btn-block" data-toggle="modal" data-target="#writeReviewModal">
+									Write a review
+							</button>
 						</div>
-						
-						<button type="button" class="btn btn-outline-dark btn-success btn-block" data-toggle="modal" data-target="#writeReviewModal">
-								Write a review
-						</button>
 					</div> 	 
-				</div>
-			</div>
-				
+					
 			{% else %}
 				<h3>Location not found</h3>
-			{% endif %}
+			{% endif %}	
+				</div>
+			</div>
 			
 		
 		
