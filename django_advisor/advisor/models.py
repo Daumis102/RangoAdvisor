@@ -7,7 +7,7 @@ from utils.slugify import *
 # Create your models here.
 class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name="user_profile", on_delete=models.CASCADE)  # the user
-    avatar = models.ImageField(upload_to='profile_image', blank=True)  # picture of the user
+    avatar = models.ImageField(upload_to='profile_image', blank=True, null=True)  # picture of the user
 
     def __str__(self):  # return the username when printed
         return self.user.username
@@ -60,7 +60,7 @@ class Picture(models.Model):
     # location_id = models.PositiveIntegerField()  # foreign key of the location that this picture is of
     uploaded_by = models.ForeignKey(UserProfile, on_delete=models.CASCADE)  # actual foreign key
     # uploaded_by = models.CharField(max_length=30)  # foreign key to the user that uploaded this picture
-    picture = models.ImageField(upload_to='places_location', blank=True)  # the actual picture
+    picture = models.ImageField(upload_to='places_location', blank=True, max_length=1000)  # the actual picture
 
     class Meta:
         verbose_name_plural = "Pictures"

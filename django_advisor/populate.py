@@ -9,16 +9,21 @@ from advisor.models import *
 
 
 def populate(users):
-    media_dir = os.path.join(os.getcwd(), 'media')
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    media_dir = os.path.normpath(os.path.join(BASE_DIR, 'django_advisor', 'media', 'places_location'))
+
+    uofgvisited = [users[0].id, users[3].id]
+    tmvisited = [users[1].id, users[2].id]
+
     locations = [
         {"name": "University of Glasgow",
          "city": "Glasgow",
          "coordinates": "55.8721,-4.2882",
-         "visited_by": ",".join([str(users[0].id), str(users[3].id)])},
+         "visited_by": ",".join(map(str, uofgvisited))},
         {"name": "Taco Mazama",
          "city": "Glasgow",
          "coordinates": "55.8681753,-4.3278404",
-         "visited_by": ",".join([str(users[1].id), str(users[2].id)])}
+         "visited_by": ",".join(map(str, tmvisited))}
     ]
 
     # first add locations
@@ -33,43 +38,43 @@ def populate(users):
          "publish_date": date.today(),
          "content": "Wow what an incredible place, I am definitely visiting again",
          "rating": 5,
-         "posted_by": users[0],
+         "posted_by": UserProfile.objects.get(user=users[0]),
          "location_id": uofgloc},
         {"title": "Average food but good service",
          "publish_date": date.today(),
          "content": "The food was a bit bland and expensive, but the staff served me with a smile. They tried their best",
          "rating": 3,
-         "posted_by": users[1],
+         "posted_by": UserProfile.objects.get(user=users[1]),
          "location_id": tmloc},
         {"title": "Great",
          "publish_date": date.today(),
          "content": "I am definitely coming back here again",
          "rating": 4,
-         "posted_by": users[2],
+         "posted_by": UserProfile.objects.get(user=users[2]),
          "location_id": uofgloc},
         {"title": "Awful. Just awful",
          "publish_date": date.today(),
          "content": "Title says it all",
          "rating": 1,
-         "posted_by": users[3],
+         "posted_by": UserProfile.objects.get(user=users[3]),
          "location_id": tmloc}
     ]
 
     pictures = [
         {"upload_date": date.today(),
-         "picture": File(open(media_dir+'/uofg0.jpg')),
+         "picture": File(open(os.path.join(media_dir, 'uofg0.jpg'))),
          "location_id": uofgloc,
          "posted_by": users[0]},
         {"upload_date": date.today(),
-         "picture": File(open(media_dir+'/uofg1.jpg')),
+         "picture": File(open(os.path.join(media_dir, 'uofg1.jpg'))),
          "location_id": uofgloc,
          "posted_by": users[2]},
         {"upload_date": date.today(),
-         "picture": File(open(media_dir+'/taco_mazama0.jpg')),
+         "picture": File(open(os.path.join(media_dir, 'taco_mazama0.jpg'))),
          "location_id": tmloc,
          "posted_by": users[1]},
         {"upload_date": date.today(),
-         "picture": File(open(media_dir+'/taco_mazama1.jpg')),
+         "picture": File(open(os.path.join(media_dir, 'taco_mazama1.jpg'))),
          "location_id": tmloc,
          "posted_by": users[3]}
     ]
@@ -86,16 +91,24 @@ def populate(users):
 def add_some_users():
     # to add some users to the database which will help in populating everything else
     u = []
-    user1 = User.objects.create_user(username="Mike", password="user1password", email="mike@gmail.com")
-    user2 = User.objects.create_user(username="MaryJane", password="user2password", email="MaryJane@gmail.com")
-    user3 = User.objects.create_user(username="Molly", password="user3password", email="Molly@gmail.com")
-    user4 = User.objects.create_user(username="Robert", password="user4password", email="Robert@gmail.com")
+    user1 = User.objects.create_user(username="Mike", password="mikepassword", email="mike@gmail.com")
+    user2 = User.objects.create_user(username="Mary", password="marypassword", email="mary@gmail.com")
+    user3 = User.objects.create_user(username="Molly", password="mollypassword", email="molly@gmail.com")
+    user4 = User.objects.create_user(username="Robert", password="robertpassword", email="robert@gmail.com")
+    user1profile = UserProfile.objects.create(user=user1, avatar=None)
+    user2profile = UserProfile.objects.create(user=user2, avatar=None)
+    user3profile = UserProfile.objects.create(user=user3, avatar=None)
+    user4profile = UserProfile.objects.create(user=user4, avatar=None)
     user1.save()
     user2.save()
     user3.save()
     user4.save()
+    user1profile.save()
+    user2profile.save()
+    user3profile.save()
+    user4profile.save()
     for user in User.objects.all():
-        if user.username in ["Mike", "MaryJane", "Molly", "Robert"]:  # ignore all users except the ones created just now
+        if user.username in ["Mike", "Mary", "Molly", "Robert"]:  # ignore all users except the ones created just now
             u.append(user)
     return u
 
