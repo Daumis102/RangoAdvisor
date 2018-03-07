@@ -71,3 +71,7 @@ div.comment-content {
     width: 25vw;
 	margin-top: 30px;
 }
+
+.topnav .search-container button:hover {
+  background: #ccc;
+}
