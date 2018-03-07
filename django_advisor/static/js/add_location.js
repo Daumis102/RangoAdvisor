@@ -71,5 +71,7 @@ $(document).ready(function() {
         $('#manAddr').modal('hide');  // manually hide the modal
         // now convert the address to a location on the map. let's hope the user put in a nicely written location
         turnAddressToCoord(geocoder, map, $('#address').val(), infowindow);
-    })
+    });
+
+
 });

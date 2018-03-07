@@ -65,5 +65,5 @@ class Picture(models.Model):
     class Meta:
         verbose_name_plural = "Pictures"
 
-    def __str__(self):  # unsure about this
+    def __str__(self):
         return str(self.location_id.name) + " " + str(self.id)
