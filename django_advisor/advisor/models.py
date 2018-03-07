@@ -38,13 +38,9 @@ class Location(models.Model):
 
 
 class Review(models.Model):
-
-    def get_max_len():
-        return 300
-
     title = models.CharField(max_length=100, default="")
     publish_date = models.DateField(auto_now=True)  # the date that the comment was published
-    content = models.CharField(max_length=get_max_len())  # the content of the comment
+    content = models.CharField(max_length=300)  # the content of the comment
     rating = models.CharField(max_length=1)  # rating of 1 to 5
     location_id = models.ForeignKey(Location, on_delete=models.CASCADE)  # actual foreign key
     # location_id = models.PositiveIntegerField()  # foreign key pointing to the location which this comment belongs to
