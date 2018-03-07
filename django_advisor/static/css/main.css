@@ -75,3 +75,7 @@ div.comment-content {
 .topnav .search-container button:hover {
   background: #ccc;
 }
+
+.search-container{
+    text-align: center;
+}

@@ -13,17 +13,14 @@
 					<!-- add the image from the locations in the loop-->
 				{% endfor %}
 			</ul>
-		{% else %}
-			<h2>No locations present at the moment, please be patient</h2>
 		{% endif %}
 			<div class="search-container">
 				<form action="/action_page.php">
-					<input type="text" placeholder="Search for a location..." name="search">
-					<button type="submit">Search</button>
+					<input type="text" placeholder="Search..." name="search">
+					<button type="submit">Filter</button>
 				</form>
 			</div>
             <p> Location 1, Location 2...</p>
 	</div>
-
 
 {% endblock %}
