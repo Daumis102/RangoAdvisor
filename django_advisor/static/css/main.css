@@ -59,13 +59,10 @@ div.comment-content {
     width: 100%;
 }
 
-#footer {
+.footer {
     position: absolute;
-    bottom: 0;
-    background: #444444;
+    bottom: 10px;
     height: 100px;
-    font-family: 'Open Sans', sans-serif;
-    color: #FFFFFF;
     padding: 20px;
 }
 
