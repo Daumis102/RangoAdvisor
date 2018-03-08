@@ -76,6 +76,11 @@ div.comment-content {
 	margin-top: 30px;
 }
 
+#map-addl {
+    height: 400px;
+    width: 100%;
+}
+
 .topnav .search-container button:hover {
   background: #ccc;
 }

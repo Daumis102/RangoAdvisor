@@ -14,7 +14,7 @@ function initMap() {
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
-    map = new google.maps.Map(document.getElementById("map"), options);
+    map = new google.maps.Map(document.getElementById("map-addl"), options);
 
     marker = new google.maps.Marker({
         position: latLng,
