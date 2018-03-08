@@ -66,6 +66,10 @@ div.comment-content {
     padding: 20px;
 }
 
+.inline {
+	display:inline-block;
+}
+
 #map{
     height: 25vh;
     width: 25vw;
