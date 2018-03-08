@@ -79,3 +79,8 @@ div.comment-content {
 .search-container{
     text-align: center;
 }
+
+.container-fluid{
+    position: absolute;
+    right: 10px;
+}
