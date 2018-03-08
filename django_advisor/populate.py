@@ -60,23 +60,28 @@ def populate(users):
          "location_id": tmloc}
     ]
 
+    uofgi0 = open(os.path.join(media_dir, 'uofg0.jpg'), 'rb')
+    uofgi1 = open(os.path.join(media_dir, 'uofg1.jpg'), 'rb')
+    tmi0 = open(os.path.join(media_dir, 'taco_mazama0.jpg'), 'rb')
+    tmi1 = open(os.path.join(media_dir, 'taco_mazama1.jpg'), 'rb')
+
     pictures = [
         {"upload_date": date.today(),
-         "picture": File(open(os.path.join(media_dir, 'uofg0.jpg'))),
+         "picture": File(uofgi0, 'rb'),
          "location_id": uofgloc,
-         "posted_by": users[0]},
+         "uploaded_by": UserProfile.objects.get(user=users[0])},
         {"upload_date": date.today(),
-         "picture": File(open(os.path.join(media_dir, 'uofg1.jpg'))),
+         "picture": File(uofgi1, 'rb'),
          "location_id": uofgloc,
-         "posted_by": users[2]},
+         "uploaded_by": UserProfile.objects.get(user=users[2])},
         {"upload_date": date.today(),
-         "picture": File(open(os.path.join(media_dir, 'taco_mazama0.jpg'))),
+         "picture": File(tmi0, 'rb'),
          "location_id": tmloc,
-         "posted_by": users[1]},
+         "uploaded_by": UserProfile.objects.get(user=users[1])},
         {"upload_date": date.today(),
-         "picture": File(open(os.path.join(media_dir, 'taco_mazama1.jpg'))),
+         "picture": File(tmi1, 'rb'),
          "location_id": tmloc,
-         "posted_by": users[3]}
+         "uploaded_by": UserProfile.objects.get(user=users[3])}
     ]
 
     # then add reviews
@@ -133,5 +138,4 @@ def add_picture(upload_date, picture, uploaded_by, location_id):
 
 if __name__ == '__main__':
     users = add_some_users()
-    print(users)
     populate(users)
