@@ -3,7 +3,6 @@ var map;
 var marker;
 var geocoder;
 var infowindow;
-var locationCoordinates;
 
 function initMap() {
     geocoder = new google.maps.Geocoder();
@@ -97,16 +96,17 @@ $(document).ready(function() {
         e.preventDefault();
         // get the latitude and longitude and join them in a string and set them in the hidden input so later it can be picked up easily
         $('input[name=coords]').val([marker.getPosition().lat().toFixed(5), marker.getPosition().lng().toFixed(5)].join(','));
-
+        var data = new FormData($('#addLocationForm').get(0));
         $.ajax({
             url: $(this).attr("action"),
-            type: "POST",
-            dataType: "json",
-            data: $(this).serialize(),
+            type: $(this).attr("method"),
+            data: data,
+            contentType: false,
+            processData: false,
             success: function (resp) {
                 if (resp.code === 0){
                     // if all went according to plan, then redirect them to the url of the new place
-                    window.location = resp.newUrl;
+                    window.location = resp.message;
                 } else {
                     console.log("resp code: " + resp.code + ", message: " + resp.message);
                 }

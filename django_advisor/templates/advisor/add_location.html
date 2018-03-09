@@ -7,7 +7,7 @@
 {% block body_block %}
     <div class="container-fluid">
         <div class="container-fluid">
-            <form id="addLocationForm" method="post" role="form" action="{% url 'add_location' %}">
+            <form id="addLocationForm" method="post" role="form" action="{% url 'add_location' %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-md-5">
@@ -53,7 +53,7 @@
                             <div class="input-group">
                                 <span class="input-group-addon" id="image_description">Images of location</span>
                                 <input type="file" name="location_images" class="form-control"
-                                       aria-describedby="ijmage_description" multiple required>
+                                       aria-describedby="image_description" multiple required>
                             </div>
                         </div>
                     </div>

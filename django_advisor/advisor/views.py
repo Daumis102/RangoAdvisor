@@ -1,7 +1,8 @@
 from django.shortcuts import render
-#from advisor.forms import UserProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
+from django.core.files import File
+from django.forms import formset_factory
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.http import JsonResponse
@@ -29,7 +30,15 @@ def index(request):
 def add_location(request):
     context_dict = {}
     if request.method == 'POST' and request.is_ajax():  # will just post back to the same url but with data
-        print("add_location post")
+        print(request.FILES)
+        print(request.POST)
+        coordinates = request.POST.get('coords')
+        name = request.POST.get('location_name')
+        images = request.FILES.get('location_images')
+        print(type(images['']))
+        rating = request.POST.get('input-rating')
+        current_user = request.user  # by this point the user must be logged in
+        # first save location, then pictures
         return  # TODO: make this work. frontend seems to work
     #     other items here
     else:
@@ -39,7 +48,7 @@ def add_location(request):
 @login_required
 def toggle_visited(request):
     if request.method == 'POST' and request.is_ajax():
-        location_id=request.POST.get('location_id')
+        location_id = request.POST.get('location_id')
         state=request.POST.get('state')
         location = Location.objects.get(id=location_id)
         if location:
@@ -122,6 +131,7 @@ def register(request):
         if not User.objects.filter(username__iexact=username).exists():
             user = User.objects.create_user(username=username, password=password)
             profile = UserProfile.objects.create(user=user)
+            profile.save()
             # login user
             login(request, user)
             return HttpResponse(JsonResponse({
