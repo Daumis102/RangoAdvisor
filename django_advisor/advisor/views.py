@@ -2,10 +2,10 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
 from django.core.files import File
-from django.forms import formset_factory
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.http import JsonResponse
+from django.conf import settings
 from django.contrib.auth.models import User
 from advisor.models import *
 import datetime
@@ -29,19 +29,32 @@ def index(request):
 @login_required
 def add_location(request):
     context_dict = {}
-    # assume that location has not been created. this will need to be checked at some point
+    # assume that location has not been created. todo: this will need to be checked at some point. probably on the frontend with a request
     if request.method == 'POST' and request.is_ajax():  # will just post back to the same url but with data
         coordinates = request.POST.get('coords')
         name = request.POST.get('location_name')
         image = request.FILES.get('location_image')
-        rating = request.POST.get('input-rating')
+        rating = request.POST.get('input-rating')  # not used yet
+        title = request.POST.get('review-title')
+        content = request.POST.get('review-content')
+        city = request.POST.get('city')
+        if Location.objects.filter(coordinates=coordinates, name=name).exists():  # location already exists? todo: check this out
+            return HttpResponse(JsonResponse({  # incredibly unsure about this
+                'statusCode': 1,
+                'message': '/advisor/location/' + Location.objects.get(name=name, coordinates=coordinates).slug
+                }))
         current_user = request.user  # by this point the user must be logged in
         # first save location, then picture
-        new_loc = Location.objects.create(name=name, coordinates=coordinates, visited_by=str(current_user.id), city=3)
+        new_loc = Location.objects.create(name=name, coordinates=coordinates, visited_by=str(current_user.id), city=city)
         new_loc.save()
-
-        return  # TODO: make this work. frontend seems to work
-    #     other items here
+        new_pic = Picture.objects.create(upload_date=datetime.date.today(), location_id=new_loc, uploaded_by=UserProfile.objects.get(user=current_user), picture=File(image, 'rb'))
+        new_pic.save()
+        new_review = Review.objects.create(title=title, publish_date=datetime.date.today(), content=content, rating=rating, location_id=new_loc, posted_by=UserProfile.objects.get(user=current_user))
+        new_review.save()
+        return HttpResponse(JsonResponse({
+            'statusCode': 0,
+            'message': '/advisor/location/' + new_loc.slug
+        }))
     else:
         return render(request, 'advisor/add_location.html', context_dict)
 
@@ -50,7 +63,7 @@ def add_location(request):
 def toggle_visited(request):
     if request.method == 'POST' and request.is_ajax():
         location_id = request.POST.get('location_id')
-        state=request.POST.get('state')
+        state = request.POST.get('state')
         location = Location.objects.get(id=location_id)
         if location:
             visited_by_array = location.visited_by.split(",")
@@ -213,7 +226,11 @@ def write_review(request):
             "response type": "not post"
         }))
 
-# helper method
-def save_location(loc):
+
+def process_image(image):
+    # will save the image in the media folder. won't delete it after. yet
+    # with open(settings.MEDIA_DIR+'/'+, 'rb') as f:
+    #     for chunk in image.chunks():
+    #         f.write(chunk)
     return
 

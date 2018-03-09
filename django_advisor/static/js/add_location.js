@@ -3,6 +3,7 @@ var map;
 var marker;
 var geocoder;
 var infowindow;
+var city = "Glasgow"; // default Glasgow because that's where the map marker is by default. bad idea but it works
 
 function initMap() {
     geocoder = new google.maps.Geocoder();
@@ -34,7 +35,7 @@ function showCityFromLatLng(geocoder, map, infowindow, latLng){
             if (results[0]) {
                 marker.setPosition(latLng);
                 infowindow.setContent(results[0].formatted_address);
-                console.log(results[0].address_components);
+                city = results[0].address_components[2].long_name;
                 infowindow.open(map, marker);
             } else{
                 console.log("no results found");
@@ -51,7 +52,7 @@ function turnAddressToCoord(geocoder, map, address, infowindow){
             map.setCenter(results[0].geometry.location);
             marker.setPosition(results[0].geometry.location);
             infowindow.setContent(results[0].formatted_address);
-            console.log(results[0].address_components);
+            city = results[0].address_components[2].long_name;
             infowindow.open(map, marker);
         } else{
             console.log("geocode failed: " + status);
@@ -98,6 +99,7 @@ $(document).ready(function() {
         e.preventDefault();
         // get the latitude and longitude and join them in a string and set them in the hidden input so later it can be picked up easily
         $('input[name=coords]').val([marker.getPosition().lat().toFixed(5), marker.getPosition().lng().toFixed(5)].join(','));
+        $('input[name=city]').val(city);
         var data = new FormData($('#addLocationForm').get(0));
         $.ajax({
             url: $(this).attr("action"),
@@ -106,18 +108,31 @@ $(document).ready(function() {
             contentType: false,
             processData: false,
             success: function (resp) {
-                if (resp.code === 0){
+                resp = JSON.parse(resp);
+                if (resp.statusCode === 0){
                     // if all went according to plan, then redirect them to the url of the new place
                     window.location = resp.message;
                 } else {
-                    console.log("resp code: " + resp.code + ", message: " + resp.message);
+                    console.log("resp code: " + resp.statusCode + ", message: " + resp.message);
                 }
             },
             error: function (err) {
+                err = JSON.parse(err);
                 console.log("error adding location: " + err.message);
             }
         });
+    });
 
+    $('input[name=location_image]').on('change', function (e) {
+        var file = $(this).prop('files')[0];
+        var reader = new FileReader();
+
+        reader.addEventListener("load", function (e) {
+            var picture = e.target;
+            $('img[id=ci]').attr("src", picture.result); // set the picture in the carousel
+        });
+
+        reader.readAsDataURL(file); // read the picture
     });
 
 });

@@ -7,7 +7,8 @@
 {% block body_block %}
     <div class="container-fluid">
         <div class="container-fluid">
-            <form id="addLocationForm" method="post" role="form" action="{% url 'add_location' %}" enctype="multipart/form-data">
+            <form id="addLocationForm" method="post" role="form" action="{% url 'add_location' %}"
+                  enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-md-5">
@@ -29,10 +30,7 @@
                                     {#         wrapper for slides #}
                                     <div class="carousel-inner" role="listbox">
                                         <div class="item active">
-                                            <img src="{% static 'no-foto.png' %}" alt=""> {# for test purposes #}
-                                            <div class="carousel-caption">
-                                                No photo uploaded!
-                                            </div>
+                                            <img src="{% static 'no-foto.png' %}" alt="blank photo" id="ci"> {# for test purposes #}
                                         </div>
                                     </div>
                                     {#         controls #}
@@ -70,8 +68,21 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div class="form-group">
+                                <input type="text" name="review-title" required maxlength="100" class="form-control"
+                                       placeholder="Review headline">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <input type="text" name="review-content" required maxlength="500" class="form-control form-group-lg"
+                                       placeholder="Write your thoughts">
+                            </div>
+                        </div>
+                        <div class="row">
                             <span>Select the location on the map or enter its coordinates manually</span>
-                            <input hidden name="coords" id="coords" type="text">
+                            <input hidden name="coords" id="coords" type="text" title="hidden-coords">
+                            <input hidden name="city" id="city" type="text" title="hidden-city">
                             <div id="map-addl"></div>
                         </div>
                         <br/>
