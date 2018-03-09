@@ -38,6 +38,11 @@ def add_location(request):
         title = request.POST.get('review-title')
         content = request.POST.get('review-content')
         city = request.POST.get('city')
+        if Location.objects.filter(coordinates=coordinates, name=name).exists():  # location already exists? todo: check this out
+            return HttpResponse(JsonResponse({  # incredibly unsure about this
+                'statusCode': 1,
+                'message': '/advisor/location/' + Location.objects.get(name=name, coordinates=coordinates).slug
+                }))
         current_user = request.user  # by this point the user must be logged in
         # first save location, then picture
         new_loc = Location.objects.create(name=name, coordinates=coordinates, visited_by=str(current_user.id), city=city)
