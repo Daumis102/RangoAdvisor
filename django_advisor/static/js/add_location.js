@@ -34,6 +34,7 @@ function showCityFromLatLng(geocoder, map, infowindow, latLng){
             if (results[0]) {
                 marker.setPosition(latLng);
                 infowindow.setContent(results[0].formatted_address);
+                console.log(results[0].address_components);
                 infowindow.open(map, marker);
             } else{
                 console.log("no results found");
@@ -50,6 +51,7 @@ function turnAddressToCoord(geocoder, map, address, infowindow){
             map.setCenter(results[0].geometry.location);
             marker.setPosition(results[0].geometry.location);
             infowindow.setContent(results[0].formatted_address);
+            console.log(results[0].address_components);
             infowindow.open(map, marker);
         } else{
             console.log("geocode failed: " + status);

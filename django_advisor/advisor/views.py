@@ -29,16 +29,17 @@ def index(request):
 @login_required
 def add_location(request):
     context_dict = {}
+    # assume that location has not been created. this will need to be checked at some point
     if request.method == 'POST' and request.is_ajax():  # will just post back to the same url but with data
-        print(request.FILES)
-        print(request.POST)
         coordinates = request.POST.get('coords')
         name = request.POST.get('location_name')
-        images = request.FILES.get('location_images')
-        print(type(images['']))
+        image = request.FILES.get('location_image')
         rating = request.POST.get('input-rating')
         current_user = request.user  # by this point the user must be logged in
-        # first save location, then pictures
+        # first save location, then picture
+        new_loc = Location.objects.create(name=name, coordinates=coordinates, visited_by=str(current_user.id), city=3)
+        new_loc.save()
+
         return  # TODO: make this work. frontend seems to work
     #     other items here
     else:
@@ -212,5 +213,7 @@ def write_review(request):
             "response type": "not post"
         }))
 
-
+# helper method
+def save_location(loc):
+    return
 
