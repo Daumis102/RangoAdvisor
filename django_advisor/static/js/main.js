@@ -93,7 +93,7 @@ $(document).ready(function(){
                 console.log(resp);
             }
         });
-    })
+    });
 	
 	// handle review
     $('#btn-visited').click(function (e) {
