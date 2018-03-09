@@ -28,12 +28,13 @@ def index(request):
 @login_required
 def add_location(request):
     context_dict = {}
-    if request.method == 'POST':  # will just post back to the same url but with data
-        name = request.POST.get("name")
-        coordinates = request.POST.get("coordinates")
+    if request.method == 'POST' and request.is_ajax():  # will just post back to the same url but with data
+        print("add_location post")
+        return  # TODO: make this work. frontend seems to work
     #     other items here
     else:
         return render(request, 'advisor/add_location.html', context_dict)
+
 
 @login_required
 def toggle_visited(request):
@@ -69,6 +70,7 @@ def toggle_visited(request):
             "response type": "not post"
         }))
 
+
 def location_details(request, location_name_slug):
     context_dict = {}
     try:
@@ -83,8 +85,7 @@ def location_details(request, location_name_slug):
                 visited_by_user = True
             else:
                 visited_by_user = None
-        
-        
+
         context_dict['comments'] = comments
         context_dict['pictures'] = pictures
         context_dict['location'] = location
