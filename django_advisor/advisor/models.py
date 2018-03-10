@@ -50,7 +50,9 @@ class Location(models.Model):
                 rating_sum+=int(review.rating)
             return round(rating_sum/len(reviews),1)
         else:
-            return "Not available"
+            return None
+    def num_visited_by(self):
+        return len(visited_by.split(','))
         
 
 class Review(models.Model):

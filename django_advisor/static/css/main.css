@@ -101,42 +101,42 @@ div.comment-content {
     padding:10px;
     border:2px solid grey;
 	border-radius:5px;
-	min-height:350px;
     margin:10px 10px;
     overflow:hidden;
-	height:auto;
+	height:350px;
 	width:25%;
 	position:relative;
 }
 
-.location-item-info{
-	position: absolute;
-    bottom: 0;
+.location-tabs-container{
+	margin-bottom:40px
 }
 
 .location-item img{
 	display:block;
-    width: 80%;
+    width: 90%;
 	margin-left:auto;
 	margin-right:auto;
     height: auto;
 }
 
 .location-item .title{
-	left:0;
-	position: absolute;
-    bottom: 0;
+	margin:10px;
+	font-size:2em;
 	
 }
 
 .location-item .mystar-rating{
-	right:0;
+	right:10px;
 	position: absolute;
     bottom: 0;
 	
 }
 
-
+.location-item .picture{
+	height:75%;
+	overflow:hidden;
+}
 
 
 div.location-items-container{
