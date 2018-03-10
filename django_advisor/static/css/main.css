@@ -60,10 +60,12 @@ div.comment-content {
 }
 
 .footer {
-    position: absolute;
-    bottom: 10px;
-    height: 100px;
-    padding: 20px;
+    position: fixed; 
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+	background-color: #333;
 }
 
 .inline {
@@ -79,6 +81,67 @@ div.comment-content {
 #map-addl {
     height: 400px;
     width: 100%;
+}
+
+.mystar-rating .mystar{
+	
+	color:#fde16d;
+	white-space: nowrap;
+}
+
+.mystar-rating{
+	font-size:2em;
+	-webkit-text-stroke: 1px #777;
+	text-shadow: 1px 1px #999;
+	margin-left:auto;
+}
+
+.location-item{
+	display:inline-block;
+    padding:10px;
+    border:2px solid grey;
+	border-radius:5px;
+	min-height:350px;
+    margin:10px 10px;
+    overflow:hidden;
+	height:auto;
+	width:25%;
+	position:relative;
+}
+
+.location-item-info{
+	position: absolute;
+    bottom: 0;
+}
+
+.location-item img{
+	display:block;
+    width: 80%;
+	margin-left:auto;
+	margin-right:auto;
+    height: auto;
+}
+
+.location-item .title{
+	left:0;
+	position: absolute;
+    bottom: 0;
+	
+}
+
+.location-item .mystar-rating{
+	right:0;
+	position: absolute;
+    bottom: 0;
+	
+}
+
+
+
+
+div.location-items-container{
+	border:1px solid red;
+    text-align:center;
 }
 
 .topnav .search-container button:hover {

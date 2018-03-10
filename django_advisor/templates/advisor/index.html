@@ -22,5 +22,31 @@
 			</div>
             <p> Location 1, Location 2...</p>
 	</div>
+	
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				<div id="location-items-container">
+					{% for location in locations %}
+						<div class="location-item">
+							{% if location.get_picture %}
+								<img src="{{location.get_picture.picture.url}}"/>
+							{% else %}
+								<img src="{% static 'images/no-foto.png' %}"/>
+							{% endif %}
+							
+								<h4 class="title">{{location.name}}</h4>
+								<span class="mystar-rating">
+									<span class="mystar glyphicon glyphicon-star"></span>
+									{{location.get_rating}}
+								</span>
+							
+						</div>
+					{% endfor %}
+				</div>
+				
+			</div>
+		</div>
+	</div>
 
 {% endblock %}
