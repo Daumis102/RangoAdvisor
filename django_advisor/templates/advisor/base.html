@@ -60,11 +60,13 @@
 <!-- FOOTER -->
 <footer class="footer">
       <div class="container">
-        <ul>
-            <li><a href="{% url 'about' %}">About</a></li>
-            <li><a href="{% url 'contacts' %}">Contacts</a></li>
-            <li><a href="{% url 'index' %}">Index</a></li>
-        </ul>
+          <TABLE BORDER="0">
+              <TR>
+                <TD><input type="button" class="btn btn-info" value="About" onclick="location.href = '{% url 'about' %}';"></li></TD>
+                <TD><input type="button" class="btn btn-info" value="Contacts" onclick="location.href = '{% url 'contacts' %}';"></TD>
+                <TD><input type="button" class="btn btn-info" value="Index" onclick="location.href = '{% url 'index' %}';"></TD>
+            </TR>
+          </TABLE>
       </div>
 </footer>
 <!-- Dialogs -->
