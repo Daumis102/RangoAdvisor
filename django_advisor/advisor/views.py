@@ -21,8 +21,10 @@ def contacts(request):
 
 
 def index(request):
+    context_dict={}
     locations_list = Location.objects.order_by('-name')
-    context_dict = {'locations': locations_list}
+    context_dict['locations'] = locations_list
+    
     return render(request, 'advisor/index.html', context_dict)
 
 
