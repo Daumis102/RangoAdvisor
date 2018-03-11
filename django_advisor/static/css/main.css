@@ -108,8 +108,14 @@ div.comment-content {
 	position:relative;
 }
 
-.location-tabs-container{
-	margin-bottom:40px
+.location-item:hover{
+	width:26%;
+	margin:2px;
+	height:360px;
+}
+
+.content{
+	margin-bottom:40px;
 }
 
 .location-item img{
@@ -122,20 +128,42 @@ div.comment-content {
 
 .location-item .title{
 	margin:10px;
-	font-size:2em;
+	
 	
 }
 
 .location-item .mystar-rating{
-	right:10px;
-	position: absolute;
-    bottom: 0;
-	
+	right:25px;
 }
 
 .location-item .picture{
 	height:75%;
 	overflow:hidden;
+}
+
+.location-item .visited{
+	left:25px;
+}
+
+.location-item .top-section{
+	position:absolute;
+	top:0;
+	right:0;
+	color:#34f200;
+}
+
+.location-item .text{
+	font-size:2em;
+}
+
+.location-item .bottom-section{
+	position:absolute;
+	bottom:0;
+}
+
+.location-item .comments{
+	right:45%;
+    
 }
 
 

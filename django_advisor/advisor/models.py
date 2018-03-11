@@ -51,8 +51,15 @@ class Location(models.Model):
             return round(rating_sum/len(reviews),1)
         else:
             return None
+
+    def num_reviews(self):
+        review = Review.objects.filter(location_id = self.id)
+        return len(review)
+    
+    def visited_by_list(self):
+        return self.visited_by.split(',')
     def num_visited_by(self):
-        return len(visited_by.split(','))
+        return len(self.visited_by.split(','))
         
 
 class Review(models.Model):

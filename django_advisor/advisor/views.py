@@ -23,8 +23,13 @@ def contacts(request):
 def index(request):
     context_dict={}
     locations_list = Location.objects.order_by('-name')
+    visited_places = []
+    user = str(request.user.id)
+    for location in locations_list: 
+        if user in location.visited_by_list():
+            visited_places.append(location)
     context_dict['locations'] = locations_list
-    
+    context_dict['visited_places'] = visited_places
     return render(request, 'advisor/index.html', context_dict)
 
 
@@ -68,7 +73,7 @@ def toggle_visited(request):
         state = request.POST.get('state')
         location = Location.objects.get(id=location_id)
         if location:
-            visited_by_array = location.visited_by.split(",")
+            visited_by_array = location.visited_by_list()
             user = str(request.user.id)
             try:
                 if user in visited_by_array:

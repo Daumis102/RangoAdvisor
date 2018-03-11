@@ -28,7 +28,15 @@
 				<div id="location-items-container">
 					{% for location in locations %}
 						<div class="location-item">
+							
+							<input id="url" type="hidden" value="{% url 'location_details' location.slug %}"/>
+						
+						
+							{% if location in visited_places %}
+								<span class="text top-section glyphicon glyphicon-check"></span>
+							{% endif %}
 							<div class="picture">
+
 							{% if location.get_picture %}
 								<img src="{{location.get_picture.picture.url}}"/>
 							{% else %}
@@ -36,15 +44,24 @@
 							{% endif %}
 							</div>
 							
-								<p class="title">{{location.name}}</p>
+								<p class="text title">{{location.name}}</p>
 								
 								{% if location.get_rating %}
-									<span class="mystar-rating">
+									<span class="bottom-section mystar-rating">
 										<span class="mystar glyphicon glyphicon-star"></span>
 										{{location.get_rating}}
 									</span>
 								{% endif %}
 								
+								<span class="bottom-section text visited">
+									<span class="glyphicon glyphicon-flag"></span>
+									{{location.num_visited_by}}
+								</span>
+								
+								<span class="text bottom-section comments">
+									<span class="glyphicon glyphicon-comment"></span>
+									{{location.num_reviews}}
+								</span>
 								
 							
 						</div>

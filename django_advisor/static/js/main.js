@@ -150,6 +150,15 @@ $(document).ready(function(){
 				}
 			});
 	}
-    })
+    });
+	
+	// handle review
+    $('.location-item').click(function (e) {
+        e.preventDefault();
+		var url = $(this).children("input#url").val();
+		console.log(url);
+        window.location.href = url;
+    });
+	
 	
 });
