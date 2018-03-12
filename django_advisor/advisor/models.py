@@ -35,29 +35,32 @@ class Location(models.Model):
     
     def get_lng(self):
         return float(self.coordinates.split(',')[1])
+
     def get_picture(self):
         try:
-            picture = Picture.objects.filter(location_id = self.id)[0]
+            picture = Picture.objects.filter(location_id=self.id)[0]
             print(picture)
         except:
-            picture=None
+            picture = None
         return picture
+
     def get_rating(self):
-        reviews = Review.objects.filter(location_id = self.id)
-        if len(reviews)>0:
-            rating_sum=0;
+        reviews = Review.objects.filter(location_id=self.id)
+        if len(reviews) > 0:
+            rating_sum = 0
             for review in reviews:
-                rating_sum+=int(review.rating)
-            return round(rating_sum/len(reviews),1)
+                rating_sum += int(review.rating)
+            return round(rating_sum/len(reviews), 1)
         else:
             return None
 
     def num_reviews(self):
-        review = Review.objects.filter(location_id = self.id)
+        review = Review.objects.filter(location_id=self.id)
         return len(review)
     
     def visited_by_list(self):
         return self.visited_by.split(',')
+
     def num_visited_by(self):
         return len(self.visited_by.split(','))
         
@@ -66,7 +69,7 @@ class Review(models.Model):
     title = models.CharField(max_length=100, default="")
     publish_date = models.DateField(auto_now=True)  # the date that the comment was published
     content = models.CharField(max_length=300)  # the content of the comment
-    rating = models.IntegerField(max_length=1)  # rating of 1 to 5
+    rating = models.IntegerField()  # rating of 1 to 5
     location_id = models.ForeignKey(Location, on_delete=models.CASCADE)  # actual foreign key
     # location_id = models.PositiveIntegerField()  # foreign key pointing to the location which this comment belongs to
     posted_by = models.ForeignKey(UserProfile, on_delete=models.CASCADE)  # actual foreign key
