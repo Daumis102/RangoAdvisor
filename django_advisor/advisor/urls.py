@@ -13,5 +13,5 @@ urlpatterns = [
     url(r'^register/$', views.register, name='register'),
     url(r'^location/(?P<location_name_slug>[\w\-]+)/$', views.location_details, name='location_details'),
     url(r'^location/toggle-visited$', views.toggle_visited, name='toggle_visited'),
-    
+    url(r'^profile/$', views.profile, name='profile'),
 ]

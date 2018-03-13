@@ -25,15 +25,14 @@
                         <div class="row">
                             <div class="form-group">
                                 <div id="picture-carousel" class="carousel slide" data-ride="carousel">
-                                    {#         indicators. depends on how many images have been added. will need to be manipulated using javascript #}
                                     <ol class="carousel-indicators">
                                         <li data-target="#picture-carousel" data-slide-to="0" class="active"></li>
-                                        {# for test purposes #}
                                     </ol>
                                     {#         wrapper for slides #}
                                     <div class="carousel-inner" role="listbox">
                                         <div class="item active">
-                                            <img src="{% static 'images/no-foto.png' %}" alt="blank photo" id="ci"> {# for test purposes #}
+                                            <img src="{% static 'images/no-foto.png' %}" alt="blank photo" id="ci">
+                                            {# for test purposes #}
                                         </div>
                                     </div>
                                     {#         controls #}
@@ -61,8 +60,7 @@
                     <div class="col-md-5 col-md-offset-1">
                         <div class="row">
                             <div class="form-group">
-                                <span>Give it a good ol rating now</span> <br>
-                                {#                             need to see how to get the number value from this when submitting form#}
+                                <span>Give it a rating</span> <br>
                                 <input title="rating" id="ratingBar" name="input-rating" type="number" class="rating"
                                        min=0
                                        max=5 step=1
@@ -78,7 +76,8 @@
                         </div>
                         <div class="row">
                             <div class="form-group">
-                                <textarea name="review-content" required maxlength="500" class="form-control form-group-lg"
+                                <textarea name="review-content" required maxlength="500"
+                                          class="form-control form-group-lg"
                                           placeholder="Write your thoughts" rows="4"></textarea>
                             </div>
                         </div>

@@ -5,7 +5,6 @@ from django.core.files import File
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.http import JsonResponse
-from django.conf import settings
 from django.contrib.auth.models import User
 from advisor.models import *
 import datetime
@@ -234,10 +233,5 @@ def write_review(request):
         }))
 
 
-def process_image(image):
-    # will save the image in the media folder. won't delete it after. yet
-    # with open(settings.MEDIA_DIR+'/'+, 'rb') as f:
-    #     for chunk in image.chunks():
-    #         f.write(chunk)
+def profile(request):
     return
-
