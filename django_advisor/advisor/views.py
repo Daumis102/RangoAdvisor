@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
 from django.core.files import File
@@ -234,4 +234,8 @@ def write_review(request):
 
 
 def profile(request):
-    return
+    if not request.user.is_authenticated:  # better than having login_required decorator and user getting an error imo
+        return redirect(reverse('index'))
+    context_dict = {}
+    context_dict['name'] = request.user.username
+    return render(request, 'advisor/profile.html', context_dict)

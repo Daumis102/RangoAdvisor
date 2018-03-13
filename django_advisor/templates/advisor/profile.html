@@ -1,0 +1,37 @@
+{% extends 'advisor/base.html' %}
+{% load staticfiles %}
+{% block title_block %}
+    Welcome back {{ name }}
+{% endblock %}
+
+{% block body_block %}
+    <div class="container-fluid">
+{#      left column is profile pic, small info, and change password  #}
+{#      right column is places that you have reviewed  #}
+        <div class="col-md-5">
+{#            <div class="row">#}
+{#                <h1>Welcome to your profile {{ name }}</h1>#}
+{#            </div>#}
+            <div class="row">
+{#              image  #}
+                {% if user.get_avatar %}
+                    <img class="img-responsive" src="{{ user.get_avatar.picture.url }}"/>
+                {% else %}
+                    <img class="img-responsive" src="{% static 'images/no-foto.png' %}"/>
+                {% endif %}
+            </div>
+            <div class="row">
+{#              information about the user  #}
+                <p class="text-primary">
+
+                </p>
+            </div>
+            <div class="row">
+{#              change password option and maybe some other shit  #}
+            </div>
+        </div>
+        <div class="col-md-5">
+{#          places they've seen  #}
+        </div>
+    </div>
+{% endblock %}

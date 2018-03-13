@@ -12,6 +12,13 @@ class UserProfile(models.Model):
     def __str__(self):  # return the username when printed
         return self.user.username
 
+    def get_avatar(self):
+        try:
+            picture = UserProfile.objects.filter(user=self.user)[0]
+        except:
+            picture = None
+        return picture
+
 
 class Location(models.Model):
     name = models.CharField(max_length=50)  # the name of the location
