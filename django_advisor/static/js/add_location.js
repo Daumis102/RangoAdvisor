@@ -56,6 +56,11 @@ function turnAddressToCoord(geocoder, map, address, infowindow){
             infowindow.open(map, marker);
         } else{
             console.log("geocode failed: " + status);
+            swal({
+                type: 'error',
+                title: 'Address not found',
+                'text': 'The address could not be found. Please try again'
+            });
         }
     })
 }
@@ -111,9 +116,25 @@ $(document).ready(function() {
                 resp = JSON.parse(resp);
                 if (resp.statusCode === 0){
                     // if all went according to plan, then redirect them to the url of the new place
-                    window.location = resp.message;
+                    swal({
+                        type: 'success',
+                        title: 'New location added!',
+                        text: 'Your location has been added! Taking you to it now...',
+                        timer: 3000,
+                        onOpen: function (e) {
+                            swal.showLoading();
+                        }
+                    }).then(function (result) {
+                        if (result.dismiss === swal.DismissReason.timer){
+                            window.location = resp.message;
+                        }
+                    });
                 } else {
-                    console.log("resp code: " + resp.statusCode + ", message: " + resp.message);
+                    swal({
+                        type: 'error',
+                        title: 'An error occured',
+                        text: 'An error with the addition of your new location. Please try again later'
+                    });
                 }
             },
             error: function (err) {

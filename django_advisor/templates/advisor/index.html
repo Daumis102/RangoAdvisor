@@ -1,75 +1,63 @@
 {% extends 'advisor/base.html' %}
 {% load staticfiles %}
 {% block title_block %}
-		RangoAdvisor
+    RangoAdvisor
 {% endblock %}
 
 {% block body_block %}
-	<div>
-		{% if locations %}
-			<ul>
-				{% for location in locations %}
-					<li> <a href="/advisor/location/{{ location.slug }}">{{location.name}}</a></li>
-				{% endfor %}
-			</ul>
-		{% endif %}
-			<div class="search-container">
-				<form action="/action_page.php">
-					<input type="text" placeholder="Search..." name="search">
-					<button type="submit">Filter</button>
-				</form>
-			</div>
-            <p> Location 1, Location 2...</p>
-	</div>
-	
-	<div class="container-fluid">
-		<div class="row location-tabs-container">
-			<div class="col-md-8 col-md-offset-2">
-				<div id="location-items-container">
-					{% for location in locations %}
-						<div class="location-item">
-							
-							<input id="url" type="hidden" value="{% url 'location_details' location.slug %}"/>
-						
-						
-							{% if location in visited_places %}
-								<span class="text top-section glyphicon glyphicon-check"></span>
-							{% endif %}
-							<div class="picture">
+    <div class="search-container">
+        <form action="/action_page.php">
+            <input type="text" placeholder="Search..." name="search">
+            <button type="submit">Filter</button>
+        </form>
+    </div>
 
-							{% if location.get_picture %}
-								<img src="{{location.get_picture.picture.url}}"/>
-							{% else %}
-								<img src="{% static 'images/no-foto.png' %}"/>
-							{% endif %}
-							</div>
-							
-								<p class="text title">{{location.name}}</p>
-								
-								{% if location.get_rating %}
-									<span class="bottom-section mystar-rating">
+    <div class="container-fluid">
+        <div class="row location-tabs-container">
+            <div class="col-md-8 col-md-offset-2">
+                <div id="location-items-container">
+                    {% for location in locations %}
+                        <div class="location-item">
+
+                            <input id="url" type="hidden" value="{% url 'location_details' location.slug %}"/>
+
+                            {% if location in visited_places %}
+                                <span class="text top-section glyphicon glyphicon-check"></span>
+                            {% endif %}
+                            <div class="picture">
+
+                                {% if location.get_picture %}
+                                    <img src="{{ location.get_picture.picture.url }}"/>
+                                {% else %}
+                                    <img src="{% static 'images/no-foto.png' %}"/>
+                                {% endif %}
+                            </div>
+
+                            <p class="text title">{{ location.name }}</p>
+
+                            {% if location.get_rating %}
+                                <span class="bottom-section mystar-rating">
 										<span class="mystar glyphicon glyphicon-star"></span>
-										{{location.get_rating}}
+										{{ location.get_rating }}
 									</span>
-								{% endif %}
-								
-								<span class="bottom-section text visited">
+                            {% endif %}
+
+                            <span class="bottom-section text visited">
 									<span class="glyphicon glyphicon-flag"></span>
-									{{location.num_visited_by}}
+									{{ location.num_visited_by }}
 								</span>
-								
-								<span class="text bottom-section comments">
+
+                            <span class="text bottom-section comments">
 									<span class="glyphicon glyphicon-comment"></span>
-									{{location.num_reviews}}
+									{{ location.num_reviews }}
 								</span>
-								
-							
-						</div>
-					{% endfor %}
-				</div>
-				
-			</div>
-		</div>
-	</div>
+
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
