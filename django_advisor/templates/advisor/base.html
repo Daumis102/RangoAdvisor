@@ -20,38 +20,6 @@
 </head>
 
 <body>
-<!-- Navigation Bar -->
-{#<nav class="navbar navbar-inverse">#}
-{#    <div class="container-fluid">#}
-{#        <div class="navbar-header">#}
-{#            <a class="navbar-brand" href="{% url 'index'%}">RangoAdvisor</a>#}
-{#        </div>#}
-{#        <ul class="nav navbar-nav">#}
-{#            {% if user.is_authenticated %}#}
-{#                <ul class="navbar-right">#}
-{#                    <li class="nav-item"><a href="{% url 'add_location' %}">Add a Location</a></li>#}
-{#                </ul>#}
-{#                <li class="nav-item"><a href="{% url 'logout' %}">Logout</a></li>#}
-{#                <!--To do: show user profile picture-->#}
-{#            {% else %}#}
-{#                <!-- Buttons that invoke Register and Login pop ups -->#}
-{#                <li class="nav-item">#}
-{#                    <a type="button" class="btn btn-outline-dark" data-toggle="modal"#}
-{#                            data-target="#loginModal">#}
-{#                        Login#}
-{#                    </a>#}
-{#                </li>#}
-{#                <li class="nav-item">#}
-{#                    <a type="button" class="btn btn-outline-dark" data-toggle="modal"#}
-{#                            data-target="#registerModal">#}
-{#                        Register#}
-{#                    </a>#}
-{#                </li>#}
-{#            {% endif %}#}
-{##}
-{#        </ul>#}
-{#    </div>#}
-{#</nav>#}
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -66,9 +34,8 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-{#              ADD LOCATION LINK HERE  #}
                 {% if user.is_authenticated %}
-                    <li class="active"><a href="#">Add Location <span class="sr-only">(current)</span></a></li>
+                    <li><a href="{% url 'add_location' %}">Add Location</a></li>
                 {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">
