@@ -59,12 +59,13 @@ div.comment-content {
     width: 100%;
 }
 
+body {
+  padding-bottom:60px;
+}
+
 .footer {
-    position: fixed; 
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 70px;
+    position: absolute;
+    height: 60px;
 	background-color: #333;
 }
 
