@@ -14,4 +14,6 @@ urlpatterns = [
     url(r'^location/(?P<location_name_slug>[\w\-]+)/$', views.location_details, name='location_details'),
     url(r'^location/toggle-visited$', views.toggle_visited, name='toggle_visited'),
     url(r'^profile/$', views.profile, name='profile'),
+    url(r'^change_pw/$', views.change_pw, name='change_pw'),
+    url(r'^change_pp/$', views.change_pp, name='change_pp'),
 ]

@@ -6,32 +6,42 @@
 
 {% block body_block %}
     <div class="container-fluid">
-{#      left column is profile pic, small info, and change password  #}
-{#      right column is places that you have reviewed  #}
-        <div class="col-md-5">
-{#            <div class="row">#}
-{#                <h1>Welcome to your profile {{ name }}</h1>#}
-{#            </div>#}
+        {#      left column is profile pic, small info, and change password  #}
+        {#      right column is places that you have reviewed  #}
+        <div class="col-md-5 col-md-offset-1">
             <div class="row">
-{#              image  #}
-                {% if user.get_avatar %}
-                    <img class="img-responsive" src="{{ user.get_avatar.picture.url }}"/>
+                {% if user.user_profile.avatar.url %}
+                    <img class="img-responsive" src="{{ user.user_profile.avatar.url }}" id="avatar"/>
                 {% else %}
-                    <img class="img-responsive" src="{% static 'images/no-foto.png' %}"/>
+                    <img class="img-responsive" src="{% static 'images/no-foto.png' %}" id="avatar"/>
                 {% endif %}
             </div>
+            <br/>
             <div class="row">
-{#              information about the user  #}
-                <p class="text-primary">
-
-                </p>
+                {#              information about the user  #}
+                <h3>Username: <span class="well">{{ user.username }}</span></h3>
             </div>
+            <br/>
+            <br/>
             <div class="row">
-{#              change password option and maybe some other shit  #}
+                <button id="changePP" class="btn btn-primary" type="submit" role="button">Update Profile Picture</button>
+                <form method="post" action="{% url 'change_pp' %}" role="form" id="changePPForm">
+                    <input hidden accept="image/*" type="file" name="newAvatar" id="changePPInput" />
+                </form>
+            </div>
+            <br/>
+            <div class="row">
+                <button data-toggle="modal" data-target="#changePW" class="btn btn-primary" type="submit" role="button">
+                    Change Your Password
+                </button>
             </div>
         </div>
         <div class="col-md-5">
-{#          places they've seen  #}
+            {#          places they've seen  #}
+            <button>gang</button>
         </div>
     </div>
+
+    {% include 'advisor/forms/change_password.html' %}
+    <script type="text/javascript" src="{% static 'js/profile.js' %}"></script>
 {% endblock %}

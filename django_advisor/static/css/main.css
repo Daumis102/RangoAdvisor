@@ -179,3 +179,8 @@ div.location-items-container{
 .search-container{
     text-align: center;
 }
+
+
+#changePPInput {
+	display: none;
+}

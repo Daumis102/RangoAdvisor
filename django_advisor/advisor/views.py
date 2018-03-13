@@ -44,11 +44,11 @@ def add_location(request):
         title = request.POST.get('review-title')
         content = request.POST.get('review-content')
         city = request.POST.get('city')
-        if Location.objects.filter(coordinates=coordinates, name=name).exists():  # location already exists? todo: check this out
-            return HttpResponse(JsonResponse({  # incredibly unsure about this
-                'statusCode': 1,
-                'message': '/advisor/location/' + Location.objects.get(name=name, coordinates=coordinates).slug
-                }))
+        # if Location.objects.filter(coordinates=coordinates, name=name).exists():  # location already exists? todo: check this out
+        #     return HttpResponse(JsonResponse({  # incredibly unsure about this
+        #         'statusCode': 1,
+        #         'message': '/advisor/location/' + Location.objects.get(name=name, coordinates=coordinates).slug
+        #         }))
         current_user = request.user  # by this point the user must be logged in
         # first save location, then picture
         new_loc = Location.objects.create(name=name, coordinates=coordinates, visited_by=str(current_user.id), city=city)
@@ -145,6 +145,7 @@ def user_logout(request):
 
 
 def register(request):
+    resp = {'statusCode': 0}
     if request.method == 'POST' and request.is_ajax():  # we are doing modal login so should only be ajax
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -154,24 +155,15 @@ def register(request):
             profile.save()
             # login user
             login(request, user)
-            return HttpResponse(JsonResponse({
-                'currentUrl': request.POST.get('currentUrl'),
-                'statusCode': 0
-            }))
-        else:
-            # Invalid form or forms - mistakes or something else?
-            data = {
-                    "statusCode": 1
-            }
-            return HttpResponse(JsonResponse(data))
-    # not a POST request
+            resp['statusCode'] = 0
+            resp['currentUrl'] = request.POST.get('currentUrl')
     else:
-        return HttpResponse(JsonResponse({
-            "response type": "not post"
-        }))
+        resp['response type'] = 'not post: ' + str(request.method)
+    return HttpResponse(JsonResponse(resp))
 
 
 def user_login(request):
+    resp = {'statusCode': 1}
     if request.method == 'POST' and request.is_ajax():  # we are doing modal login so should only be ajax
         username = request.POST.get('loginUsername')
         password = request.POST.get('loginPassword')
@@ -179,24 +171,13 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
-                return HttpResponse(JsonResponse({
-                    'currentUrl': request.POST.get('currentUrl'),
-                    'statusCode': 0
-                }))
-            else:
-                return HttpResponse(JsonResponse({
-                    "statusCode": 1
-                }))
-
+                resp['statusCode'] = 0
+                resp['currentUrl'] = request.POST.get('currentUrl')
         else:
-            return HttpResponse(JsonResponse({
-                "details": "bad login details"
-            }))
-
+            resp['details'] = "bad login details"
     else:
-        return HttpResponse(JsonResponse({
-            "response type": "not post"
-        }))
+        resp['response type'] = 'not post: ' + str(request.method)
+    return HttpResponse(JsonResponse(resp))
 
 
 @login_required
@@ -239,3 +220,27 @@ def profile(request):
     context_dict = {}
     context_dict['name'] = request.user.username
     return render(request, 'advisor/profile.html', context_dict)
+
+
+@login_required()
+def change_pw(request):
+    resp = {"statusCode": 1}  # by default assume that it failed. as always you should
+    if request.method == 'POST' and request.is_ajax():
+        new_password = request.POST.get('changePWPassword')
+        user = User.objects.get(username=request.user.username)  # get the current user
+        user.set_password(new_password)
+        user.save()
+        resp['statusCode'] = 0
+    return HttpResponse(JsonResponse(resp))
+
+
+@login_required()
+def change_pp(request):
+    resp = {'statusCode': 1}
+    if request.method == 'POST' and request.is_ajax():
+        user = UserProfile.objects.get(user=request.user)
+        image = request.FILES.get('newAvatar')
+        user.avatar = image
+        user.save(update_fields=['avatar'])
+        resp['statusCode'] = 0
+    return HttpResponse(JsonResponse(resp))
