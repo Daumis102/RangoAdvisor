@@ -1,85 +1,77 @@
 input[type="number"] {
-	-moz-appearance:textfield;
+    -moz-appearance: textfield;
 }
 
 div.align {
-  display:flex;
-  align-items:center;
+    display: flex;
+    align-items: center;
 }
 
 textarea.write-review {
-	height:200px;
-	padding:2px;
+    height: 200px;
+    padding: 2px;
 }
 
 div.comments-container {
-    border:2px solid grey;
-	border-radius:5px;
-	padding:5px;
-	margin:5px;
-	min-height:70vh;
+    border: 2px solid grey;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    min-height: 70vh;
 }
 
 div.comment-container {
-	border:1px solid grey;
-	border-radius:5px;
-	padding:3px;
-	margin:2px;
-	overflow:hidden;
-	
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 3px;
+    margin: 2px;
+    overflow: hidden;
+
 }
 
 img.review-thumbnail {
-	display:block;
+    display: block;
     width: 80%;
-	margin-left:auto;
-	margin-right:auto;
+    margin-left: auto;
+    margin-right: auto;
     height: auto;
 }
 
 div.float-left {
-	float:left;
-	margin:2px;
-	width:20%;
-	overflow:hidden;
-}
-p.center{
-	text-align:center;
+    float: left;
+    margin: 2px;
+    width: 20%;
+    overflow: hidden;
 }
 
+p.center {
+    text-align: center;
+}
 
 div.comment-title {
     border-bottom: 2px solid grey;
 }
 
 div.comment-content {
-    padding:3px;
+    padding: 3px;
 }
-.carousel-inner > .item > img{
+
+.carousel-inner > .item > img {
     width: 100%;
 }
 
 body {
-  padding-bottom:60px;
-}
-
-.footer {
-    position: fixed;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	height: 70px;
-	background-color: #333;
+    padding-bottom: 60px;
 }
 
 .inline {
-	display:inline-block;
+    display: inline-block;
 }
 
-#map{
+#map {
     height: 25vh;
     width: 25vw;
-	margin-top: 30px;
+    margin-top: 30px;
 }
 
 #map-addl {
@@ -87,107 +79,105 @@ body {
     width: 100%;
 }
 
-.mystar-rating .mystar{
-	
-	color:#fde16d;
-	white-space: nowrap;
+.mystar-rating .mystar {
+
+    color: #fde16d;
+    white-space: nowrap;
 }
 
-.mystar-rating{
-	font-size:2em;
-	-webkit-text-stroke: 1px #777;
-	text-shadow: 1px 1px #999;
-	margin-left:auto;
+.mystar-rating {
+    font-size: 2em;
+    -webkit-text-stroke: 1px #777;
+    text-shadow: 1px 1px #999;
+    margin-left: auto;
 }
 
-.location-item{
-	display:inline-block;
-    padding:10px;
-    border:2px solid grey;
-	border-radius:5px;
-    margin:10px 10px;
-    overflow:hidden;
-	height:350px;
-	width:25%;
-	position:relative;
+.location-item {
+    display: inline-block;
+    padding: 10px;
+    border: 2px solid grey;
+    border-radius: 5px;
+    margin: 10px 10px;
+    overflow: hidden;
+    height: 350px;
+    width: 25%;
+    position: relative;
 }
 
-.location-item:hover{
-	width:26%;
-	margin:2px;
-	height:360px;
+.location-item:hover {
+    width: 26%;
+    margin: 2px;
+    height: 360px;
 }
 
-.content{
-	margin-bottom:40px;
+.content {
+    margin-bottom: 40px;
 }
 
-.location-item img{
-	display:block;
+.location-item img {
+    display: block;
     width: 90%;
-	margin-left:auto;
-	margin-right:auto;
+    margin-left: auto;
+    margin-right: auto;
     height: auto;
 }
 
-.location-item .title{
-	margin:10px;
-	
-	
+.location-item .title {
+    margin: 10px;
+
 }
 
-.location-item .mystar-rating{
-	right:25px;
+.location-item .mystar-rating {
+    right: 25px;
 }
 
-.location-item .picture{
-	height:75%;
-	overflow:hidden;
+.location-item .picture {
+    height: 75%;
+    overflow: hidden;
 }
 
-.location-item .visited{
-	left:25px;
+.location-item .visited {
+    left: 25px;
 }
 
-.location-item .top-section{
-	position:absolute;
-	top:0;
-	right:0;
-	color:#34f200;
+.location-item .top-section {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #34f200;
 }
 
-.location-item .text{
-	font-size:2em;
+.location-item .text {
+    font-size: 2em;
 }
 
-.location-item .bottom-section{
-	position:absolute;
-	bottom:0;
+.location-item .bottom-section {
+    position: absolute;
+    bottom: 0;
 }
 
-.location-item .comments{
-	right:45%;
-    
+.location-item .comments {
+    right: 45%;
+
 }
 
-
-div.location-items-container{
-	border:1px solid red;
-    text-align:center;
+div.location-items-container {
+    border: 1px solid red;
+    text-align: center;
 }
 
 .topnav .search-container button:hover {
-  background: #ccc;
+    background: #ccc;
 }
 
-.search-container{
+.search-container {
     text-align: center;
 }
 
 #changePPInput {
-	display: none;
+    display: none;
 }
 
 .pseudo_link:hover {
-	cursor: pointer;
+    cursor: pointer;
 }

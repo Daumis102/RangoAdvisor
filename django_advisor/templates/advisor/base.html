@@ -51,23 +51,20 @@
     </div>
 </nav>
 
-
 <!-- BODY -->
 <div class="content">
     {% block body_block %}
     {% endblock %}
 </div>
 
-<footer class="footer">
-      <div class="container">
-          <TABLE BORDER="0">
-              <TR>
-                <TD><input type="button" class="btn btn-info" value="About" onclick="location.href = '{% url 'about' %}';"></TD>
-                <TD><input type="button" class="btn btn-info" value="Contacts" onclick="location.href = '{% url 'contacts' %}';"></TD>
-                <TD><input type="button" class="btn btn-info" value="Index" onclick="location.href = '{% url 'index' %}';"></TD>
-            </TR>
-          </TABLE>
-      </div>
+<footer class="navbar-inverse navbar-fixed-bottom">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav">
+            <li class="pull-left"><a href="{% url 'about' %}">About</a></li>
+            <li class="pull-left"><a href="{% url 'contacts' %}">Contacts</a></li>
+            <li class="pull-left"><a href="{% url 'index' %}">Home</a></li>
+        </ul>
+    </div>
 </footer>
 
 <!-- Login dialog -->
