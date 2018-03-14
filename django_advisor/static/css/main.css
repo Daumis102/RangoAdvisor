@@ -181,7 +181,10 @@ div.location-items-container{
     text-align: center;
 }
 
-
 #changePPInput {
 	display: none;
+}
+
+.pseudo_link:hover {
+	cursor: pointer;
 }

@@ -1,15 +1,15 @@
 {% extends 'advisor/base.html' %}
 {% load staticfiles %}
 {% block title_block %}
-    Welcome back {{ name }}
+    Welcome back {{ user.username }}
 {% endblock %}
 
 {% block body_block %}
     <div class="container-fluid">
-        {#      left column is profile pic, small info, and change password  #}
-        {#      right column is places that you have reviewed  #}
         <div class="col-md-5 col-md-offset-1">
             <div class="row">
+            <br/>
+            <br/>
                 {% if user.user_profile.avatar.url %}
                     <img class="img-responsive" src="{{ user.user_profile.avatar.url }}" id="avatar"/>
                 {% else %}
@@ -24,9 +24,10 @@
             <br/>
             <br/>
             <div class="row">
-                <button id="changePP" class="btn btn-primary" type="submit" role="button">Update Profile Picture</button>
+                <button id="changePP" class="btn btn-primary" type="submit" role="button">Update Profile Picture
+                </button>
                 <form method="post" action="{% url 'change_pp' %}" role="form" id="changePPForm">
-                    <input hidden accept="image/*" type="file" name="newAvatar" id="changePPInput" />
+                    <input hidden accept="image/*" type="file" name="newAvatar" id="changePPInput"/>
                 </form>
             </div>
             <br/>
@@ -38,7 +39,27 @@
         </div>
         <div class="col-md-5">
             {#          places they've seen  #}
-            <button>gang</button>
+            <div class="row">
+                <h3>Number of places visited: {{ count }}</h3>
+            </div>
+            <hr>
+            {% for location in locations %}
+                <div class="row well pseudo_link" data-url="{% url 'location_details' location.slug %}">
+                    <div class="media">
+{#                        <div class="media-left">#}
+{#                            <a href="{% url 'location_details' location.slug %}">#}
+{#                                <img class="media-object img-rounded img-responsive" src="{{ location.get_picture.picture.url }}"#}
+{#                                     alt="{{ location.name }}"/>#}
+{#                            </a>#}
+{#                        </div>#}
+                        <div class="media-body">
+                            <h3 class="media-heading">{{ location.name }}</h3>
+                            <p>{{ location.city }}</p>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            {% endfor %}
         </div>
     </div>
 

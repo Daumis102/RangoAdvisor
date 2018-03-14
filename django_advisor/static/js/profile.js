@@ -74,4 +74,8 @@ $(function() {
 
         reader.readAsDataURL(file);
     });
+
+    $('.pseudo_link').on('click', function (e) {
+        window.location = $(this).data("url");
+    });
 });

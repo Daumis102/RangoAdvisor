@@ -215,10 +215,12 @@ def write_review(request):
 
 
 def profile(request):
-    if not request.user.is_authenticated:  # better than having login_required decorator and user getting an error imo
+    if not request.user.is_authenticated:
         return redirect(reverse('index'))
     context_dict = {}
-    context_dict['name'] = request.user.username
+    visited_locations = Location.objects.all().filter(visited_by__contains=request.user.id)
+    context_dict['locations'] = visited_locations
+    context_dict['count'] = len(visited_locations)
     return render(request, 'advisor/profile.html', context_dict)
 
 
