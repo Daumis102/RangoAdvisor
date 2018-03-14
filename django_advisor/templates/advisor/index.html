@@ -5,19 +5,19 @@
 {% endblock %}
 
 {% block body_block %}
-    <div class="search-container">
-        <form action="/action_page.php">
-            <input type="text" placeholder="Search..." name="search">
-            <button type="submit">Filter</button>
-        </form>
-    </div>
-
+    
     <div class="container-fluid">
+		
+		<div class="align">	
+			<input class="search-box" type="text" placeholder="Search..." id="search"/>
+		</div>
+	
+	
         <div class="row location-tabs-container">
-            <div class="col-md-8 col-md-offset-2">
-                <div id="location-items-container">
+            <div class="col-md-8 col-md-offset-2">	
+                <div id="location-items-container" class="location-items-container">
                     {% for location in locations %}
-                        <div class="location-item">
+                        <div class="location-item" name="{{ location.name }}" id="{{location.slug}}">
 
                             <input id="url" type="hidden" value="{% url 'location_details' location.slug %}"/>
 
@@ -33,8 +33,10 @@
                                 {% endif %}
                             </div>
 
-                            <p class="text title">{{ location.name }}</p>
-
+							<div class="title">
+								<p class="text">{{ location.name }}</p>
+							</div>
+                            
                             {% if location.get_rating %}
                                 <span class="bottom-section mystar-rating">
 										<span class="mystar glyphicon glyphicon-star"></span>
@@ -42,6 +44,7 @@
 									</span>
                             {% endif %}
 
+							
                             <span class="bottom-section text visited">
 									<span class="glyphicon glyphicon-flag"></span>
 									{{ location.num_visited_by }}
@@ -50,7 +53,7 @@
                             <span class="text bottom-section comments">
 									<span class="glyphicon glyphicon-comment"></span>
 									{{ location.num_reviews }}
-								</span>
+							</span>
 
                         </div>
                     {% endfor %}

@@ -113,7 +113,9 @@ def location_details(request, location_name_slug):
             if str(request.user.id) in visited_by_array:
                 visited_by_user = True
             else:
-                visited_by_user = None
+                visited_by_user = False
+        else:
+            visited_by_user = None
 
         context_dict['comments'] = comments
         context_dict['pictures'] = pictures

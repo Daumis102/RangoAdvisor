@@ -8,22 +8,24 @@
 	
 {% block body_block %}
 		{% if location %}
-			<div class="page-header">
+			<div class="page-header my-page-header">
 				<h1 >{{ location.name }}</h1>
-					<div class="location-info">
-					{% if visited_by_user %}
-						<h3 class="inline" id="been-here-text">You said that you have visited this place</h3>
-						<button class="inline btn btn-danger" id="btn-visited" data-state="true" data-location-id="{{ location.id }}" action='{% url "toggle_visited" %}'>Click me if you haven't!</button>
-					{% else %}
-						<h3 class="inline" id="been-here-text">You said that you haven't visited this place</h3>
-						<button class="inline btn btn-success" id="btn-visited" data-state="false" data-location-id="{{ location.id }}" action='{% url "toggle_visited" %}'>Click me if you have!</button>
+					{% if visited_by_user != None %}
+						<div class="location-info">
+						{% if visited_by_user %}
+							<h3 class="inline" id="been-here-text">You said that you have visited this place</h3>
+							<button class="inline btn btn-danger" id="btn-visited" data-state="true" data-location-id="{{ location.id }}" action='{% url "toggle_visited" %}'>Click me if you haven't!</button>
+						{% else %}
+							<h3 class="inline" id="been-here-text">You said that you haven't visited this place</h3>
+							<button class="inline btn btn-success" id="btn-visited" data-state="false" data-location-id="{{ location.id }}" action='{% url "toggle_visited" %}'>Click me if you have!</button>
+						{% endif %}
+						</div>
 					{% endif %}
-					</div>
 				<p>This Location was visited by <span id="num-visits">{{ no_visits }}</span> people</p>
 			</div>
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-md-5" name="photo_map_col">
+					<div class="col-md-5 col-md-offset-1" name="photo_map_col">
 					
 						<div class="row" name="photo">
 						
@@ -84,7 +86,7 @@
 							<div id="map"></div>
 						</div>
 					</div>
-					<div class="col-md-3 col-md-offset-3" name="reviews">
+					<div class="col-md-3 col-md-offset-2" name="reviews">
 						<div class="row">
 							<div class="comments-container pre-scrollable">
 								{% if comments %}

@@ -106,7 +106,7 @@ body {
 
 .location-item:hover {
     width: 26%;
-    margin: 2px;
+    margin: 4px;
     height: 360px;
 }
 
@@ -124,7 +124,9 @@ body {
 
 .location-item .title {
     margin: 10px;
-
+	max-height: 25%;
+	overflow:hidden;
+	text-align:center;
 }
 
 .location-item .mystar-rating {
@@ -132,7 +134,7 @@ body {
 }
 
 .location-item .picture {
-    height: 75%;
+    max-height: 75%;
     overflow: hidden;
 }
 
@@ -162,7 +164,6 @@ body {
 }
 
 div.location-items-container {
-    border: 1px solid red;
     text-align: center;
 }
 
@@ -180,4 +181,62 @@ div.location-items-container {
 
 .pseudo_link:hover {
     cursor: pointer;
+}
+
+input.search-box {
+    border-radius: 5px;
+    border: 2px solid grey;
+    padding: 6px; 
+	margin-bottom:100px;
+	margin-top:40px;
+	margin-left:auto;
+	margin-right:auto;
+	width:35%;
+}
+
+div.my-page-header {
+	padding-left:20px;
+}
+
+/* Index page location-items fix for small screen */
+@media only screen and (max-width: 1026px) {
+    .location-item {
+		display: inline-block;
+		padding: 10px;
+		border: 2px solid grey;
+		border-radius: 5px;
+		margin: 10px 10px;
+		overflow: hidden;
+		height: 350px;
+		width: 90%;
+		position: relative;
+	}
+	
+	.location-item:hover {
+    width: 92%;
+	margin-bottom:8px;
+    height: 360px;
+	}
+}
+
+
+/* Index page location-items fix for medium screen */
+@media only screen and (max-width: 1680px) and (min-width: 1026px) {
+    .location-item {
+		display: inline-block;
+		padding: 10px;
+		border: 2px solid grey;
+		border-radius: 5px;
+		margin: 10px 10px;
+		overflow: hidden;
+		height: 350px;
+		width: 40%;
+		position: relative;
+	}
+	
+	.location-item:hover {
+    width: 42%;
+	margin-bottom:8px;
+    height: 360px;
+	}
 }
