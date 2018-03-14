@@ -13,7 +13,6 @@ import datetime
 import os
 
 
-# Create your views here.
 def about(request):
     return render(request, 'advisor/about.html', context={})
 
@@ -23,7 +22,7 @@ def contacts(request):
 
 
 def index(request):
-    context_dict={}
+    context_dict = {}
     locations_list = Location.objects.order_by('-name')
     visited_places = []
     user = str(request.user.id)
