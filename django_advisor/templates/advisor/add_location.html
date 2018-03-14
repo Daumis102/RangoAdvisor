@@ -7,6 +7,8 @@
 {% block body_block %}
     <div class="container-fluid">
         <div class="container-fluid">
+            <br/>
+            <br/>
             <form id="addLocationForm" method="post" role="form" action="{% url 'add_location' %}"
                   enctype="multipart/form-data">
                 {% csrf_token %}
@@ -105,6 +107,9 @@
     </div>
     {% include 'advisor/forms/manual_address.html' %}
     {# for if the user wants to enter their address manually instead of mucking about the map #}
+{% endblock %}
+
+{% block javascript %}
     <script type="text/javascript" src="{% static 'js/add_location.js' %}"></script>
     <script type="text/javascript" async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDA7X84ZDyPgCBFuFaE99Ft64XeE0V5x2g&callback=initMap"></script>
