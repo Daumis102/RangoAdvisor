@@ -83,7 +83,6 @@ def toggle_visited(request):
                     visited_by_array.append(user)
                 location.visited_by = ",".join(visited_by_array)
                 location.save()
-                print(location.visited_by)
                 return HttpResponse(JsonResponse({
                             'statusCode': 0,
                         }))
@@ -186,7 +185,6 @@ def user_login(request):
 
 @login_required
 def write_review(request):
-    print("WRITE REVIEW")
     if request.method == 'POST':
         title = request.POST.get('reviewTitle')
         rating = request.POST.get('input-rating')
