@@ -2,12 +2,15 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
 from django.core.files import File
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.http import JsonResponse
 from django.contrib.auth.models import User
+from django.core.files import File
 from advisor.models import *
 import datetime
+import os
 
 
 # Create your views here.
@@ -153,7 +156,7 @@ def register(request):
         password = request.POST.get('password')
         if not User.objects.filter(username__iexact=username).exists():
             user = User.objects.create_user(username=username, password=password)
-            profile = UserProfile.objects.create(user=user)
+            profile = UserProfile.objects.create(user=user, avatar=File(open(os.path.join(settings.STATIC_DIR, 'images', 'no-foto.png'), 'rb'), 'rb'))
             profile.save()
             # login user
             login(request, user)
