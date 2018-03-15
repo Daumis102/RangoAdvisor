@@ -66,6 +66,7 @@ def add_location(request):
 
 @login_required
 def toggle_visited(request):
+    resp = {'statusCode': 1}
     if request.method == 'POST' and request.is_ajax():
         location_id = request.POST.get('location_id')
         state = request.POST.get('state')
@@ -80,22 +81,13 @@ def toggle_visited(request):
                     visited_by_array.append(user)
                 location.visited_by = ",".join(visited_by_array)
                 location.save()
-                return HttpResponse(JsonResponse({
-                            'statusCode': 0,
-                        }))
+                resp['statusCode'] = 0
             except:
-                return HttpResponse(JsonResponse({
-                            'statusCode': 1,
-                        }))
-        else:
-            return HttpResponse(JsonResponse({
-                    'statusCode': 1
-                }))
+                pass
     # not a POST request
     else:
-        return HttpResponse(JsonResponse({
-            "response type": "not post"
-        }))
+        resp['response type'] = 'not post: ' + str(request.method)
+    return HttpResponse(JsonResponse(resp))
 
 
 def location_details(request, location_name_slug):
@@ -145,7 +137,7 @@ def user_logout(request):
 
 
 def register(request):
-    resp = {'statusCode': 0}
+    resp = {'statusCode': 1}
     if request.method == 'POST' and request.is_ajax():  # we are doing modal login so should only be ajax
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -182,6 +174,7 @@ def user_login(request):
 
 @login_required
 def write_review(request):
+    resp = {'statusCode': 1}
     if request.method == 'POST':
         title = request.POST.get('reviewTitle')
         rating = request.POST.get('input-rating')
@@ -198,19 +191,11 @@ def write_review(request):
                                            location_id=location, rating=rating,
                                            posted_by=user_profile)
             review.save()
-            return HttpResponse(JsonResponse({
-                'currentUrl': request.POST.get('currentUrl'),
-                'statusCode': 0
-            }))
-        else:
-            return HttpResponse(JsonResponse({
-                "statusCode": 1
-            }))
-
+            resp['statusCode'] = 0
+            resp['currentUrl'] = request.POST.get('currentUrl')
     else:
-        return HttpResponse(JsonResponse({
-            "response type": "not post"
-        }))
+        resp['response type'] = 'not post: ' + str(request.method)
+    return HttpResponse(JsonResponse(resp))
 
 
 def profile(request):
