@@ -37,31 +37,28 @@ def index(request):
 @login_required
 def add_location(request):
     context_dict = {}
-    # assume that location has not been created. todo: this will need to be checked at some point. probably on the frontend with a request
     if request.method == 'POST' and request.is_ajax():  # will just post back to the same url but with data
         coordinates = request.POST.get('coords')
-        name = request.POST.get('location_name')
+        name = titlecase(request.POST.get('location_name'))
         image = request.FILES.get('location_image')
         rating = request.POST.get('input-rating')  # not used yet
-        title = request.POST.get('review-title')
+        title = titlecase(request.POST.get('review-title'))
         content = request.POST.get('review-content')
-        city = request.POST.get('city')
-        # if Location.objects.filter(coordinates=coordinates, name=name).exists():  # location already exists? todo: check this out
-        #     return HttpResponse(JsonResponse({  # incredibly unsure about this
-        #         'statusCode': 1,
-        #         'message': '/advisor/location/' + Location.objects.get(name=name, coordinates=coordinates).slug
-        #         }))
+        city = titlecase(request.POST.get('city'))
         current_user = request.user  # by this point the user must be logged in
-        # first save location, then picture
-        new_loc = Location.objects.create(name=name, coordinates=coordinates, visited_by=str(current_user.id), city=city)
-        new_loc.save()
-        new_pic = Picture.objects.create(upload_date=datetime.date.today(), location_id=new_loc, uploaded_by=UserProfile.objects.get(user=current_user), picture=File(image, 'rb'))
+        # if location exists, then do not recreate it
+        if Location.objects.filter(coordinates=coordinates, city=city, name=name, slug__contains=name).exists():
+            loc = Location.objects.get(coordinates=coordinates, city=city, name=name, slug__contains=name)
+        else:
+            loc = Location.objects.create(name=name, coordinates=coordinates, visited_by=str(current_user.id), city=city)
+            loc.save()
+        new_pic = Picture.objects.create(upload_date=datetime.date.today(), location_id=loc, uploaded_by=UserProfile.objects.get(user=current_user), picture=File(image, 'rb'))
         new_pic.save()
-        new_review = Review.objects.create(title=title, publish_date=datetime.date.today(), content=content, rating=rating, location_id=new_loc, posted_by=UserProfile.objects.get(user=current_user))
+        new_review = Review.objects.create(title=title, publish_date=datetime.date.today(), content=content, rating=rating, location_id=loc, posted_by=UserProfile.objects.get(user=current_user))
         new_review.save()
         return HttpResponse(JsonResponse({
             'statusCode': 0,
-            'message': '/advisor/location/' + new_loc.slug
+            'message': '/advisor/location/' + loc.slug
         }))
     else:
         return render(request, 'advisor/add_location.html', context_dict)
@@ -248,3 +245,10 @@ def change_pp(request):
         user.save(update_fields=['avatar'])
         resp['statusCode'] = 0
     return HttpResponse(JsonResponse(resp))
+
+
+# helper method for title casing and taking care of apostrophes
+def titlecase(s):
+    return re.sub(r"[A-Za-z]+('[A-Za-z]+)?",
+                  lambda mo: mo.group(0)[0].upper() +
+                             mo.group(0)[1:].lower(), s)
