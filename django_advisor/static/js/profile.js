@@ -1,4 +1,4 @@
-$(function() {
+$(function () {
     $('#changePWForm').submit(function (e) {
         e.preventDefault();
         $.ajax({
@@ -7,7 +7,7 @@ $(function() {
             dataType: "json",
             data: $(this).serialize(),
             success: function (e) {
-                if (e.statusCode === 0){
+                if (e.statusCode === 0) {
                     swal({
                         type: 'success',
                         title: 'Password change successful',
@@ -48,16 +48,20 @@ $(function() {
                 data: data,
                 success: function (resp) {
                     resp = JSON.parse(resp);
-                    if (resp.statusCode === 0){
+                    if (resp.statusCode === 0) {
                         swal({
                             type: 'success',
                             title: 'Avatar change successful',
-                            text: 'You have successfully changed your profile picture. Reloading your profile page now...'
+                            text: 'You have successfully changed your profile picture. Reloading your profile page now...',
+                            timer: 3000,
+                            onOpen: function (e) {
+                                swal.showLoading();
+                            }
+                        }).then(function (result) {
+                            if (result.dismiss === swal.DismissReason.timer) {
+                                window.location = '/advisor/profile/';
+                            }
                         });
-                        setTimeout(function () {
-                            window.location = '/advisor/profile';
-                        }, 1000);
-
                     } else {
                         swal({
                             type: 'error',
