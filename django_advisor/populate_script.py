@@ -10,7 +10,7 @@ from advisor.models import *
 
 def populate(users):
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    media_dir = os.path.normpath(os.path.join(BASE_DIR, 'django_advisor', 'media', 'places_location'))
+    init_image_dir = os.path.normpath(os.path.join(BASE_DIR, 'django_advisor', 'media', 'initial_population'))
 
     uofgvisited = [users[0].id, users[3].id]
     tmvisited = [users[1].id, users[2].id]
@@ -60,10 +60,10 @@ def populate(users):
          "location_id": tmloc}
     ]
 
-    uofgi0 = open(os.path.join(media_dir, 'uofg0.jpg'), 'rb')
-    uofgi1 = open(os.path.join(media_dir, 'uofg1.jpg'), 'rb')
-    tmi0 = open(os.path.join(media_dir, 'taco_mazama0.jpg'), 'rb')
-    tmi1 = open(os.path.join(media_dir, 'taco_mazama1.jpg'), 'rb')
+    uofgi0 = open(os.path.join(init_image_dir, 'uofg0.jpg'), 'rb')
+    uofgi1 = open(os.path.join(init_image_dir, 'uofg1.jpg'), 'rb')
+    tmi0 = open(os.path.join(init_image_dir, 'taco_mazama0.jpg'), 'rb')
+    tmi1 = open(os.path.join(init_image_dir, 'taco_mazama1.jpg'), 'rb')
 
     pictures = [
         {"upload_date": date.today(),

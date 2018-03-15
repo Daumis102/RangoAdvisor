@@ -1,7 +1,33 @@
 __pycache__/
 
+media/
 .idea/
 
 *.sqlite3
 
 .DS_Store
+
+._*
+
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Node
+npm-debug.log
+
+# Mac
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# WebStorm
+.idea/
+
+# vi
+*~
+
+# General
+log/
+*.log
