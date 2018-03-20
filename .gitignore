@@ -1,6 +1,5 @@
 __pycache__/
 
-media/
 .idea/
 
 *.sqlite3
