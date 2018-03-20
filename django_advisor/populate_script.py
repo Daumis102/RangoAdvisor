@@ -8,6 +8,13 @@ django.setup()
 from advisor.models import *
 
 
+# helper method for title casing and taking care of apostrophes
+def titlecase(s):
+    return re.sub(r"[A-Za-z]+('[A-Za-z]+)?",
+                  lambda mo: mo.group(0)[0].upper() +
+                             mo.group(0)[1:].lower(), s)
+
+
 def populate(users):
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     init_image_dir = os.path.normpath(os.path.join(BASE_DIR, 'django_advisor', 'media', 'initial_population'))
@@ -16,12 +23,12 @@ def populate(users):
     tmvisited = [users[1].id, users[2].id]
 
     locations = [
-        {"name": "University of Glasgow",
-         "city": "Glasgow",
+        {"name": titlecase("University of Glasgow"),
+         "city": titlecase("Glasgow"),
          "coordinates": "55.8721,-4.2882",
          "visited_by": ",".join(map(str, uofgvisited))},
-        {"name": "Taco Mazama",
-         "city": "Glasgow",
+        {"name": titlecase("Taco Mazama"),
+         "city": titlecase("Glasgow"),
          "coordinates": "55.8681753,-4.3278404",
          "visited_by": ",".join(map(str, tmvisited))}
     ]
@@ -34,25 +41,25 @@ def populate(users):
     tmloc = Location.objects.get(name="Taco Mazama")
 
     reviews = [
-        {"title": "Good place",
+        {"title": titlecase("Good place"),
          "publish_date": date.today(),
          "content": "Wow what an incredible place, I am definitely visiting again",
          "rating": 5,
          "posted_by": UserProfile.objects.get(user=users[0]),
          "location_id": uofgloc},
-        {"title": "Average food but good service",
+        {"title": titlecase("Average food but good service"),
          "publish_date": date.today(),
          "content": "The food was a bit bland and expensive, but the staff served me with a smile. They tried their best",
          "rating": 3,
          "posted_by": UserProfile.objects.get(user=users[1]),
          "location_id": tmloc},
-        {"title": "Great",
+        {"title": titlecase("Great"),
          "publish_date": date.today(),
          "content": "I am definitely coming back here again",
          "rating": 4,
          "posted_by": UserProfile.objects.get(user=users[2]),
          "location_id": uofgloc},
-        {"title": "Awful. Just awful",
+        {"title": titlecase("Awful. Just awful"),
          "publish_date": date.today(),
          "content": "Title says it all",
          "rating": 1,
