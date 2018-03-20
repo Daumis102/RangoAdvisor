@@ -198,6 +198,9 @@ div.my-page-header {
 	padding-left:20px;
 }
 
+div#photo-col #photo-upload-button{
+	margin-top:5px;
+}
 /* Index page location-items fix for small screen */
 @media only screen and (max-width: 1026px) {
     .location-item {
@@ -239,4 +242,12 @@ div.my-page-header {
 	margin-bottom:8px;
     height: 360px;
 	}
+}
+
+input#photo-upload-input{
+	display:none;
+}
+
+.invisible{
+	display:none;
 }

@@ -2,15 +2,12 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
 from django.core.files import File
-from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.http import JsonResponse
 from django.contrib.auth.models import User
-from django.core.files import File
 from advisor.models import *
 import datetime
-import os
 
 
 def about(request):
@@ -143,7 +140,7 @@ def register(request):
         password = request.POST.get('password')
         if not User.objects.filter(username__iexact=username).exists():
             user = User.objects.create_user(username=username, password=password)
-            profile = UserProfile.objects.create(user=user, avatar=File(open(os.path.join(settings.STATIC_DIR, 'images', 'no-foto.png'), 'rb'), 'rb'))
+            profile = UserProfile.objects.create(user=user)
             profile.save()
             # login user
             login(request, user)
@@ -232,8 +229,24 @@ def change_pp(request):
     return HttpResponse(JsonResponse(resp))
 
 
+
 # helper method for title casing and taking care of apostrophes
 def titlecase(s):
     return re.sub(r"[A-Za-z]+('[A-Za-z]+)?",
                   lambda mo: mo.group(0)[0].upper() +
                              mo.group(0)[1:].lower(), s)
+
+@login_required()
+def upload_location_photo(request):
+    resp = {'statusCode': 1}
+    if request.method == 'POST' and request.is_ajax():
+        slug= request.POST.get("location")
+        location = Location.objects.get(slug=slug)
+        userProf = UserProfile.objects.get(user=request.user)
+        image = request.FILES.get('photo')
+        newPic = Picture.objects.create(location_id=location,uploaded_by=userProf,picture=image)
+        newPic.save();
+        resp['statusCode'] = 0
+        resp['url'] = newPic.picture.url
+    return HttpResponse(JsonResponse(resp))
+

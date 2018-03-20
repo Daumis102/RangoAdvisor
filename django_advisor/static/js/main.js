@@ -101,4 +101,15 @@ $(document).ready(function () {
         });
     });
 
+                    window.location = resp.currentUrl;
+                } else {
+                    alert('login failed');
+                    // TODO: alert the user here that their login failed
+                }
+            },
+            error: function(resp) {
+                console.log(resp);
+            }
+        });
+    });
 });
