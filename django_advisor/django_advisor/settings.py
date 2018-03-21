@@ -32,7 +32,9 @@ SECRET_KEY = 'of6j3q36=jbk*u=)xsh5e9v)u*38vcbge4p_=gqi$jhyzil+9y'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['djangoadvisor.pythonanywhere.com']
+ALLOWED_HOSTS = ['djangoadvisor.pythonanywhere.com',
+				'localhost',
+				'127.0.0.1']
 
 
 # Application definition
