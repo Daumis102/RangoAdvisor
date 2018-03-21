@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load staticfiles %}
+{% load compress %}
 
 <html>
 <head>
@@ -71,10 +72,12 @@
 <!-- Register dialog -->
 {% include 'advisor/forms/register.html' %}
 
+{% compress js %}
 <script type="text/javascript" src="{% static 'jquery/dist/jquery.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>
-<script type="text/javascript" src="https://unpkg.com/sweetalert2@7.15.1/dist/sweetalert2.all.js"></script>
+<script type="text/javascript" src="{% static 'js/sweetalert2.all.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+{% endcompress %}
 
 {% block javascript %}{% endblock %}
 
