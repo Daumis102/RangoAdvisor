@@ -5,9 +5,9 @@ Rango Advisor is the new way to discover gorgeous places around the world. You c
 1. Change into the django_adviser directory
 2. Activate the virtual environment (python 3.6)
 3. In the command line, run
-    ```bash
-    $ pip install -r requirements.txt
-    ```
+```bash
+$ pip install -r requirements.txt
+```
 
 ## Sources used for photos
 * [Unsplash](https://unsplash.com/)
@@ -18,6 +18,8 @@ Rango Advisor is the new way to discover gorgeous places around the world. You c
 * [Bootstrap 3](https://getbootstrap.com/docs/3.3/)
 * [SweetAlert2](https://sweetalert2.github.io/)
 * [Bootstrap Star Rating](http://plugins.krajee.com/star-rating)
+* [Django Compressor](https://django-compressor.readthedocs.io/en/latest/)
+* [lxml](http://lxml.de/)
 
 ## How to run tests
 ```bash
