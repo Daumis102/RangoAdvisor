@@ -69,8 +69,8 @@ body {
 }
 
 #map {
-    height: 25vh;
-    width: 25vw;
+    height: 30vh;
+    width: 100%;
     margin-top: 30px;
 }
 
