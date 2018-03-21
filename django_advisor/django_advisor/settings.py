@@ -49,7 +49,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'htmlmin.middleware.HtmlMinifyMiddleware',
     'django.middleware.gzip.GZipMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -147,4 +146,3 @@ STATIC_URL = '/static/'
 COMPRESS_ROOT = STATIC_DIR
 COMPRESS_ENABLED = True
 COMPRESS_PARSER = 'compressor.parser.LxmlParser'
-HTML_MINIFY = True
