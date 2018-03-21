@@ -231,24 +231,24 @@ def change_pp(request):
     return HttpResponse(JsonResponse(resp))
 
 
-
 # helper method for title casing and taking care of apostrophes
 def titlecase(s):
     return re.sub(r"[A-Za-z]+('[A-Za-z]+)?",
                   lambda mo: mo.group(0)[0].upper() +
                              mo.group(0)[1:].lower(), s)
 
+
 @login_required()
 def upload_location_photo(request):
     resp = {'statusCode': 1}
     if request.method == 'POST' and request.is_ajax():
-        slug= request.POST.get("location")
+        slug = request.POST.get("location")
         location = Location.objects.get(slug=slug)
-        userProf = UserProfile.objects.get(user=request.user)
+        user_prof = UserProfile.objects.get(user=request.user)
         image = request.FILES.get('photo')
-        newPic = Picture.objects.create(location_id=location,uploaded_by=userProf,picture=image)
-        newPic.save();
+        new_pic = Picture.objects.create(location_id=location, uploaded_by=user_prof, picture=image)
+        new_pic.save()
         resp['statusCode'] = 0
-        resp['url'] = newPic.picture.url
+        resp['url'] = new_pic.picture.url
     return HttpResponse(JsonResponse(resp))
 

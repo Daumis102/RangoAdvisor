@@ -57,6 +57,7 @@ $(document).ready(function () {
                         text: 'An error occured while trying to register you. Please try again later'
                     });
                 }
+                console.log(resp);
             },
             error: function (resp) {
                 console.log("error: " + resp);
@@ -96,18 +97,6 @@ $(document).ready(function () {
                 }
             },
             error: function (resp) {
-                console.log(resp);
-            }
-        });
-    });
-
-                    window.location = resp.currentUrl;
-                } else {
-                    alert('login failed');
-                    // TODO: alert the user here that their login failed
-                }
-            },
-            error: function(resp) {
                 console.log(resp);
             }
         });
