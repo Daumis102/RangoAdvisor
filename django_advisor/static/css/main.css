@@ -186,12 +186,9 @@ div.location-items-container {
 input.search-box {
     border-radius: 5px;
     border: 2px solid grey;
-    padding: 6px; 
-	margin-bottom:100px;
-	margin-top:40px;
-	margin-left:auto;
-	margin-right:auto;
-	width:35%;
+    padding: 6px;
+    margin: 40px auto 100px;
+    width:35%;
 }
 
 div.my-page-header {
