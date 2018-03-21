@@ -107,6 +107,7 @@ $(function () {
     // handle review
     $('#reviewForm').submit(function (e) {
         e.preventDefault();
+		console.log("submitting");
         $.ajax({
             url: $(this).attr('action'),
             type: $(this).attr('method'),
@@ -115,6 +116,7 @@ $(function () {
             success: function (resp) {
                 if (resp.statusCode === 0) {
                     // everything was ok, review posted
+					console.log("success");
                     swal({
                         type: 'success',
                         title: 'Review posted!',
@@ -129,6 +131,7 @@ $(function () {
                         }
                     });
                 } else {
+					console.log("fail");
                     swal({
                         type: 'error',
                         title: 'An error occured',
@@ -137,6 +140,7 @@ $(function () {
                 }
             },
             error: function (resp) {
+				console.log("failure2");
                 console.log(resp);
             }
         });
