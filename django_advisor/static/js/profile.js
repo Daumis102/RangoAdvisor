@@ -82,4 +82,54 @@ $(function () {
     $('.pseudo_link').on('click', function (e) {
         window.location = $(".pseudo_url").attr("value");
     });
+
+    $('#deleteAcc').click(function (e) {
+        swal({
+            title: 'Are you sure?',
+            text: 'You will not be able to revert this!',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Do it'
+        }).then(function (result) {
+            if (result.value) {
+                // delete account
+                $.ajax({
+                    url: '/advisor/profile/deleteaccount/',
+                    type: 'post',
+                    success: function (resp) {
+                        console.log(resp);
+                        swal({
+                            title: 'Account deletion successful',
+                            text: 'You have deleted your account. Sorry to see you go :( Taking you to the homepage...',
+                            type: 'info',
+                            timer: 1500,
+                            onOpen: function (e) {
+                                swal.showLoading();
+                            }
+                        }).then(function (value) {
+                            window.location = '/advisor/index/';
+                        });
+                    },
+                    error: function (resp) {
+                        console.log(resp);
+                        swal({
+                            title: 'An error occured',
+                            text: 'We do not know what happened',
+                            type: 'info'
+                        });
+                    }
+                });
+            } else {
+                // do not delete account
+                swal({
+                    title: 'Account not deleted',
+                    text: 'Your account has not been deleted.',
+                    type: 'info'
+                })
+            }
+
+        });
+    });
 });

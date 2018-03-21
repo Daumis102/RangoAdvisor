@@ -231,6 +231,19 @@ def change_pp(request):
     return HttpResponse(JsonResponse(resp))
 
 
+@login_required()
+def delete_account(request):
+    resp = {'statusCode': 1}
+    if request.method == 'POST' and request.is_ajax():
+        current_user = User.objects.get(username=request.user.username)
+        current_user_profile = UserProfile.objects.get(user=current_user)
+        logout(request)
+        current_user.delete()
+        current_user_profile.delete()
+        resp['statusCode'] = 0
+    return HttpResponse(JsonResponse(resp))
+
+
 # helper method for title casing and taking care of apostrophes
 def titlecase(s):
     return re.sub(r"[A-Za-z]+('[A-Za-z]+)?",

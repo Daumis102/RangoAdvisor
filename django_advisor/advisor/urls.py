@@ -17,4 +17,5 @@ urlpatterns = [
     url(r'^change_pw/$', views.change_pw, name='change_pw'),
     url(r'^change_pp/$', views.change_pp, name='change_pp'),
     url(r'^photo/upload/$', views.upload_location_photo, name='photo_upload'),
+    url(r'^profile/deleteaccount/$', views.delete_account, name='delete_account'),
 ]
