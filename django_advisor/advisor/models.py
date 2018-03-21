@@ -1,7 +1,9 @@
+import re
+from django.template.defaultfilters import slugify
 from django.db import models
 from django.core.validators import validate_comma_separated_integer_list
 from django.contrib.auth.models import User
-#from static.python.slugify import *
+# from static.python.slugify import *
 
 
 # Create your models here.
@@ -93,13 +95,7 @@ class Picture(models.Model):
         return str(self.location_id.name) + " " + str(self.id)
 
 
-
-
-#### Custom slugiy for unique slugs
-import re
-from django.template.defaultfilters import slugify
-
-
+# Custom slugiy for unique slugs
 def unique_slugify(instance, value, slug_field_name='slug', queryset=None,
                    slug_separator='-'):
     """
