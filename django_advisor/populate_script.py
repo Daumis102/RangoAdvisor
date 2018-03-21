@@ -3,7 +3,6 @@ import os
 import django
 from datetime import date
 from django.core.files import File
-
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'django_advisor.settings')
 django.setup()
 from advisor.models import *
@@ -17,8 +16,7 @@ def titlecase(s):
 
 
 def populate(users):
-    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    init_image_dir = os.path.normpath(os.path.join(base_dir, 'django_advisor', 'media', 'initial_population'))
+    init_image_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'django_advisor', 'media', 'initial_population'))
 
     bean_visited = [users[0].id]
     highlands_visited = [users[0].id, users[1].id, users[2].id]
@@ -223,6 +221,7 @@ def populate(users):
 
 
 def add_some_users():
+    init_image_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'django_advisor', 'static', 'images'))
     # to add some users to the database which will help in populating everything else
     new_users = []
     user1 = User.objects.create_user(username="Anguel", password="anguel", email="anguel@gmail.com")
@@ -233,10 +232,10 @@ def add_some_users():
     user2.save()
     user3.save()
     user4.save()
-    user1profile = UserProfile.objects.create(user=user1, avatar=None)
-    user2profile = UserProfile.objects.create(user=user2, avatar=None)
-    user3profile = UserProfile.objects.create(user=user3, avatar=None)
-    user4profile = UserProfile.objects.create(user=user4, avatar=None)
+    user1profile = UserProfile.objects.create(user=user1, avatar=File(open(os.path.join(init_image_dir, 'default_avatar.png'), 'rb'), 'rb'))
+    user2profile = UserProfile.objects.create(user=user2, avatar=File(open(os.path.join(init_image_dir, 'default_avatar.png'), 'rb'), 'rb'))
+    user3profile = UserProfile.objects.create(user=user3, avatar=File(open(os.path.join(init_image_dir, 'default_avatar.png'), 'rb'), 'rb'))
+    user4profile = UserProfile.objects.create(user=user4, avatar=File(open(os.path.join(init_image_dir, 'default_avatar.png'), 'rb'), 'rb'))
     user1profile.save()
     user2profile.save()
     user3profile.save()

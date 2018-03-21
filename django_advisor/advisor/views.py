@@ -142,7 +142,7 @@ def register(request):
         password = request.POST.get('password')
         if not User.objects.filter(username__iexact=username).exists():
             user = User.objects.create_user(username=username, password=password)
-            profile = UserProfile.objects.create(user=user, avatar=File(open(os.path.join(settings.STATIC_DIR, 'images', 'no-foto.png'), 'rb'), 'rb'))
+            profile = UserProfile.objects.create(user=user, avatar=File(open(os.path.join(settings.STATIC_DIR, 'images', 'default_avatar.png'), 'rb'), 'rb'))
             profile.save()
             # login user
             login(request, user)
