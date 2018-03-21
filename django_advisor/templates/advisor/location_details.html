@@ -31,9 +31,9 @@
         </div>
         <div class="container-fluid">
         <div class="row">
-        <div class="col-md-5 col-md-offset-1" name="photo_map_col">
+        <div class="col-md-5 col-md-offset-1">
 
-            <div class="row" name="photo">
+            <div class="row">
 
                 {% if pictures %}
                     <!-- PHOTOs CAROUSEL -->
@@ -90,11 +90,11 @@
 				<input accept="image/*" type="file" id="photo-upload-input" data-location-slug="{{location.slug}}" data-url="{% url 'photo_upload' %}" />
             </div>
 
-            <div class="row" name="map">
+            <div class="row">
                 <div id="map"></div>
             </div>
         </div>
-        <div class="col-md-3 col-md-offset-2" name="reviews">
+        <div class="col-md-3 col-md-offset-2">
             <div class="row">
                 <div class="comments-container pre-scrollable">
                     {% if comments %}

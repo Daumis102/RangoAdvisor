@@ -17,7 +17,7 @@
                 <div id="location-items-container" class="location-items-container">
 					{% if locations %}
 						{% for location in locations %}
-							<div class="location-item pseudo_link" name="{{ location.name }}" id="{{ location.slug }}">
+							<div class="location-item pseudo_link" id="{{ location.slug }}">
 
 								<input id="url" type="hidden" value="{% url 'location_details' location.slug %}"/>
 
