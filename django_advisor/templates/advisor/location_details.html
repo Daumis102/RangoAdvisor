@@ -15,13 +15,13 @@
                     {% if visited_by_user %}
                         <h3 class="inline" id="been-here-text">You said that you have visited this place</h3>
                         <button class="inline btn btn-danger" id="btn-visited" data-state="true"
-                                data-location-id="{{ location.id }}" action='{% url "toggle_visited" %}'>Click me if you
+                                data-location-id="{{ location.id }}" data-action='{% url "toggle_visited" %}'>Click me if you
                             haven't!
                         </button>
                     {% else %}
                         <h3 class="inline" id="been-here-text">You said that you haven't visited this place</h3>
                         <button class="inline btn btn-success" id="btn-visited" data-state="false"
-                                data-location-id="{{ location.id }}" action='{% url "toggle_visited" %}'>Click me if you
+                                data-location-id="{{ location.id }}" data-action='{% url "toggle_visited" %}'>Click me if you
                             have!
                         </button>
                     {% endif %}
@@ -87,7 +87,7 @@
                     <h2>No photos to show</h2>
                 {% endif %}
 				<button class="btn btn-primary btn-block" id="photo-upload-button">Upload a photo</button>
-				<input accept="image/*" type="file" id="photo-upload-input" data-location-slug="{{location.slug}}" data-url="{% url 'photo_upload' %}"></input>
+				<input accept="image/*" type="file" id="photo-upload-input" data-location-slug="{{location.slug}}" data-url="{% url 'photo_upload' %}" />
             </div>
 
             <div class="row" name="map">

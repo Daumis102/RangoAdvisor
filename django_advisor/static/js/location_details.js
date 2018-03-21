@@ -93,7 +93,7 @@ function displayAddressFromLatLng(geocoder, map, infowindow, latLng) {
 		if(state=="false"){
 			// register user to location visitors
 			$.ajax({
-				url: $(this).attr("action"),
+				url: $(this).attr("data-action"),
 				type: "POST",
 				dataType: "json",
 				data:{'location_id': $(this).attr("data-location-id"),'state':state},
@@ -119,7 +119,7 @@ function displayAddressFromLatLng(geocoder, map, infowindow, latLng) {
 	} else {
 		// unregister user from location visitors
 		$.ajax({
-				url: $(this).attr("action"),
+				url: $(this).attr("data-action"),
 				type: "POST",
 				dataType: "json",
 				data:{'location_id': $(this).attr("data-location-id"),'state':state},
@@ -178,7 +178,6 @@ function displayAddressFromLatLng(geocoder, map, infowindow, latLng) {
 		// check if file is of correct type
 		if(type.match('image.*')){
 			// file is correct. upload
-			
 			swal({
 				title: 'Uploading..!',
 				text: 'This might take a few seconds',
@@ -186,9 +185,7 @@ function displayAddressFromLatLng(geocoder, map, infowindow, latLng) {
 				onOpen: function (e) {
 					swal.showLoading();
 				}
-			})
-			.then((success) => {
-				
+			}).then(function (success){
 					// get location to which we are uploading:
 				var loc = $(self).attr("data-location-slug");
 				var formData = new FormData();
@@ -205,7 +202,6 @@ function displayAddressFromLatLng(geocoder, map, infowindow, latLng) {
 					success: function(resp) {
 						if (resp.statusCode === 0){
 							// everything was ok, photo was uploaded
-							
 							// now we can update carousel to include uploaded photo without reloading the page to make user exp better
 							var num_pictures = $("div#photos ol.carousel-indicators").children().length;
 							$('div#photos ol.carousel-indicators').append(`<li data-target="#photos" data-slide-to=${num_pictures}></li>`);
@@ -213,18 +209,17 @@ function displayAddressFromLatLng(geocoder, map, infowindow, latLng) {
 									<div class="item" id="uploaded_photo_item">
 										<img id="uploaded_photo" src="${resp.url}">
 									</div>`);
-
 							swal({
 								type: "success",
 								title: "Upload complete",
-								text: "You picture was added to the slideshow",
+								text: "You picture was added to the slideshow"
 							});
 					
 						} else {
 							swal({
 								type: "error",
 								title: "Upload failed",
-								text: "Some error occured",
+								text: "Some error occured"
 							});
 						}
 					},
@@ -232,7 +227,7 @@ function displayAddressFromLatLng(geocoder, map, infowindow, latLng) {
 						swal({
 							type: "error",
 							title: "Upload failed",
-							text: "Some error occured",
+							text: "Some error occured"
 						});
 						console.log(resp);
 					}
