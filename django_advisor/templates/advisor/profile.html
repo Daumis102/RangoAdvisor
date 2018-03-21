@@ -1,5 +1,6 @@
 {% extends 'advisor/base.html' %}
 {% load staticfiles %}
+{% load compress %}
 {% block title_block %}
     Welcome back {{ user.username }}
 {% endblock %}
@@ -87,5 +88,7 @@
 {% endblock %}
 
 {% block javascript %}
+    {% compress js %}
     <script type="text/javascript" src="{% static 'js/profile.js' %}"></script>
+    {% endcompress %}
 {% endblock %}
