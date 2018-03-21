@@ -80,6 +80,6 @@ $(function () {
     });
 
     $('.pseudo_link').on('click', function (e) {
-        window.location = $(this).data("url");
+        window.location = $(".pseudo_url").attr("value");
     });
 });

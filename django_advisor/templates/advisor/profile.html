@@ -46,8 +46,8 @@
             <hr>
             <div id="location-items-container" class="location-items-container">
                 {% for location in locations %}
-                    <div class="location-item pseudo_link" name="{{ location.name }}" id="{{ location.slug }}">
-                        <input id="url" type="hidden" value="{% url 'location_details' location.slug %}">
+                    <div class="location-item pseudo_link" id="{{ location.slug }}">
+                        <input class="pseudo_url" type="hidden" value="{% url 'location_details' location.slug %}">
                         <div class="picture">
                             {% if location.get_picture %}
                                 <img src="{{ location.get_picture.picture.url }}" />
