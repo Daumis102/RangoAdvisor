@@ -19,7 +19,7 @@
             <br/>
             <div class="row">
                 {#              information about the user  #}
-                <h3>Username: <span class="well">{{ user.username }}</span></h3>
+                <h3 class="well">Username: <span class="text-muted">{{ user.username }}</span></h3>
             </div>
             <br/>
             <br/>
@@ -78,23 +78,6 @@
                         </span>
 
                     </div>
-
-
-                    {#                <div class="row well pseudo_link" data-url="{% url 'location_details' location.slug %}">#}
-                    {#                    <div class="media">#}
-                    {#                        <div class="media-left">#}
-                    {#                            <a href="{% url 'location_details' location.slug %}">#}
-                    {#                                <img class="media-object img-rounded img-responsive" src="{{ location.get_picture.picture.url }}"#}
-                    {#                                     alt="{{ location.name }}"/>#}
-                    {#                            </a>#}
-                    {#                        </div>#}
-                    {#                        <div class="media-body">#}
-                    {#                            <h3 class="media-heading">{{ location.name }}</h3>#}
-                    {#                            <p>{{ location.city }}</p>#}
-                    {#                        </div>#}
-                    {#                    </div>#}
-                    {#                </div>#}
-                    {#                <br>#}
                 {% endfor %}
             </div>
         </div>
