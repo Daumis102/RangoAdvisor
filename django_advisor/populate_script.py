@@ -130,17 +130,17 @@ def populate(users):
     ]
 
     # oh boy. could have looped thru each directory and stored in a list but that's a feature not a requirement
-    bean_i1 = open(os.path.join(init_image_dir, 'bean', 'bean1.jpg'), 'rb')
-    highlands_i1 = open(os.path.join(init_image_dir, 'highlands', 'gh1.jpg'), 'rb')
-    highlands_i2 = open(os.path.join(init_image_dir, 'highlands', 'gh2.jpg'), 'rb')
-    highlands_i3 = open(os.path.join(init_image_dir, 'highlands', 'gh3.jpg'), 'rb')
-    nyhavn_i1 = open(os.path.join(init_image_dir, 'nyhavn', 'cph1.jpg'), 'rb')
-    nyhavn_i2 = open(os.path.join(init_image_dir, 'nyhavn', 'cph2.jpg'), 'rb')
-    nyhavn_i3 = open(os.path.join(init_image_dir, 'nyhavn', 'cph3.jpg'), 'rb')
-    stonehenge_i1 = open(os.path.join(init_image_dir, 'stonehenge', 'sth1.jpg'), 'rb')
-    stonehenge_i2 = open(os.path.join(init_image_dir, 'stonehenge', 'sth2.jpg'), 'rb')
-    yucatan_i1 = open(os.path.join(init_image_dir, 'yucatan', 'yucatan1.jpg'), 'rb')
-    yucatan_i2 = open(os.path.join(init_image_dir, 'yucatan', 'yucatan2.jpg'), 'rb')
+    bean_i1 = open(os.path.join(init_image_dir, 'bean', 'bean1r.jpg'), 'rb')
+    highlands_i1 = open(os.path.join(init_image_dir, 'highlands', 'gh1r.jpg'), 'rb')
+    highlands_i2 = open(os.path.join(init_image_dir, 'highlands', 'gh2r.jpg'), 'rb')
+    highlands_i3 = open(os.path.join(init_image_dir, 'highlands', 'gh3r.jpg'), 'rb')
+    nyhavn_i1 = open(os.path.join(init_image_dir, 'nyhavn', 'cph1r.jpg'), 'rb')
+    nyhavn_i2 = open(os.path.join(init_image_dir, 'nyhavn', 'cph2r.jpg'), 'rb')
+    nyhavn_i3 = open(os.path.join(init_image_dir, 'nyhavn', 'cph3r.jpg'), 'rb')
+    stonehenge_i1 = open(os.path.join(init_image_dir, 'stonehenge', 'sth1r.jpg'), 'rb')
+    stonehenge_i2 = open(os.path.join(init_image_dir, 'stonehenge', 'sth2r.jpg'), 'rb')
+    yucatan_i1 = open(os.path.join(init_image_dir, 'yucatan', 'yucatan1r.jpg'), 'rb')
+    yucatan_i2 = open(os.path.join(init_image_dir, 'yucatan', 'yucatan2r.jpg'), 'rb')
 
     pictures = [
         {
