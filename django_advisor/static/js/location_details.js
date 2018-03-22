@@ -1,3 +1,4 @@
+// just look at comments from add_location. literally the same code
 var map;
 var marker;
 var geocoder;
@@ -48,7 +49,7 @@ function displayAddressFromLatLng(geocoder, map, infowindow, latLng) {
     // handle review
     $('#reviewForm').submit(function (e) {
         e.preventDefault();
-		console.log("submitting");
+		// console.log("submitting");
         $.ajax({
             url: $(this).attr('action'),
             type: $(this).attr('method'),
@@ -148,23 +149,23 @@ function displayAddressFromLatLng(geocoder, map, infowindow, latLng) {
     $('.location-item').click(function (e) {
         e.preventDefault();
 		var url = $(this).children("input#url").val();
-		console.log(url);
+		// console.log(url);
         window.location.href = url;
     });
 	
-	$('#search').keyup( function(e) {
-		var searchFor = $(this).val();
-		console.log(searchFor);
-		$('#location-items-container').find('div.location-item').each(function(){
-			var locationName = $(this).attr('name').toLowerCase();
-			console.log(locationName + "     " +  $(this).attr('name'));
-			if(	locationName.indexOf(searchFor)<0){
-				this.style.display = "none";
-			}else{
-				this.style.display = "inline-block"
-			}
-		});
-	});
+	// $('#search').keyup( function(e) {
+	// 	var searchFor = $(this).val();
+	// 	console.log(searchFor);
+	// 	$('#location-items-container').find('div.location-item').each(function(){
+	// 		var locationName = $(this).attr('name').toLowerCase();
+	// 		console.log(locationName + "     " +  $(this).attr('name'));
+	// 		if(	locationName.indexOf(searchFor)<0){
+	// 			this.style.display = "none";
+	// 		}else{
+	// 			this.style.display = "inline-block"
+	// 		}
+	// 	});
+	// });
 	
 	// handle upload photo button (make clicking proper button invoke click on file select input)
     $('#photo-upload-button').click( function() {
