@@ -9,9 +9,9 @@ $(function () {
 
     $('#search').keyup(function (e) {
         var searchFor = $(this).val();
-        console.log(searchFor);
-        $('#location-items-container').find('div.location-item').each(function () {
-            var locationName = $(this).attr('name').toLowerCase();
+        $('div#location-items-container').find('div.location-item').each(function () {
+			console.log($(this).attr('name'));
+            var locationName = $(this).attr('data-location-name').toLowerCase();
             console.log(locationName + "     " + $(this).attr('name'));
             if (locationName.indexOf(searchFor) < 0) {
                 this.style.display = "none";
