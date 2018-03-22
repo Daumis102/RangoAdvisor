@@ -7,8 +7,9 @@ $(function () {
         window.location.href = url;
     });
 
+    // search through all the items as soon as user enters text
     $('#search').keyup(function (e) {
-        var searchFor = $(this).val();
+        var searchFor = $(this).val().toLowerCase();
         $('div#location-items-container').find('div.location-item').each(function () {
 			console.log($(this).attr('name'));
             var locationName = $(this).attr('data-location-name').toLowerCase();

@@ -1,4 +1,4 @@
-// kind of a bad idea to have these globals but oh well it's version 1
+// i stand by my globals
 var map;
 var marker;
 var geocoder;
@@ -6,23 +6,23 @@ var infowindow;
 var city = "Glasgow"; // default Glasgow because that's where the map marker is by default. bad idea but it works
 
 function initMap() {
-    geocoder = new google.maps.Geocoder();
-    infowindow = new google.maps.InfoWindow;
-    var latLng = new google.maps.LatLng(55.872555, -4.289680);
-    var options = {
+    geocoder = new google.maps.Geocoder(); // init the geocoder
+    infowindow = new google.maps.InfoWindow; // init the infowindow
+    var latLng = new google.maps.LatLng(55.872555, -4.289680); // set the default maps markers
+    var options = { // set the options for the map
         zoom: 12,
         center: latLng,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
-    map = new google.maps.Map(document.getElementById("map-addl"), options);
+    map = new google.maps.Map(document.getElementById("map-addl"), options); // init map on the page
 
-    marker = new google.maps.Marker({
+    marker = new google.maps.Marker({ // create a new marker on the map
         position: latLng,
         map: map
     });
 
-    google.maps.event.addListener(map, 'click', function(e){
+    google.maps.event.addListener(map, 'click', function(e){ // add event listener to whenever the user clicks on the map anywhere
         // for when they physically click on the map
         showCityFromLatLng(geocoder, map, infowindow, e.latLng);
     });
@@ -46,6 +46,7 @@ function showCityFromLatLng(geocoder, map, infowindow, latLng){
     });
 }
 
+// this is for when the user enters a human readable address. it will convert it to coordinates and display them on map
 function turnAddressToCoord(geocoder, map, address, infowindow){
     geocoder.geocode({'address': address}, function (results, status) {
         if (status === 'OK'){
@@ -59,7 +60,7 @@ function turnAddressToCoord(geocoder, map, address, infowindow){
             swal({
                 type: 'error',
                 title: 'Address not found',
-                'text': 'The address could not be found. Please try again'
+                text: 'The address could not be found. Please try again'
             });
         }
     })
@@ -119,6 +120,7 @@ $(document).ready(function() {
         });
     });
 
+    // make the image appear in the carousel when they upload one
     $('input[name=location_image]').on('change', function (e) {
         var file = $(this).prop('files')[0];
         var reader = new FileReader();
