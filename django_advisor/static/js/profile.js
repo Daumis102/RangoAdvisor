@@ -1,4 +1,6 @@
 $(function () {
+
+    // handle changing the user's password
     $('#changePWForm').submit(function (e) {
         e.preventDefault();
         $.ajax({
@@ -33,6 +35,7 @@ $(function () {
         $('input[name=newAvatar]').trigger('click');
     });
 
+    // handle changing the avatar
     $('input[name=newAvatar]').on('change', function (e) {
         // get the new image and send it to the backend
         var file = $(this).prop('files')[0];
@@ -79,10 +82,12 @@ $(function () {
         reader.readAsDataURL(file);
     });
 
+    // sneaky sneaky pseudo links
     $('.pseudo_link').on('click', function (e) {
         window.location = $(".pseudo_url").attr("value");
     });
 
+    // handle the deletion of the user account
     $('#deleteAcc').click(function (e) {
         swal({
             title: 'Are you sure?',
