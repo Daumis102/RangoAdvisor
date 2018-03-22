@@ -2,6 +2,7 @@
 import os
 import django
 from datetime import date
+from tqdm import tqdm
 from django.core.files import File
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'django_advisor.settings')
 django.setup()
@@ -58,8 +59,10 @@ def populate(users):
     ]
 
     # first add locations
-    for loc in locations:
+    print("Adding locations...")
+    for loc in tqdm(locations):
         add_location(loc.get("name"), loc.get("city"), loc.get("coordinates"), loc.get("visited_by"))
+    print("Locations added!")
 
     bean_loc = Location.objects.get(name="Cloud Gate")
     highlands_loc = Location.objects.get(name="Loch Lomond")
@@ -209,15 +212,18 @@ def populate(users):
     ]
 
     # then add reviews
-    for review in reviews:
+    print("Adding reviews...")
+    for review in tqdm(reviews):
         add_review(title=review.get("title"), publish_date=review.get("publish_date"), content=review.get("content"),
                    rating=review.get("rating"), posted_by=review.get("posted_by"),
                    location_id=review.get("location_id"))
-
+    print("Reviews added!")
     # finally add the pictures
-    for picture in pictures:
+    print("Adding pictures...")
+    for picture in tqdm(pictures):
         add_picture(upload_date=picture.get("upload_date"), picture=picture.get("picture"),
                     uploaded_by=picture.get("uploaded_by"), location_id=picture.get("location_id"))
+    print("Pictures added!")
 
 
 def add_some_users():
@@ -240,10 +246,12 @@ def add_some_users():
     user2profile.save()
     user3profile.save()
     user4profile.save()
-    for user in User.objects.all():
-        if user.username in ["Anguel", "Daumantas", "Louis",
-                             "Soma"]:  # ignore all users except the ones created just now. this is done in case there are already other users in db
+    print("Adding sample users...")
+    for user in tqdm(User.objects.all()):
+        if user.username in ["anguel", "daumantas", "louis",
+                             "soma"]:  # ignore all users except the ones created just now. this is done in case there are already other users in db
             new_users.append(user)
+    print("Users added!")
     return new_users
 
 
@@ -268,5 +276,7 @@ def add_picture(upload_date, picture, uploaded_by, location_id):
 
 
 if __name__ == '__main__':
+    print("Starting population script...")
     u = add_some_users()
     populate(u)
+    print("Population script done!")
