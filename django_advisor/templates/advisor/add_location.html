@@ -35,20 +35,8 @@
                                     <div class="carousel-inner" role="listbox">
                                         <div class="item active">
                                             <img src="{% static 'images/no-foto.png' %}" alt="blank photo" id="ci">
-                                            {# for test purposes #}
                                         </div>
                                     </div>
-                                    {#         controls #}
-                                    <a class="left carousel-control" href="#picture-carousel" role="button"
-                                       data-slide="prev">
-                                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                    <a class="right carousel-control" href="#picture-carousel" role="button"
-                                       data-slide="next">
-                                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                                        <span class="sr-only">Next</span>
-                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -105,8 +93,8 @@
             </form>
         </div>
     </div>
-    {% include 'advisor/forms/manual_address.html' %}
     {# for if the user wants to enter their address manually instead of mucking about the map #}
+    {% include 'advisor/forms/manual_address.html' %}
 {% endblock %}
 
 {% block javascript %}

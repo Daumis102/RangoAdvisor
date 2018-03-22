@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $('input[name=currentUrl]').val(window.location.pathname); // so we can redirect back to the original page after logging in
-    // ajax csrf setup
+    // ajax csrf setup. this is necessary as we are posting forms manually
     $.ajaxSetup({
         beforeSend: function (xhr, settings) {
             function getCookie(name) {
@@ -29,40 +29,49 @@ $(document).ready(function () {
     // handle the user signup
     $('#signupForm').submit(function (e) {
         e.preventDefault();
-        $.ajax({
-            url: $(this).attr('action'),
-            type: $(this).attr('method'),
-            dataType: "json",
-            data: $(this).serialize(),
-            success: function (resp) {
-                if (resp.statusCode === 0) {
-                    // everything was ok, user is registered, redirect them to original page
-                    swal({
-                        type: 'success',
-                        title: 'You have successfully registered!',
-                        text: 'Hold on while we take you to your profile...',
-                        timer: 1500,
-                        onOpen: function (e) {
-                            swal.showLoading();
-                        }
-                    }).then(function (result) {
-                        if (result.dismiss === swal.DismissReason.timer) {
-                            window.location = '/advisor/profile/';
-                        }
-                    });
-                } else {
-                    swal({
-                        type: 'error',
-                        title: 'Error occured',
-                        text: 'An error occured while trying to register you. Please try again later'
-                    });
+        // if passwords match, then register the user
+        if ($('input[id=password]').val() === $('input[id=passwordConfirm]').val()) {
+            $.ajax({
+                url: $(this).attr('action'),
+                type: $(this).attr('method'),
+                dataType: "json",
+                data: $(this).serialize(),
+                success: function (resp) {
+                    if (resp.statusCode === 0) {
+                        // everything was ok, user is registered, redirect them to original page
+                        swal({
+                            type: 'success',
+                            title: 'You have successfully registered!',
+                            text: 'Hold on while we take you to your profile...',
+                            timer: 1500,
+                            onOpen: function (e) {
+                                swal.showLoading();
+                            }
+                        }).then(function (result) {
+                            if (result.dismiss === swal.DismissReason.timer) {
+                                window.location = '/advisor/profile/';
+                            }
+                        });
+                    } else {
+                        swal({
+                            type: 'error',
+                            title: 'Error occured',
+                            text: 'An error occured while trying to register you. Please try again later'
+                        });
+                    }
+                    console.log(resp);
+                },
+                error: function (resp) {
+                    console.log("error: " + resp);
                 }
-                console.log(resp);
-            },
-            error: function (resp) {
-                console.log("error: " + resp);
-            }
-        });
+            });
+        } else {
+            swal({
+                title: 'Passwords do not match',
+                text: 'Please retype your passwords as they do not match',
+                type: 'error'
+            });
+        }
     });
 
     // handle the user login

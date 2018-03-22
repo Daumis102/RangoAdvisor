@@ -11,9 +11,9 @@ $(function () {
     $('#search').keyup(function (e) {
         var searchFor = $(this).val().toLowerCase();
         $('div#location-items-container').find('div.location-item').each(function () {
-			console.log($(this).attr('name'));
+			// console.log($(this).attr('name'));
             var locationName = $(this).attr('data-location-name').toLowerCase();
-            console.log(locationName + "     " + $(this).attr('name'));
+            // console.log(locationName + "     " + $(this).attr('name'));
             if (locationName.indexOf(searchFor) < 0) {
                 this.style.display = "none";
             } else {
