@@ -27,9 +27,9 @@
 								<div class="picture">
 
 									{% if location.get_picture %}
-										<img src="{{ location.get_picture.picture.url }}"/>
+										<img src="{{ location.get_picture.picture.url }}" alt="{{ location.get_picture.picture }}"/>
 									{% else %}
-										<img src="{% static 'images/no-foto.png' %}"/>
+										<img src="{% static 'images/no-foto.png' %}" alt="no photo dded"/>
 									{% endif %}
 								</div>
 
