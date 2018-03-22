@@ -137,12 +137,14 @@
                     {% endif %}
                 </div>
             </div>
+            {% if user.is_authenticated %}
             <div class="row">
                 <button type="button" class="btn btn-outline-dark btn-success btn-block" data-toggle="modal"
                         data-target="#writeReviewModal">
                     Write a review
                 </button>
             </div>
+            {% endif %}
         </div>
 
     {% else %}
