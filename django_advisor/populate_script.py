@@ -224,10 +224,10 @@ def add_some_users():
     init_image_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'django_advisor', 'static', 'images'))
     # to add some users to the database which will help in populating everything else
     new_users = []
-    user1 = User.objects.create_user(username="Anguel", password="anguel", email="anguel@gmail.com")
-    user2 = User.objects.create_user(username="Daumantas", password="mary", email="daumantas@gmail.com")
-    user3 = User.objects.create_user(username="Louis", password="louis", email="louis@gmail.com")
-    user4 = User.objects.create_user(username="Soma", password="soma", email="soma@gmail.com")
+    user1 = User.objects.create_user(username="anguel", password="anguel", email="anguel@gmail.com")
+    user2 = User.objects.create_user(username="daumantas", password="daumantas", email="daumantas@gmail.com")
+    user3 = User.objects.create_user(username="louis", password="louis", email="louis@gmail.com")
+    user4 = User.objects.create_user(username="soma", password="soma", email="soma@gmail.com")
     user1.save()
     user2.save()
     user3.save()
