@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 {% load staticfiles %}
-{% load compress %}
 
 <html>
 <head>
@@ -10,12 +9,10 @@
     </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {% compress css %}
     <link href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}" type="text/css" rel="stylesheet" media="all">
     <link href="{% static 'css/main.css' %}" media="all" rel="stylesheet" type="text/css"/>
     <link href="{% static 'bootstrap-star-rating/css/star-rating.min.css' %}" media="all" rel="stylesheet"
           type="text/css"/>
-    {% endcompress %}
 </head>
 
 <body>
@@ -74,12 +71,10 @@
 <!-- Register dialog -->
 {% include 'advisor/forms/register.html' %}
 
-{% compress js %}
 <script type="text/javascript" src="{% static 'jquery/dist/jquery.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/sweetalert2.all.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
-{% endcompress %}
 
 {% block javascript %}{% endblock %}
 

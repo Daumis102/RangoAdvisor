@@ -1,6 +1,5 @@
 {% extends 'advisor/base.html' %}
 {% load staticfiles %}
-{% load compress %}
 {% block title_block %}
     DjangoAdvisor
 {% endblock %}
@@ -71,7 +70,5 @@
 {% endblock %}
 
 {% block javascript %}
-    {% compress js %}
     <script type="text/javascript" src="{% static 'js/index.js' %}"></script>
-    {% endcompress %}
 {% endblock %}

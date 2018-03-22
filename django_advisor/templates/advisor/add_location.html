@@ -1,6 +1,5 @@
 {% extends 'advisor/base.html' %}
 {% load staticfiles %}
-{% load compress %}
 {% block title_block %}
     Add New Location
 {% endblock %}
@@ -111,11 +110,9 @@
 {% endblock %}
 
 {% block javascript %}
-    {% compress js %}
     <script src="{% static 'bootstrap-star-rating/js/star-rating.min.js' %}" type="text/javascript"></script>
     <script src="{% static 'bootstrap-star-rating/themes/krajee-svg/theme.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/add_location.js' %}"></script>
-    {% endcompress %}
     <script type="text/javascript" async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDA7X84ZDyPgCBFuFaE99Ft64XeE0V5x2g&callback=initMap"></script>
 {% endblock %}
