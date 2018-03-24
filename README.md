@@ -18,8 +18,7 @@ $ pip install -r requirements.txt
 * [Bootstrap 3](https://getbootstrap.com/docs/3.3/)
 * [SweetAlert2](https://sweetalert2.github.io/)
 * [Bootstrap Star Rating](http://plugins.krajee.com/star-rating)
-* [Django Compressor](https://django-compressor.readthedocs.io/en/latest/)
-* [lxml](http://lxml.de/)
+* [tqdm](https://github.com/noamraph/tqdm)
 
 ## How to run tests
 ```bash
