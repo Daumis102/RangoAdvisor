@@ -81,16 +81,13 @@ def toggle_visited(request):
         if location:
             visited_by_array = location.visited_by_list()
             user = str(request.user.id)
-            try:
-                if user in visited_by_array:
-                    visited_by_array.remove(user)  # remove the user from the visited by array
-                else:
-                    visited_by_array.append(user)  # add the user to the visited by array
-                location.visited_by = ",".join(visited_by_array)
-                location.save()
-                resp['statusCode'] = 0
-            except:
-                pass
+            if user in visited_by_array:
+                visited_by_array.remove(user)  # remove the user from the visited by array
+            else:
+                visited_by_array.append(user)  # add the user to the visited by array
+            location.visited_by = ",".join(visited_by_array)
+            location.save()
+            resp['statusCode'] = 0
     # not a POST request or something happened with the request
     else:
         resp['response type'] = 'not post: ' + str(request.method)

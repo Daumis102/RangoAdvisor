@@ -41,7 +41,7 @@ class Location(models.Model):
         try:
             picture = Picture.objects.filter(location_id=self.id)[0]
             print(picture)
-        except:
+        except Picture.DoesNotExist:
             picture = None
         return picture
 
