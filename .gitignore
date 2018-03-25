@@ -30,3 +30,7 @@ Thumbs.db
 # General
 log/
 *.log
+
+migrations/
+media/places_location/
+media/profile_image
