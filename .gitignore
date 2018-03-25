@@ -32,5 +32,5 @@ log/
 *.log
 
 migrations/
-media/places_location/
-media/profile_image
+django_advisor/media/profile_image/*
+django_advisor/media/places_location/*
