@@ -28,16 +28,16 @@ class Location(models.Model):
     class Meta:
         verbose_name_plural = "Locations"
 
-    def __str__(self):  # return the name of the location
+    def __str__(self):  # return the name of the location. test done
         return self.name
     
-    def get_lat(self):
+    def get_lat(self):  # test done
         return float(self.coordinates.split(',')[0])
     
-    def get_lng(self):
+    def get_lng(self):  # test done
         return float(self.coordinates.split(',')[1])
 
-    def get_picture(self):
+    def get_picture(self):  # test done
         try:
             picture = Picture.objects.filter(location_id=self.id)[0]
             print(picture)
@@ -45,7 +45,7 @@ class Location(models.Model):
             picture = None
         return picture
 
-    def get_rating(self):
+    def get_rating(self):  # test done
         reviews = Review.objects.filter(location_id=self.id)
         if len(reviews) > 0:
             rating_sum = 0
@@ -55,14 +55,14 @@ class Location(models.Model):
         else:
             return None
 
-    def num_reviews(self):
+    def num_reviews(self):  # test done
         review = Review.objects.filter(location_id=self.id)
         return len(review)
     
-    def visited_by_list(self):
+    def visited_by_list(self):  # test done
         return self.visited_by.split(',')
 
-    def num_visited_by(self):
+    def num_visited_by(self):  # test done
         return len(self.visited_by.split(','))
         
 
@@ -77,7 +77,7 @@ class Review(models.Model):
     class Meta:
         verbose_name_plural = "Comments"
 
-    def __str__(self):  # return the comment content when printed
+    def __str__(self):  # return the comment content when printed. test done
         return self.content
 
 
@@ -90,11 +90,11 @@ class Picture(models.Model):
     class Meta:
         verbose_name_plural = "Pictures"
 
-    def __str__(self):
+    def __str__(self):  # test done
         return str(self.location_id.name) + " " + str(self.id)
 
 
-# Custom slugiy for unique slugs
+# Custom slugiy for unique slugs. test done this
 def unique_slugify(instance, value, slug_field_name='slug', queryset=None,
                    slug_separator='-'):
     """

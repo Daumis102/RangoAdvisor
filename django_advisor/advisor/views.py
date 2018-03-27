@@ -40,7 +40,7 @@ def index(request):
 def add_location(request):
     # accept the form data and add that location to the database
     context_dict = {}
-    if request.method == 'POST' and request.is_ajax():  # will just post back to the same url but with data
+    if request.method == 'POST':  # will just post back to the same url but with data
         # get all the fields from the post request
         coordinates = request.POST.get('coords')
         name = titlecase(request.POST.get('location_name'))
@@ -73,10 +73,9 @@ def add_location(request):
 def toggle_visited(request):
     # for when the user clicks on a button to say if they have been in the location or not
     resp = {'statusCode': 1}
-    if request.method == 'POST' and request.is_ajax():
+    if request.method == 'POST':
         # get the post fields from the request
         location_id = request.POST.get('location_id')
-        state = request.POST.get('state')
         location = Location.objects.get(id=location_id)
         if location:
             visited_by_array = location.visited_by_list()
@@ -146,7 +145,7 @@ def user_logout(request):
 def register(request):
     # register a user
     resp = {'statusCode': 1}
-    if request.method == 'POST' and request.is_ajax():  # we are doing modal login so should only be ajax
+    if request.method == 'POST':  # we are doing modal login so should only be ajax
         # get username and password
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -167,7 +166,7 @@ def register(request):
 def user_login(request):
     # login a user
     resp = {'statusCode': 1}
-    if request.method == 'POST' and request.is_ajax():  # we are doing modal login so should only be ajax
+    if request.method == 'POST':  # we are doing modal login so should only be ajax
         # get fields from post request
         username = request.POST.get('loginUsername')
         password = request.POST.get('loginPassword')
@@ -229,7 +228,7 @@ def profile(request):
 def change_pw(request):
     # change the user's password
     resp = {"statusCode": 1}  # by default assume that it failed. as always you should
-    if request.method == 'POST' and request.is_ajax():
+    if request.method == 'POST':
         # get the new password
         new_password = request.POST.get('changePWPassword')
         user = User.objects.get(username=request.user.username)  # get the current user
@@ -244,7 +243,7 @@ def change_pw(request):
 def change_pp(request):
     # change the user's avatar
     resp = {'statusCode': 1}
-    if request.method == 'POST' and request.is_ajax():
+    if request.method == 'POST':
         user = UserProfile.objects.get(user=request.user)
         # get the new avatar
         image = request.FILES.get('newAvatar')
@@ -259,11 +258,9 @@ def change_pp(request):
 def delete_account(request):
     # delete the user's account
     resp = {'statusCode': 1}
-    if request.method == 'POST' and request.is_ajax():
+    if request.method == 'POST':
         current_user = User.objects.get(username=request.user.username)
         current_user_profile = UserProfile.objects.get(user=current_user)
-        # logout the user just in case
-        logout(request)
         # remove the user and their profile
         current_user.delete()
         current_user_profile.delete()
@@ -275,7 +272,7 @@ def delete_account(request):
 def upload_location_photo(request):
     # upload a new photo for the current location that is being viewed
     resp = {'statusCode': 1}
-    if request.method == 'POST' and request.is_ajax():
+    if request.method == 'POST':
         # get the fields from the post request
         slug = request.POST.get("location")
         location = Location.objects.get(slug=slug)

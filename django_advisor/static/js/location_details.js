@@ -91,13 +91,13 @@ function displayAddressFromLatLng(geocoder, map, infowindow, latLng) {
 	// handle visited people
     $('#btn-visited').click(function (e) {
 		var state = $(this).attr("data-state");
-		if(state ==="false"){
+		if(state === "false"){
 			// register user to location visitors
 			$.ajax({
 				url: $(this).attr("data-action"),
 				type: "POST",
 				dataType: "json",
-				data:{'location_id': $(this).attr("data-location-id"),'state':state},
+				data:{'location_id': $(this).attr("data-location-id")},
 				success: function(resp) {
 					if (resp.statusCode === 0){
 						// successfully registered to visited people
