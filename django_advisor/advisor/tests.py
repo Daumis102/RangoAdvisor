@@ -5,27 +5,46 @@ from advisor.views import *
 from .models import *
 
 
+# helper methods for the setUp functions to reduce the same boilerplate
+def get_init_dir():
+    return os.path.normpath(
+        os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ''))
+
+
+def get_user_info():
+    return {'username': 'anguel', 'password': 'anguel', 'email': 'anguel@gmail.com'}
+
+
+def get_loc_info(i):
+    return {'name': 'Caledonian Uni', 'city': 'Glasgow', 'coordinates': '233,233',
+            'visited_by': ','.join(map(str, [i]))}
+
+
+def get_rev_info(u, l):
+    return {'title': 'What a gorgeous view', 'publish_date': date.today(),
+            'content': 'The Cloud Gat, or Bean as the Chicagoans call it, is truly a sight to behold. Quite an impressive piece of engineering.',
+            'rating': 5, 'posted_by': UserProfile.objects.get(user=u), 'location_id': l}
+
+
+def get_prof_info(u):
+    return {'user': u,
+            'avatar': File(open(os.path.join(get_init_dir(), 'static', 'images', 'default_avatar.png'), 'rb'), 'rb')}
+
+
+def get_pic_info(u, l):
+    return {'upload_date': date.today(), 'picture': File(
+        open(os.path.join(get_init_dir(), 'media', 'initial_population', 'bean', 'bean1.jpg'), 'rb'), 'rb'),
+            'location_id': l, 'uploaded_by': UserProfile.objects.get(user=u)}
+
+
 class LocationTests(TestCase):
     def setUp(self):
-        self.init_dir = os.path.normpath(
-            os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ''))
-        self.user = User.objects.create_user(username='anguel', password='anguel', email='anguel@gmail.com')
-        self.profile = UserProfile.objects.create(user=self.user,
-                                                  avatar=File(
-                                                      open(os.path.join(self.init_dir, 'static', 'images',
-                                                                        'default_avatar.png'),
-                                                           'rb'), 'rb'))
-        self.loc = Location.objects.create(name='Caledonian Uni', city='Glasgow', coordinates='233,233',
-                                           visited_by=','.join(map(str, [self.user.id])))
-        self.rev = Review.objects.create(title='What a gorgeous view', publish_date=date.today(),
-                                         content='The Cloud Gat, or Bean as the Chicagoans call it, is truly a sight to behold. Quite an impressive piece of engineering.',
-                                         rating=5, posted_by=UserProfile.objects.get(user=self.user),
-                                         location_id=self.loc)
-        self.pic = Picture.objects.create(upload_date=date.today(), picture=File(
-            open(os.path.join(self.init_dir, 'media', 'initial_population', 'bean', 'bean1.jpg'), 'rb'), 'rb'),
-                                          location_id=self.loc, uploaded_by=UserProfile.objects.get(user=self.user))
-        self.client = Client()
-        self.factory = RequestFactory()
+        self.init_dir = get_init_dir()
+        self.user = User.objects.create_user(**get_user_info())
+        self.profile = UserProfile.objects.create(**get_prof_info(self.user))
+        self.loc = Location.objects.create(**get_loc_info(self.user.id))
+        self.rev = Review.objects.create(**get_rev_info(self.user, self.loc))
+        self.pic = Picture.objects.create(**get_pic_info(self.user, self.loc))
 
     def test_get_lat(self):
         self.assertEquals(self.loc.get_lat(), 233)
@@ -37,7 +56,8 @@ class LocationTests(TestCase):
         self.assertEqual(str(self.loc), self.loc.name)
 
     def test_get_picture(self):
-        self.assertEqual(self.loc.get_picture(), self.pic)  # this works cause the picture is mapped to this location in the setup
+        self.assertEqual(self.loc.get_picture(),
+                         self.pic)  # this works cause the picture is mapped to this location in the setup
 
     def test_get_rating(self):
         self.assertEqual(self.loc.get_rating(), 5)
@@ -54,25 +74,9 @@ class LocationTests(TestCase):
 
 class UserTests(TestCase):
     def setUp(self):
-        self.init_dir = os.path.normpath(
-            os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ''))
-        self.user = User.objects.create_user(username='anguel', password='anguel', email='anguel@gmail.com')
-        self.profile = UserProfile.objects.create(user=self.user,
-                                                  avatar=File(
-                                                      open(os.path.join(self.init_dir, 'static', 'images',
-                                                                        'default_avatar.png'),
-                                                           'rb'), 'rb'))
-        self.loc = Location.objects.create(name='Caledonian Uni', city='Glasgow', coordinates='233,233',
-                                           visited_by=','.join(map(str, [self.user.id])))
-        self.rev = Review.objects.create(title='What a gorgeous view', publish_date=date.today(),
-                                         content='The Cloud Gat, or Bean as the Chicagoans call it, is truly a sight to behold. Quite an impressive piece of engineering.',
-                                         rating=5, posted_by=UserProfile.objects.get(user=self.user),
-                                         location_id=self.loc)
-        self.pic = Picture.objects.create(upload_date=date.today(), picture=File(
-            open(os.path.join(self.init_dir, 'media', 'initial_population', 'bean', 'bean1.jpg'), 'rb'), 'rb'),
-                                          location_id=self.loc, uploaded_by=UserProfile.objects.get(user=self.user))
-        self.client = Client()
-        self.factory = RequestFactory()
+        self.init_dir = get_init_dir()
+        self.user = User.objects.create_user(**get_user_info())
+        self.profile = UserProfile.objects.create(**get_prof_info(self.user))
 
     def test_to_str(self):
         self.assertEqual(str(self.profile), self.user.username)
@@ -80,25 +84,11 @@ class UserTests(TestCase):
 
 class ReviewTests(TestCase):
     def setUp(self):
-        self.init_dir = os.path.normpath(
-            os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ''))
-        self.user = User.objects.create_user(username='anguel', password='anguel', email='anguel@gmail.com')
-        self.profile = UserProfile.objects.create(user=self.user,
-                                                  avatar=File(
-                                                      open(os.path.join(self.init_dir, 'static', 'images',
-                                                                        'default_avatar.png'),
-                                                           'rb'), 'rb'))
-        self.loc = Location.objects.create(name='Caledonian Uni', city='Glasgow', coordinates='233,233',
-                                           visited_by=','.join(map(str, [self.user.id])))
-        self.rev = Review.objects.create(title='What a gorgeous view', publish_date=date.today(),
-                                         content='The Cloud Gat, or Bean as the Chicagoans call it, is truly a sight to behold. Quite an impressive piece of engineering.',
-                                         rating=5, posted_by=UserProfile.objects.get(user=self.user),
-                                         location_id=self.loc)
-        self.pic = Picture.objects.create(upload_date=date.today(), picture=File(
-            open(os.path.join(self.init_dir, 'media', 'initial_population', 'bean', 'bean1.jpg'), 'rb'), 'rb'),
-                                          location_id=self.loc, uploaded_by=UserProfile.objects.get(user=self.user))
-        self.client = Client()
-        self.factory = RequestFactory()
+        self.init_dir = get_init_dir()
+        self.user = User.objects.create_user(**get_user_info())
+        self.profile = UserProfile.objects.create(**get_prof_info(self.user))
+        self.loc = Location.objects.create(**get_loc_info(self.user.id))
+        self.rev = Review.objects.create(**get_rev_info(self.user, self.loc))
 
     def test_to_str(self):
         self.assertEqual(str(self.loc), self.loc.name)
@@ -106,25 +96,11 @@ class ReviewTests(TestCase):
 
 class PictureTests(TestCase):
     def setUp(self):
-        self.init_dir = os.path.normpath(
-            os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ''))
-        self.user = User.objects.create_user(username='anguel', password='anguel', email='anguel@gmail.com')
-        self.profile = UserProfile.objects.create(user=self.user,
-                                                  avatar=File(
-                                                      open(os.path.join(self.init_dir, 'static', 'images',
-                                                                        'default_avatar.png'),
-                                                           'rb'), 'rb'))
-        self.loc = Location.objects.create(name='Caledonian Uni', city='Glasgow', coordinates='233,233',
-                                           visited_by=','.join(map(str, [self.user.id])))
-        self.rev = Review.objects.create(title='What a gorgeous view', publish_date=date.today(),
-                                         content='The Cloud Gat, or Bean as the Chicagoans call it, is truly a sight to behold. Quite an impressive piece of engineering.',
-                                         rating=5, posted_by=UserProfile.objects.get(user=self.user),
-                                         location_id=self.loc)
-        self.pic = Picture.objects.create(upload_date=date.today(), picture=File(
-            open(os.path.join(self.init_dir, 'media', 'initial_population', 'bean', 'bean1.jpg'), 'rb'), 'rb'),
-                                          location_id=self.loc, uploaded_by=UserProfile.objects.get(user=self.user))
-        self.client = Client()
-        self.factory = RequestFactory()
+        self.init_dir = get_init_dir()
+        self.user = User.objects.create_user(**get_user_info())
+        self.profile = UserProfile.objects.create(**get_prof_info(self.user))
+        self.loc = Location.objects.create(**get_loc_info(self.user.id))
+        self.pic = Picture.objects.create(**get_pic_info(self.user, self.loc))
 
     def test_to_str(self):
         self.assertEqual(str(self.pic), (self.pic.location_id.name + " " + str(self.pic.id)))
@@ -132,23 +108,12 @@ class PictureTests(TestCase):
 
 class ViewsTest(TestCase):
     def setUp(self):
-        self.init_dir = os.path.normpath(
-            os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ''))
-        self.user = User.objects.create_user(username='anguel', password='anguel', email='anguel@gmail.com')
-        self.profile = UserProfile.objects.create(user=self.user,
-                                                  avatar=File(
-                                                      open(os.path.join(self.init_dir, 'static', 'images',
-                                                                        'default_avatar.png'),
-                                                           'rb'), 'rb'))
-        self.loc = Location.objects.create(name='Caledonian Uni', city='Glasgow', coordinates='233,233',
-                                           visited_by=','.join(map(str, [self.user.id])))
-        self.rev = Review.objects.create(title='What a gorgeous view', publish_date=date.today(),
-                                         content='The Cloud Gat, or Bean as the Chicagoans call it, is truly a sight to behold. Quite an impressive piece of engineering.',
-                                         rating=5, posted_by=UserProfile.objects.get(user=self.user),
-                                         location_id=self.loc)
-        self.pic = Picture.objects.create(upload_date=date.today(), picture=File(
-            open(os.path.join(self.init_dir, 'media', 'initial_population', 'bean', 'bean1.jpg'), 'rb'), 'rb'),
-                                          location_id=self.loc, uploaded_by=UserProfile.objects.get(user=self.user))
+        self.init_dir = get_init_dir()
+        self.user = User.objects.create_user(**get_user_info())
+        self.profile = UserProfile.objects.create(**get_prof_info(self.user))
+        self.loc = Location.objects.create(**get_loc_info(self.user.id))
+        self.rev = Review.objects.create(**get_rev_info(self.user, self.loc))
+        self.pic = Picture.objects.create(**get_pic_info(self.user, self.loc))
         self.client = Client()
         self.factory = RequestFactory()
 
@@ -196,7 +161,8 @@ class ViewsTest(TestCase):
         req.profile = self.profile
         resp = profile(req)
         self.assertEqual(resp.status_code, 200)
-        self.assertContains(resp, 'Username: '.format(self.user.username))  # show profile when logged in. check for username
+        self.assertContains(resp,
+                            'Username: '.format(self.user.username))  # show profile when logged in. check for username
 
     def test_profile_page_logged_out(self):
         resp = self.client.get('/advisor/profile')
@@ -250,23 +216,12 @@ class ViewsTest(TestCase):
 
 class TestSlugify(TestCase):
     def setUp(self):
-        self.init_dir = os.path.normpath(
-            os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ''))
-        self.user = User.objects.create_user(username='anguel', password='anguel', email='anguel@gmail.com')
-        self.profile = UserProfile.objects.create(user=self.user,
-                                                  avatar=File(
-                                                      open(os.path.join(self.init_dir, 'static', 'images',
-                                                                        'default_avatar.png'),
-                                                           'rb'), 'rb'))
-        self.loc = Location.objects.create(name='Caledonian Uni', city='Glasgow', coordinates='233,233',
-                                           visited_by=','.join(map(str, [self.user.id])))
-        self.rev = Review.objects.create(title='What a gorgeous view', publish_date=date.today(),
-                                         content='The Cloud Gat, or Bean as the Chicagoans call it, is truly a sight to behold. Quite an impressive piece of engineering.',
-                                         rating=5, posted_by=UserProfile.objects.get(user=self.user),
-                                         location_id=self.loc)
-        self.pic = Picture.objects.create(upload_date=date.today(), picture=File(
-            open(os.path.join(self.init_dir, 'media', 'initial_population', 'bean', 'bean1.jpg'), 'rb'), 'rb'),
-                                          location_id=self.loc, uploaded_by=UserProfile.objects.get(user=self.user))
+        self.init_dir = get_init_dir()
+        self.user = User.objects.create_user(**get_user_info())
+        self.profile = UserProfile.objects.create(**get_prof_info(self.user))
+        self.loc = Location.objects.create(**get_loc_info(self.user.id))
+        self.rev = Review.objects.create(**get_rev_info(self.user, self.loc))
+        self.pic = Picture.objects.create(**get_pic_info(self.user, self.loc))
         self.client = Client()
         self.factory = RequestFactory()
 
@@ -279,23 +234,12 @@ class TestSlugify(TestCase):
 
 class FormsTest(TestCase):
     def setUp(self):
-        self.init_dir = os.path.normpath(
-            os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ''))
-        self.user = User.objects.create_user(username='anguel', password='anguel', email='anguel@gmail.com')
-        self.profile = UserProfile.objects.create(user=self.user,
-                                                  avatar=File(
-                                                      open(os.path.join(self.init_dir, 'static', 'images',
-                                                                        'default_avatar.png'),
-                                                           'rb'), 'rb'))
-        self.loc = Location.objects.create(name='Caledonian Uni', city='Glasgow', coordinates='233,233',
-                                           visited_by=','.join(map(str, [self.user.id])))
-        self.rev = Review.objects.create(title='What a gorgeous view', publish_date=date.today(),
-                                         content='The Cloud Gat, or Bean as the Chicagoans call it, is truly a sight to behold. Quite an impressive piece of engineering.',
-                                         rating=5, posted_by=UserProfile.objects.get(user=self.user),
-                                         location_id=self.loc)
-        self.pic = Picture.objects.create(upload_date=date.today(), picture=File(
-            open(os.path.join(self.init_dir, 'media', 'initial_population', 'bean', 'bean1.jpg'), 'rb'), 'rb'),
-                                          location_id=self.loc, uploaded_by=UserProfile.objects.get(user=self.user))
+        self.init_dir = get_init_dir()
+        self.user = User.objects.create_user(**get_user_info())
+        self.profile = UserProfile.objects.create(**get_prof_info(self.user))
+        self.loc = Location.objects.create(**get_loc_info(self.user.id))
+        self.rev = Review.objects.create(**get_rev_info(self.user, self.loc))
+        self.pic = Picture.objects.create(**get_pic_info(self.user, self.loc))
         self.client = Client()
         self.factory = RequestFactory()
 
